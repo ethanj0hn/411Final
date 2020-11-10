@@ -70,6 +70,22 @@ typedef enum bit [2:0] {
     alu_and = 3'b111
 } alu_ops;
 
+typedef struct packed {
+    rv32i_opcode opcode;
+    alu_ops aluop;
+    branch_funct3_t cmpop;
+    logic load_regfile;
+    logic load_data_address; // MAR for data
+    logic load_data_value; // MDR for data
+    logic data_read; // mem_read for data
+    logic data_write; // mem_write for data
+    logic load_data_out;
+    alumux::alumux1_sel_t alumux1_sel;
+    alumux::alumux2_sel_t alumux2_sel;
+    regfilemux::regfilemux_sel_t regfilemux_sel;
+    cmpmux::cmpmux_sel_t cmpmux_sel;
+} rv32i_control_word;
+
 
 endpackage : rv32i_types
 
