@@ -6,7 +6,7 @@ Inputs - clk, reset, PC + offset for branch, read val from instruction memory.
 Outputs - imm vals, instruction, PC value, instruction read signal
 */
 
-module IF_ID(
+module IF_stage(
     input logic clk,
     input logic reset,
     input logic br_en, // from ex stage cmp
@@ -50,3 +50,5 @@ pc_register PC(
     .in(PC_in),
     .out(inst_addr)
 );
+
+endmodule : IF_stage
