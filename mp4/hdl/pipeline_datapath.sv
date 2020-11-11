@@ -88,6 +88,31 @@ shift_reg_cw CW_regs (
     .MEM_WB()
 );
 
+MEM_stage MEM (
+    .clk(clk),
+    .rst(rst),
+    .ctrl(),
+
+    // from current IR
+    .funct3_mem(),
+
+    // from exec
+    .rs2_out(),
+    .alu_buffered(), // calculated address
+    .funct3_exec(),
+
+    // to wb
+    .data_value(), // data from data_value_register
+
+    // interfacing cache / memory
+    .mem_rdata(),
+    .mem_wdata(),
+    .mem_address(),
+    .mem_byte_enable(),
+    .data_read(),
+    .data_write()
+);
+
 
 
 endmodule : pipeline_datapath
