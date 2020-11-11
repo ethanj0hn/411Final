@@ -10,7 +10,7 @@ module MEM_stage(
 
     // from exec
     input [31:0] rs2_out,
-    input [31:0] alu_buffered, // calculated address
+    input [31:0] alu_out, // calculated address
     input [2:0] funct3_exec,
 
     // to wb
@@ -27,7 +27,6 @@ module MEM_stage(
 );
 
 // local signals
-logic load_data_address;
 logic load_data_out;
 logic load_data_value;
 assign load_data_address = ctrl.load_data_address;
@@ -99,13 +98,19 @@ begin
     endcase
 end 
 
-register data_address_register(
+register alu_buffer(
     .clk(clk),
     .rst(rst),
-    .load(load_data_address),
-    .in(alu_result),
+    .load(1'b1),
+    .in(alu_out),
     .out(mem_address_raw)
 );
+
+// buffer for cmp
+always_ff(@posedge clk)
+begin
+    if(rst)
+end
 
 register mem_data_out(
     .clk(clk),
