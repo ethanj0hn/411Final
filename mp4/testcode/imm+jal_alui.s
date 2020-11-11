@@ -29,6 +29,8 @@ ld_reg:
     addi x9, x0, 9
     addi x15, x0, -5
     addi x16, x0, 1
+    addi x20, x0, 15
+    nop
     nop
     nop
     nop
@@ -42,9 +44,9 @@ ld_reg:
     nop
     nop
     slti x1, x0, 1
-    andi x7, x0, 1
-    xori x9, x0, 0
-    ori x15, x0, 1
+    andi x3, x7, 7
+    xori x8, x9, 8
+    ori x6, x0, 1
     nop
     nop
     nop
