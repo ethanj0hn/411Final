@@ -59,14 +59,26 @@ shift_reg PC_regs(
     .MEM_WB() // has MEM_WV PC value
 );
 
-/*
-Add decode stage here and connect output to cw shift reg
-*/
+ID_stage ID (
+    .clk(clk),
+    .rst(rst),
+    .funct3_if(),
+    .funct7_if(),
+    .opcode_if(),
+    .rs1_ex(),
+    .rs2_ex(),
+    .rs1_out_ex(),
+    .rs2_out_ex(),
+    .rd_wb(),
+    .load_regfile_wb(),
+    .regfilemux_out_wb(),
+    .ctrl()
+);
 
 // shift reg for generated control words
 //
 // TODO: add width in paramter below and connect
-shift_reg_cw #() CW_regs(
+shift_reg_cw CW_regs (
     .clk(clk),
     .reset(reset),
     .load(1'b1), // always load for now

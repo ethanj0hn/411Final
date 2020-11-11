@@ -76,7 +76,7 @@ module shift_reg_cw
 
 //internal logic and assignments
 //
-logic rv32i_control_word data [3];
+rv32i_control_word data [3];
 
 always_comb
 begin
