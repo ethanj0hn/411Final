@@ -104,6 +104,15 @@ Burst Memory Ports:
 
 Please refer to tb_itf.sv for more information.
 */
+always @(posedge itf.clk) begin
+    if (itf.halt)
+        $finish;
+    // if (timeout == 0) begin
+    //     $display("TOP: Timed out");
+    //     $finish;
+    // end
+    // timeout <= timeout - 1;
+end
 
 mp4 dut(
     .clk(itf.clk),

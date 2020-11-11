@@ -17,6 +17,7 @@ interface tb_itf();
     logic sm_error;
     assign sm_error = inst_sm_error | data_sm_error;
     logic pmem_error = 1'b0;
+    logic halt;
 
     /* I Cache Ports */
     logic inst_read;
@@ -44,6 +45,10 @@ interface tb_itf();
     /* Mailbox for memory path */
     mailbox #(string) path_mb;
     initial path_mb = new();
+
+    // halt condition
+    assign itf.halt = dut.cpu.load_pc &
+                  (dut.cpu.datapath.pc_out == dut.cpu.datapath.pcmux_out);
 
     /* Burst Memory */
     clocking mcb @(posedge clk);
