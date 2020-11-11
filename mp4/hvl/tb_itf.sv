@@ -47,8 +47,7 @@ interface tb_itf();
     initial path_mb = new();
 
     // halt condition
-    assign itf.halt = dut.cpu.load_pc &
-                  (dut.cpu.datapath.pc_out == dut.cpu.datapath.pcmux_out);
+    assign itf.halt = (dut.inst_addr == dut.datapath.IF.PC_in);
 
     /* Burst Memory */
     clocking mcb @(posedge clk);
