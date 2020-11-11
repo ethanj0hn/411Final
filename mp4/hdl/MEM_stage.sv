@@ -15,6 +15,7 @@ module MEM_stage(
 
     // to wb
     output logic [31:0] data_value, // data from data_value_register
+    output logic [2:0] mem_address_last_two_bits
 
     // interfacing cache / memory
     input [31:0] mem_rdata,
@@ -39,6 +40,7 @@ assign data_write = ctrl.data_write;
 logic [31:0] mem_address_raw;
 logic [31:0] data_to_store;
 assign mem_address = {mem_address_raw[31:2], 2'b00};
+assign mem_address_last_two_bits = mem_address_raw[1:0];
 
 // muxes
 always_comb
@@ -77,7 +79,7 @@ begin
         sw: mem_byte_enable = 4'b1111;
         sh:
         begin
-            unique case(mem_address_raw[1:0])
+            unique case(mem_address_last_two_bits)
                 default: mem_byte_enable = 4'b1111;
                 2'b00, 2'b01: mem_byte_enable = 4'b0011;
                 2'b10, 2'b11: mem_byte_enable = 4'b1100;
@@ -85,7 +87,7 @@ begin
         end
         sb:
         begin
-            unique case(mem_address_raw[1:0])
+            unique case(mem_address_last_two_bits)
                 default: mem_byte_enable = 4'b1111;
                 2'b00: mem_byte_enable = 4'b0001;
                 2'b01: mem_byte_enable = 4'b0010;

@@ -103,6 +103,7 @@ MEM_stage MEM (
 
     // to wb
     .data_value(), // data from data_value_register
+    .mem_address_last_two_bits() // used to mask for loads in wb
 
     // interfacing cache / memory
     .mem_rdata(),
