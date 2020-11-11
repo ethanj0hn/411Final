@@ -15,7 +15,7 @@ module MEM_stage(
 
     // to wb
     output logic [31:0] data_value, // data from data_value_register
-    output logic [2:0] mem_address_last_two_bits
+    output logic [1:0] mem_address_last_two_bits
 
     // interfacing cache / memory
     input [31:0] mem_rdata,
