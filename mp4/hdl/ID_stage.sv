@@ -61,10 +61,79 @@ begin
                 end
                 sr: begin
                     if (funct7 != 7'b0)
-
+                        ctrl.aluop = alu_sra;
                 end
                 default: ;
             endcase
+        end
+        op_reg: begin
+            ctrl.load_regfile = 1'b1;
+            case (arith_funct3_t'(funct3_if))
+                slt: begin
+                    ctrl.cmpop = blt;
+                    ctrl.regfilemux_sel = regfilemux::br_en;
+                end
+                sltu: begin
+                    ctrl.cmpop = bltu;
+                    ctrl.regfilemux_sel = regfilemux::br_en;
+                end
+                sr: begin
+                    ctrl.alumux2_sel = alumux::rs2_out;
+                    if (funct7 != 7'b0)
+                        ctrl.aluop = alu_sra;
+                end
+                add: begin
+                    ctrl.alumux2_sel = alumux::rs2_out;
+                    if (funct7 != 7'b0)
+                        ctrl.aluop = alu_sub;
+                end
+                default:
+                    ctrl.alumux2_sel = alumux::rs2_out;
+            endcase
+        end
+        op_lui: begin
+            ctrl.load_regfile = 1'b1;
+            ctrl.regfilemux_sel = regfilemux::u_imm;
+        end
+        op_auipc: begin
+            ctrl.aluop = alu_add;
+            ctrl.alumux1_sel = alumux::pc_out;
+            ctrl.alumux2_sel = alumux::u_imm;
+            ctrl.load_regfile = 1'b1;
+        end
+        op_jal: begin
+            ctrl.alumux1_sel = alumux::pc_out;
+            ctrl.alumux2_sel = alumux::j_imm;
+            ctrl.aluop = alu_add;
+        end
+        op_jalr:
+            ctrl.aluop = alu_add;
+        op_br: begin
+            ctrl.alumux1_sel = alumux::pc_out;
+            ctrl.alumux2_sel = alumux::b_imm;
+            ctrl.aluop = alu_add;
+        end
+        op_load: begin
+            ctrl.aluop = alu_add;
+            ctrl.load_data_address = 1'b1;
+            ctrl.load_data_value = 1'b1;
+            ctrl.data_read = 1'b1;
+            ctrl.load_regfile = 1'b1;
+            case (load_funct3_t'(funct3_if))
+                lw : ctrl.regfilemux_sel = regfilemux::lw;
+                lb: ctrl.regfilemux_sel = regfilemux::lb;
+                lbu: ctrl.regfilemux_sel = regfilemux::lbu;
+                lh: ctrl.regfilemux_sel = regfilemux::lh;
+                lhu: ctrl.regfilemux_sel = regfilemux::lhu;
+                default: ;
+            endcase
+        end
+        op_store: begin
+            ctrl.aluop = alu_add;
+            ctrl.alumux2_sel = alumux::s_imm;
+            ctrl.load_data_address = 1'b1;
+            ctrl.load_data_out = 1'b1;
+            ctrl.data_write = 1'b1;
         end
     endcase
 end
