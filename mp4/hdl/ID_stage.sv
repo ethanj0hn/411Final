@@ -8,12 +8,10 @@ module ID_stage(
     input [2:0] funct3_if,
     input [6:0] funct7_if,
     input rv32i_opcode opcode_if,
-    
-    // inputs from execute
-    input [4:0] rs1_ex,
-    input [4:0] rs2_ex,
+    input [4:0] rs1_if,
+    input [4:0] rs2_if,
 
-    // outputs from execute
+    // outputs to execute
     output logic [31:0] rs1_out_ex,
     output logic [31:0] rs2_out_ex,
 
@@ -60,7 +58,7 @@ begin
                     ctrl.regfilemux_sel = regfilemux::br_en;
                 end
                 sr: begin
-                    if (funct7 != 7'b0)
+                    if (funct7_if != 7'b0)
                         ctrl.aluop = alu_sra;
                 end
                 default: ;
@@ -79,12 +77,12 @@ begin
                 end
                 sr: begin
                     ctrl.alumux2_sel = alumux::rs2_out;
-                    if (funct7 != 7'b0)
+                    if (funct7_if != 7'b0)
                         ctrl.aluop = alu_sra;
                 end
                 add: begin
                     ctrl.alumux2_sel = alumux::rs2_out;
-                    if (funct7 != 7'b0)
+                    if (funct7_if != 7'b0)
                         ctrl.aluop = alu_sub;
                 end
                 default:
@@ -135,6 +133,8 @@ begin
             ctrl.load_data_out = 1'b1;
             ctrl.data_write = 1'b1;
         end
+
+        default: ctrl = 0;
     endcase
 end
 
@@ -144,8 +144,8 @@ regfile regfile(
     .rst(rst),
     .load(load_regfile_wb),
     .in(regfilemux_out_wb),
-    .src_a(rs1_ex),
-    .src_b(rs2_ex),
+    .src_a(rs1_if),
+    .src_b(rs2_if),
     .dest(rd_wb),
     .reg_a(rs1_out_ex),
     .reg_b(rs2_out_ex)

@@ -36,7 +36,7 @@ logic [31:0] alumux2_out, alumux1_out, cmpmux_out;
 
 always_comb
 begin
-    case(alumux2_sel)
+    unique case(alumux2_sel)
         alumux::i_imm:
             alumux2_out = i_imm;
         alumux::u_imm:
@@ -48,12 +48,12 @@ begin
         alumux::j_imm:
             alumux2_out = j_imm;
         alumux::rs2_out:
-            alumux2_out = rs2_out;
+            alumux2_out = reg_b;
         default:
             alumux2_out = i_imm;
     endcase
 
-    case(alumux1_sel)
+    unique case(alumux1_sel)
         alumux::rs1_out:
             alumux1_out = reg_a;
         alumux::pc_out:
@@ -62,11 +62,14 @@ begin
             alumux1_out = reg_a;
     endcase
 
-    case(cmpmux_sel)
+    unique case(cmpmux_sel)
         cmpmux::rs2_out:
             cmpmux_out = reg_b;
-        cmp::i_imm:
+        cmpmux::i_imm:
             cmpmux_out = i_imm;
+        default:
+            cmpmux_out = reg_b;
+    endcase
 end
 
 alu ALU(

@@ -3,7 +3,6 @@ import rv32i_types::*; /* Import types defined in rv32i_types.sv */
 module MEM_stage(
     input clk,
     input rst,
-    input rv32i_control_word ctrl,
 
     // from current IR
     input [2:0] funct3_mem,
@@ -18,14 +17,8 @@ module MEM_stage(
     // interfacing cache / memory
     output logic [31:0] mem_wdata,
     output logic [31:0] mem_address,
-    output logic [4:0] mem_byte_enable,
-    output logic data_read,
-    output logic data_write
+    output logic [4:0] mem_byte_enable
 );
-
-// assigning signals from control word
-data_read = ctrl.data_read;
-data_write = ctrl.data_write;
 
 // local conversion of alu_buffered
 assign mem_address = {alu_buffered[31:2], 2'b00};

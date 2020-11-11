@@ -20,9 +20,8 @@ module WB_stage(
     input regfilemux::regfilemux_sel_t regfilemux_sel, // regfile mux select
 
     //outputs to ID_stage
-    output logic [4:0] rd_wb, // destination register
     output logic [31:0] regfilemux_out_wb // output of regfilemux
-)
+);
 
 load_funct3_t load_funct3;
 assign load_funct3 = load_funct3_t'(funct3);
@@ -98,7 +97,7 @@ always_comb begin : MUXES
         end
         
 
-        default: regfilemux_out = 0;
+        default: regfilemux_out_wb = 32'h0;
     endcase
 end
 

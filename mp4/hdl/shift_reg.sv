@@ -29,13 +29,13 @@ end
 // assign 0's on reset, shift on load
 // else retain data
 //
-always_ff(@posedge clk)
+always_ff @(posedge clk)
 begin
     if(reset)
     begin
         for(int i=0;i<4;i++)
         begin
-            data[i] = 32'h0;
+            data[i] <= 32'h0;
         end
     end
     else if(load)
@@ -51,7 +51,7 @@ begin
     begin
         for(int i=0; i<4; i++)
         begin
-            data[i] <= data[i]
+            data[i] <= data[i];
         end
     end
 end
@@ -88,7 +88,7 @@ end
 // assign 0's on reset, shift on load
 // else retain data
 //
-always_ff(@posedge clk)
+always_ff @(posedge clk)
 begin
     if(reset)
     begin
@@ -110,7 +110,7 @@ begin
     begin
         for(int i=0; i<3; i++)
         begin
-            data[i] <= data[i]
+            data[i] <= data[i];
         end
     end
 end
