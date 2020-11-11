@@ -17,7 +17,7 @@ module MEM_stage(
     // interfacing cache / memory
     output logic [31:0] mem_wdata,
     output logic [31:0] mem_address,
-    output logic [4:0] mem_byte_enable
+    output logic [3:0] mem_byte_enable
 );
 
 // local conversion of alu_buffered

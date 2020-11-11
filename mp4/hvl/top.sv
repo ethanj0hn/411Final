@@ -110,8 +110,8 @@ mp4 dut(
     .reset(itf.rst),
     .data_resp(itf.data_resp), // response from data, instruction memory
     .inst_resp(itf.inst_resp),
-    .inst_rdata(itf.r_data), // instruction, data read port
-    .data_rdata(itf.rdata),
+    .inst_rdata(itf.inst_rdata), // instruction, data read port
+    .data_rdata(itf.data_rdata),
     .inst_read(itf.inst_read), // instruction port address, read signal
     .inst_addr(itf.inst_addr),
     .data_read(itf.data_read), // data read write signals

@@ -200,7 +200,7 @@ logic [1:0] mem_address_last_two_bits;
 MEM_stage MEM(
     .clk(clk),
     .rst(reset),
-    .funct3_mem(IR_EX_MEM[14:2]),
+    .funct3_mem(IR_EX_MEM[14:12]),
 
     // from exec buffers
     .rs2_out_buffered(regb_buff_out),
