@@ -22,8 +22,17 @@ module pipeline_datapath(
 // Internal Logic for IF
 //
 logic is_br, is_jump;
-rv32i_opcode op_from_ex;
-assign op_from_ex = rv32i_opcode'(IR_ID_EX[6:0]);
+rv32i_opcode op_from_ex; // assign statement below line 60
+
+// Internal Logic for Writeback
+//
+rv32i_word regfilemux_out;
+
+// internal logic for EX
+//
+logic br_en;
+rv32i_word alu_out;
+
 
 always_comb
 begin
@@ -58,6 +67,7 @@ IF_stage IF(
 // Internal Logic for IR Shift regs
 //
 rv32i_word IR_IF_ID, IR_ID_EX, IR_EX_MEM, IR_MEM_WB;
+assign op_from_ex = rv32i_opcode'(IR_ID_EX[6:0]);
 
 // Shift regs for IR
 //
@@ -125,11 +135,6 @@ shift_reg_cw CW_regs (
     .EX_MEM(CW_EX_MEM),
     .MEM_WB(CW_MEM_WB)
 );
-
-// internal logic for EX
-//
-logic br_en;
-rv32i_word alu_out;
 
 EX_stage EX(
     .reg_a(reg_a),
@@ -255,10 +260,6 @@ begin
     else
         br_en_memwb <= br_en_exmem;
 end
-
-// Internal Logic for Writeback
-//
-rv32i_word regfilemux_out;
 
 WB_stage WB(
     .data_value(mem_buff_out), // value read from memory

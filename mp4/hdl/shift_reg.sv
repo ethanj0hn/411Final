@@ -1,3 +1,4 @@
+import rv32i_types::*; /* Import types defined in rv32i_types.sv */
 /*
 Shift regs for PC and IR
 Inputs - clk,reset, load, in

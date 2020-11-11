@@ -42,15 +42,21 @@ set_global_assignment -name TOP_LEVEL_ENTITY mp4
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "23:49:41  NOVEMBER 10, 2020"
 set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Standard Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP "-40"
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 100
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 2
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (SystemVerilog)"
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "SYSTEMVERILOG HDL" -section_id eda_simulation
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH mp4_tb -section_id eda_simulation
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/rv32i_types.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/rv32i_mux_types.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/register.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/pc_reg.sv
-set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/mux.sv
-set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/mp2.sv
-set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/ir.sv
-set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/datapath.sv
-set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/control.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/cmp.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/mp2_hdl/alu.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/WB_stage.sv
@@ -62,30 +68,19 @@ set_global_assignment -name SYSTEMVERILOG_FILE hdl/MEM_stage.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/IF_stage.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/ID_stage.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/EX_stage.sv
-set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
-set_global_assignment -name MIN_CORE_JUNCTION_TEMP "-40"
-set_global_assignment -name MAX_CORE_JUNCTION_TEMP 100
-set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 2
-set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (SystemVerilog)"
-set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
-set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "SYSTEMVERILOG HDL" -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_NAME mp4_tb -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id mp4_tb
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id mp4_tb
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME mp4_tb -section_id mp4_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE hvl/magic_dual_port.sv -section_id mp4_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE hvl/param_memory.sv -section_id mp4_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE hvl/rvfi_itf.sv -section_id mp4_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE hvl/rvfimon.v -section_id mp4_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE hvl/shadow_memory.sv -section_id mp4_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE hvl/source_tb.sv -section_id mp4_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE hvl/tb_itf.sv -section_id mp4_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE hvl/top.sv -section_id mp4_tb
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
-set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH top -section_id eda_simulation
-set_global_assignment -name EDA_TEST_BENCH_NAME top -section_id eda_simulation
-set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id top
-set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id top
-set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME top -section_id top
-set_global_assignment -name EDA_TEST_BENCH_FILE hvl/magic_dual_port.sv -section_id top
-set_global_assignment -name EDA_TEST_BENCH_FILE hvl/param_memory.sv -section_id top
-set_global_assignment -name EDA_TEST_BENCH_FILE hvl/rvfi_itf.sv -section_id top
-set_global_assignment -name EDA_TEST_BENCH_FILE hvl/rvfimon.v -section_id top
-set_global_assignment -name EDA_TEST_BENCH_FILE hvl/shadow_memory.sv -section_id top
-set_global_assignment -name EDA_TEST_BENCH_FILE hvl/source_tb.sv -section_id top
-set_global_assignment -name EDA_TEST_BENCH_FILE hvl/tb_itf.sv -section_id top
-set_global_assignment -name EDA_TEST_BENCH_FILE hvl/top.sv -section_id top
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

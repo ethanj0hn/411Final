@@ -1,3 +1,4 @@
+import rv32i_types::*; /* Import types defined in rv32i_types.sv */
 /* 
 EX stage module. Takes reg values, assigns appropriate MUX signals from control word.
 Also outputs ALU and CMP results. 
