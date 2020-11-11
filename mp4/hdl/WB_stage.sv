@@ -1,22 +1,27 @@
 import rv32i_types::*;
 
+/*
+Module for WB stage. MUX for selecting output to load to regfile
+Datapath Elements - regfilemux
+Inputs - data value read from memory, signals from IR including u_imm etc, memory address last two bits
+Outputs- destination register, regfilemux output
+*/
 module WB_stage(
 
     //inputs
 
-    input logic [31:0] data_value, 
+    input logic [31:0] data_value, // value read from memory
     input logic [2:0] funct3, 
-    input br_en,
+    input logic br_en, // branch enable to load to register
     input rv32i_word alu_out,
     input logic [31:0] u_imm,
     input rv32i_word pc_out,
     input [1:0] mem_address_last_two_bits,
-    input rv32i_control_word ctrl,
+    input regfilemux::regfilemux_sel_t regfilemux_sel, // regfile mux select
 
     //outputs to ID_stage
-    output logic [4:0] rd_wb,
-    output logic load_regfile_wb,
-    output logic [31:0] regfilemux_out_wb
+    output logic [4:0] rd_wb, // destination register
+    output logic [31:0] regfilemux_out_wb // output of regfilemux
 )
 
 load_funct3_t load_funct3;
@@ -47,10 +52,9 @@ always_comb begin : MUXES
                 default: rmask = 4'b1111;
             endcase
         end
-        default: trap = 1;
     endcase
 
-    unique case(ctrl.regfilemux_sel)
+    unique case(regfilemux_sel)
         regfilemux::alu_out: regfilemux_out_wb = alu_out;
         regfilemux::br_en: regfilemux_out_wb = br_en;
         regfilemux::u_imm: regfilemux_out_wb = u_imm;
@@ -97,3 +101,5 @@ always_comb begin : MUXES
         default: regfilemux_out = 0;
     endcase
 end
+
+endmodule : WB_stage

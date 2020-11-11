@@ -1,7 +1,7 @@
 /* 
 EX stage module. Takes reg values, assigns appropriate MUX signals from control word.
 Also outputs ALU and CMP results. 
-IR_EXpath elements - CMP, CMPMux, alumux1, alumux2, ALU
+Datapath elements - CMP, CMPMux, alumux1, alumux2, ALU
 Inputs - reg_a, PC, alumux1_sel, IR from ID/EX buffer, alumux2_sel, reg_b, cmpop, aluop, cmpmuxsel
 Outputs- ALU output, br_en
 */
