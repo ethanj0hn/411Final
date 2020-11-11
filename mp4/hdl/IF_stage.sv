@@ -1,7 +1,7 @@
 /* 
-IF/ID stage in the pipeline. Includes following datapath elements:
-PC, PCMUX IF/ID buffer
-IF/ID buffer stores the PC to be passed down the pipeline, Instruction from inst memory.
+IF stage in the pipeline. Includes following datapath elements:
+PC, PCMUX IF buffer
+IF buffer stores the PC to be passed down the pipeline, Instruction from inst memory.
 Inputs - clk, reset, PC + offset for branch, read val from instruction memory.
 Outputs - imm vals, instruction, PC value, instruction read signal
 */
