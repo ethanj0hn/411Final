@@ -61,22 +61,22 @@ endmodule : shift_reg
 /*
 Shift regs for control word
 Inputs - clk,reset, load, in
-Outputs- s_width bit words for buffers
+Outputs- control word struct
 */
-module shift_reg_cw #(parameter s_width = 32) // add length here
+module shift_reg_cw 
 (
     input logic clk,
     input logic reset,
     input logic load,
-    input logic [s_width-1:0] in, // input in the beginning
-    output logic [s_width-1:0] ID_EX, // output for each stage in pipeline
-    output logic [s_width-1:0] EX_MEM,
-    output logic [s_width-1:0] MEM_WB
+    input rv32i_control_word in, // input in the beginning
+    output rv32i_control_word ID_EX, // output for each stage in pipeline
+    output rv32i_control_word EX_MEM,
+    output rv32i_control_word MEM_WB
 );
 
 //internal logic and assignments
 //
-logic [s_width-1:0] data [3];
+logic rv32i_control_word data [3];
 
 always_comb
 begin
