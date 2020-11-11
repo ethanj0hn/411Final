@@ -96,17 +96,14 @@ MEM_stage MEM (
     // from current IR
     .funct3_mem(),
 
-    // from exec
-    .rs2_out(),
+    // from exec buffers
+    .rs2_out_buffered(),
     .alu_buffered(), // calculated address
-    .funct3_exec(),
 
-    // to wb
-    .data_value(), // data from data_value_register
-    .mem_address_last_two_bits() // used to mask for loads in wb
+    // to wb buffer
+    .mem_address_last_two_bits(),
 
     // interfacing cache / memory
-    .mem_rdata(),
     .mem_wdata(),
     .mem_address(),
     .mem_byte_enable(),
@@ -114,6 +111,36 @@ MEM_stage MEM (
     .data_write()
 );
 
+
+// register alu_buffer(
+//     .clk(clk),
+//     .rst(rst),
+//     .load(1'b1),
+//     .in(alu_out),
+//     .out(mem_address_raw)
+// );
+
+// // buffer for cmp
+// always_ff(@posedge clk)
+// begin
+//     if(rst)
+// end
+
+// register mem_data_out(
+//     .clk(clk),
+//     .rst(rst),
+//     .load(load_data_out),
+//     .in(data_to_store),
+//     .out(mem_wdata)  
+// );
+
+// register data_value_register(
+//     .clk  (clk),
+//     .rst (rst),
+//     .load (load_data_value),
+//     .in   (mem_rdata),
+//     .out  (data_value)
+// );
 
 
 endmodule : pipeline_datapath
