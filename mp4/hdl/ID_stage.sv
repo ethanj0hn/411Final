@@ -103,9 +103,14 @@ begin
             ctrl.alumux1_sel = alumux::pc_out;
             ctrl.alumux2_sel = alumux::j_imm;
             ctrl.aluop = alu_add;
+            ctrl.load_regfile = 1'b1;
+            ctrl.regfilemux_sel = regfilemux::pc_plus4;
         end
-        op_jalr:
+        op_jalr: begin
             ctrl.aluop = alu_add;
+            ctrl.load_regfile = 1'b1;
+            ctrl.regfilemux_sel = regfilemux::pc_plus4;
+        end
         op_br: begin
             ctrl.alumux1_sel = alumux::pc_out;
             ctrl.alumux2_sel = alumux::b_imm;
