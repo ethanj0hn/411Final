@@ -26,7 +26,7 @@ bit f;
 // This section not required until CP2
 
 assign rvfi.commit = 0; // Set high when a valid instruction is modifying regfile or PC
-assign rvfi.halt = 0;   // Set high when you detect an infinite loop
+assign rvfi.halt = (dut.datapath.CW_MEM_WB.opcode == op_br) & (dut.datapath.alu_buffer_memwb_out == dut.datapath.PC_MEM_WB);   // Set high when you detect an infinite loop
 initial rvfi.order = 0;
 always @(posedge itf.clk iff rvfi.commit) rvfi.order <= rvfi.order + 1; // Modify for OoO
 
@@ -109,11 +109,11 @@ Please refer to tb_itf.sv for more information.
 // halt condition
 // if opcode j or br wb and alu_out is PC
 //
-logic halt;
-assign halt = (dut.datapath.CW_MEM_WB.opcode == op_br) & (dut.datapath.alu_buffer_memwb_out == dut.datapath.PC_MEM_WB);
+// logic halt;
+// assign halt = (dut.datapath.CW_MEM_WB.opcode == op_br) & (dut.datapath.alu_buffer_memwb_out == dut.datapath.PC_MEM_WB);
 
 always @(posedge itf.clk) begin
-    if (halt)
+    if (rvfi.halt)
         $finish;
     // if (timeout == 0) begin
     //     $display("TOP: Timed out");
