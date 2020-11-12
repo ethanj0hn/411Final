@@ -105,15 +105,24 @@ Burst Memory Ports:
 
 Please refer to tb_itf.sv for more information.
 */
-// always @(posedge itf.clk) begin
-//     if (itf.halt)
-//         $finish;
-//     // if (timeout == 0) begin
-//     //     $display("TOP: Timed out");
-//     //     $finish;
-//     // end
-//     // timeout <= timeout - 1;
-// end
+
+// halt condition
+// if opcode j or br wb and alu_out is PC
+//
+rv32i_opcode op_wb;
+op_wb = dut.datapath.CW_MEM_WB.opcode;
+logic halt;
+assign halt = (op_wb == op_br) & (alu_out == dut.inst_addr);
+
+always @(posedge itf.clk) begin
+    if (halt)
+        $finish;
+    // if (timeout == 0) begin
+    //     $display("TOP: Timed out");
+    //     $finish;
+    // end
+    // timeout <= timeout - 1;
+end
 logic clk;
 logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out;
 logic [31:0] data_memory_buffer;
@@ -134,6 +143,9 @@ assign CW_MEM_WB = dut.datapath.CW_MEM_WB;
 assign alu_out = dut.datapath.alu_out;
 assign alu_buffer_exmem_out = dut.datapath.alu_buffer_exmem_out;
 assign alu_buffer_memwb_out = dut.datapath.alu_buffer_memwb_out;
+
+
+
 mp4 dut(
     .clk(itf.clk),
     .reset(itf.rst),

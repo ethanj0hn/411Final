@@ -26,7 +26,7 @@ logic [31:0] PC_in;
 // PC MUX sel takes alu output when take_branch OR jump control word
 //
 assign take_branch = br_en & br_cw;
-assign PC_MUX_sel = take_branch | take_branch;
+assign PC_MUX_sel = take_branch | j_cw;
 
 
 always_comb
