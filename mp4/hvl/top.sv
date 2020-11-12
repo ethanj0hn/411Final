@@ -109,20 +109,20 @@ Please refer to tb_itf.sv for more information.
 // halt condition
 // if opcode j or br wb and alu_out is PC
 //
-// rv32i_opcode op_wb;
-// op_wb = dut.datapath.CW_MEM_WB.opcode;
-// logic halt;
-// assign halt = (op_wb == op_br) & (alu_out == dut.inst_addr);
+rv32i_opcode op_wb;
+assign op_wb = dut.datapath.CW_ID_EX.opcode;
+logic halt;
+assign halt = ((op_wb == op_br) | (op_wb == op_jal) | (op_wb == op_jalr)) & (dut.datapath.alu_out == dut.datapath.PC_ID_EX);
 
-// always @(posedge itf.clk) begin
-//     if (halt)
-//         $finish;
+always @(posedge itf.clk) begin
+    if (halt)
+        $finish;
     // if (timeout == 0) begin
     //     $display("TOP: Timed out");
     //     $finish;
     // end
     // timeout <= timeout - 1;
-// end
+end
 logic clk;
 logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out;
 logic [31:0] data_memory_buffer;
