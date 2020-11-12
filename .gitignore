@@ -2,3 +2,7 @@
 *.sh
 mp4/bin/
 mp4/simulation/
+db/
+incremental_db/
+mp4_nativelink_simulation.rpt
+output_files/

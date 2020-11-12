@@ -51,6 +51,7 @@ always_comb begin : MUXES
                 default: rmask = 4'b1111;
             endcase
         end
+        default: rmask = 4'b1111;
     endcase
 
     unique case(regfilemux_sel)

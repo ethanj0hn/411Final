@@ -4,40 +4,40 @@ load_store.s:
 .globl _start
     # Refer to the RISC-V ISA Spec for the functionality of
     # the instructions in this test program.
-_start:
+_start: auipc x10, %pcrel_hi(halt)
     # Note that the comments in this file should not be taken as
     # an example of good commenting style!!  They are merely provided
     # in an effort to help you understand the assembly style.
     # addi x11,x0,0x069
-    la x3,bad
+    # la x3,bad
     nop
     nop
     nop
     nop
     nop
     nop
-    lh x1,(x3)
+    lw x1, %pcrel_lo(good)(x10)
     nop
     nop
     nop
     nop
     nop
     nop
-    lh x1,2(x3)
+    # lh x1,2(x3)
     nop
     nop
     nop
     nop
     nop
     nop
-    lw x1, (x3)
+    # lw x1, (x3)
     nop
     nop
     nop
     nop
     nop
     nop
-    la x3,answer
+    # la x3,answer
     nop
     nop
     nop
