@@ -123,6 +123,29 @@ ID_stage ID (
     .regfilemux_out_wb(regfilemux_out),
     .ctrl(CW_regs_in)
 );
+//internal logic for reg_a
+//
+logic [31:0] reg_a_buff_out;
+
+register reg_a_buffer(
+    .clk(clk),
+    .rst(reset),
+    .load(1'b1), // load is 1'b1 for now, change after adding caches
+    .in(reg_a),
+    .out(reg_a_buff_out)
+);
+
+//internal logic for reg_b
+//
+logic [31:0] reg_b_buff_out;
+
+register reg_b_buffer(
+    .clk(clk),
+    .rst(reset),
+    .load(1'b1), // load is 1'b1 for now, change after adding caches
+    .in(reg_b),
+    .out(reg_b_buff_out)
+);
 
 // shift reg for generated control words
 //
@@ -137,11 +160,11 @@ shift_reg_cw CW_regs (
 );
 
 EX_stage EX(
-    .reg_a(reg_a),
+    .reg_a(reg_a_buff_out),
     .PC_EX(PC_ID_EX),
     .alumux1_sel(CW_ID_EX.alumux1_sel),
     .IR_EX(IR_ID_EX),
-    .reg_b(reg_b),
+    .reg_b(reg_b_buff_out),
     .alumux2_sel(CW_ID_EX.alumux2_sel),
     .cmpop(CW_ID_EX.cmpop), 
     .aluop(CW_ID_EX.aluop),
@@ -180,15 +203,15 @@ end
 
 // Internal logic for regb_buff
 //
-rv32i_word regb_buff_out;
+rv32i_word regb_buff_out_exmem;
 // take reg_b and buffer in EX/MEM stage buffer
 //
 register regb_buff(
     .clk(clk),
     .rst(reset),
     .load(1'b1), // always load for now, change after adding caches
-    .in(reg_b),
-    .out(regb_buff_out) // to memory
+    .in(reg_b_buff_out),
+    .out(regb_buff_out_exmem) // to memory
 );
 
 // Internal logic for MEM stage
@@ -203,7 +226,7 @@ MEM_stage MEM(
     .funct3_mem(IR_EX_MEM[14:12]),
 
     // from exec buffers
-    .rs2_out_buffered(regb_buff_out),
+    .rs2_out_buffered(regb_buff_out_exmem),
     .alu_buffered(alu_buffer_exmem_out), // calculated address
 
     // to wb buffer
