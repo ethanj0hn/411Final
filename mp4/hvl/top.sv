@@ -105,15 +105,15 @@ Burst Memory Ports:
 
 Please refer to tb_itf.sv for more information.
 */
-always @(posedge itf.clk) begin
-    if (itf.halt)
-        $finish;
-    // if (timeout == 0) begin
-    //     $display("TOP: Timed out");
-    //     $finish;
-    // end
-    // timeout <= timeout - 1;
-end
+// always @(posedge itf.clk) begin
+//     if (itf.halt)
+//         $finish;
+//     // if (timeout == 0) begin
+//     //     $display("TOP: Timed out");
+//     //     $finish;
+//     // end
+//     // timeout <= timeout - 1;
+// end
 logic clk;
 logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out;
 logic [31:0] data_memory_buffer;

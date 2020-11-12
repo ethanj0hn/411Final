@@ -46,8 +46,8 @@ interface tb_itf();
     mailbox #(string) path_mb;
     initial path_mb = new();
 
-    // halt condition
-    assign itf.halt = (dut.inst_addr - 8 == dut.datapath.IF.PC_in);
+    // // halt condition
+    // assign itf.halt = (dut.inst_addr - 8 == dut.datapath.IF.PC_in);
 
     /* Burst Memory */
     clocking mcb @(posedge clk);

@@ -249,6 +249,12 @@ rv32i_word mem_buff_out;
 // Additional buffers for MEM/WB stage
 //
 
+logic [1:0] l_two_bits_buff;
+always_ff @(posedge clk)
+begin
+    l_two_bits_buff <= mem_address_last_two_bits;
+end
+
 // Internal logic for alu_buffer
 //
 rv32i_word alu_buffer_memwb_out;
@@ -291,7 +297,7 @@ WB_stage WB(
     .alu_out(alu_buffer_memwb_out),
     .u_imm({IR_MEM_WB[31:12], 12'h000}),
     .pc_out(PC_MEM_WB),
-    .mem_address_last_two_bits(mem_address_last_two_bits),
+    .mem_address_last_two_bits(l_two_bits_buff),
     .regfilemux_sel(CW_MEM_WB.regfilemux_sel), // regfile mux select
     .regfilemux_out_wb(regfilemux_out) // output of regfilemux
 );
