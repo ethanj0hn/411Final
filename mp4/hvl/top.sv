@@ -122,7 +122,7 @@ Please refer to tb_itf.sv for more information.
     //     $finish;
     // end
     // timeout <= timeout - 1;
-end
+// end
 logic clk;
 logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out;
 logic [31:0] data_memory_buffer;
