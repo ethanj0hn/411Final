@@ -109,10 +109,8 @@ Please refer to tb_itf.sv for more information.
 // halt condition
 // if opcode j or br wb and alu_out is PC
 //
-rv32i_opcode op_wb;
-assign op_wb = dut.datapath.CW_ID_EX.opcode;
 logic halt;
-assign halt = ((op_wb == op_br) | (op_wb == op_jal) | (op_wb == op_jalr)) & (dut.datapath.alu_out == dut.datapath.PC_ID_EX);
+assign halt = (dut.datapath.CW_MEM_WB.opcode == op_br) & (dut.datapath.alu_buffer_memwb_out == dut.datapath.PC_MEM_WB);
 
 always @(posedge itf.clk) begin
     if (halt)
