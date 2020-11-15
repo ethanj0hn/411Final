@@ -2,6 +2,7 @@ import rv32i_types::*; /* Import types defined in rv32i_types.sv */
 /* 
 EX stage module. Takes reg values, assigns appropriate MUX signals from control word.
 Also outputs ALU and CMP results. 
+Execute stage is where the actual computation occurs (Register-Register, Memory Ref, Multi Cycle)
 Datapath elements - CMP, CMPMux, alumux1, alumux2, ALU
 Inputs - reg_a, PC, alumux1_sel, IR from ID/EX buffer, alumux2_sel, reg_b, cmpop, aluop, cmpmuxsel
 Outputs- ALU output, br_en

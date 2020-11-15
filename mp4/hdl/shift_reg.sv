@@ -17,7 +17,7 @@ module shift_reg(
 
 // internal logic and assignments
 //
-logic [31:0] data [4];
+logic [31:0] data [4];   //stores value for 4 pipeline registers
 
 always_comb
 begin
@@ -41,11 +41,11 @@ begin
     end
     else if(load)
     begin
-        data[0] <= in;
+        data[0] <= in;  // IF_ID gets data post IF 
 
         for(int i=1; i<4; i++)
         begin
-            data[i] <= data[i-1];
+            data[i] <= data[i-1];  //every cycle data from previous stage goes to next
         end
     end
     else
@@ -77,7 +77,7 @@ module shift_reg_cw
 
 //internal logic and assignments
 //
-rv32i_control_word data [3];
+rv32i_control_word data [3]; //control word logic assigned in decode stage, used for 3 pipeline reg
 
 always_comb
 begin

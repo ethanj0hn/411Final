@@ -1,3 +1,13 @@
+/* 
+Decode stage in the pipeline. Includes following datapath elements:
+Register File
+Decode stage gets the indexes of registers to be used, as well as assigns control logic given
+the opcode.
+Inputs - clk, reset, funct3, funct7, rs1, rs2 (from IF stage), 
+Outputs - rs1_out, rs2_out, control word logic
+*/
+
+
 import rv32i_types::*; /* Import types defined in rv32i_types.sv */
 
 module ID_stage(

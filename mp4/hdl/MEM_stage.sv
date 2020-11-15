@@ -1,3 +1,11 @@
+/* 
+MEM stage in the pipeline. Includes following datapath elements:
+Data Memory
+Memory Accesses done in this stage, Data Memory (MDR) accessed
+Inputs - clk, reset, fucnt3, rs2, alu_out
+Outputs - last two bits of mem_address, mem_address, mem_byte_enable
+*/
+
 import rv32i_types::*; /* Import types defined in rv32i_types.sv */
 
 module MEM_stage(
