@@ -50,3 +50,9 @@ typedef enum bit [3:0] {
 } regfilemux_sel_t;
 endpackage
 
+package branchmux;
+typedef enum bit {
+    br_not_taken = 1'b0
+    ,br_taken    = 1'b1
+} branchmux_sel_t;
+endpackage

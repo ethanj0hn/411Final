@@ -1,9 +1,11 @@
-import rv32i_types::*; /* Import types defined in rv32i_types.sv */
 /*
 Module integrating all pieces of the pipeline.
 Inputs - clk, reset, memory signals as descrbed below
 Outputs - memory signals as described below
 */
+
+import rv32i_types::*; /* Import types defined in rv32i_types.sv */
+
 module pipeline_datapath(
     input logic clk,
     input logic reset,
@@ -22,6 +24,7 @@ module pipeline_datapath(
 // Internal Logic for IF
 //
 logic is_br, is_jump;
+rv32i_word IR_regs_in;
 rv32i_opcode op_from_ex; // assign statement below line 60
 
 // Internal Logic for Writeback
@@ -30,8 +33,9 @@ rv32i_word regfilemux_out;
 
 // internal logic for EX
 //
-logic br_en;
+logic br_en, take_branch;
 rv32i_word alu_out;
+branchmux::branchmux_sel_t branchmux_sel;
 
 
 always_comb
@@ -50,18 +54,26 @@ begin
     endcase
 end
 
+// if branch instruction in execute and condition holds, take branch
+//
+assign take_branch = is_br & br_en;
+
+// also load PC/appropriate control words on jumps
+//
+assign branchmux_sel = branchmux::branchmux_sel_t'(take_branch | is_jump);
+
 // Instruction fetch components
 // Contains PC, PCmux
 //
 IF_stage IF(
     .clk(clk),
     .reset(reset),
-    .br_en(br_en), // connect to br_en, br_cw, br_j from EX stage
-    .br_cw(is_br),
-    .j_cw(is_jump),
+    .branchmux_sel(branchmux_sel),
     .br_PC(alu_out), // alu output
+    .inst_rdata(inst_rdata),
     .inst_addr(inst_addr), // intruction add and read
-    .inst_read(inst_read)
+    .inst_read(inst_read),
+    .IR_regs_in(IR_regs_in) // to shift regs
 );
 
 // Internal Logic for IR Shift regs
@@ -75,7 +87,7 @@ shift_reg IR_regs(
     .clk(clk),
     .reset(reset),
     .load(1'b1), // always load for now
-    .in(inst_rdata), // read from instruction data read from memory
+    .in(IR_regs_in), // read from instruction data read from memory
     .IF_ID(IR_IF_ID), // has IF_ID IR value 
     .ID_EX(IR_ID_EX), // has ID_EX IR value
     .EX_MEM(IR_EX_MEM), // has EX_MEM IR value
@@ -111,6 +123,7 @@ rv32i_control_word CW_ID_EX, CW_EX_MEM, CW_MEM_WB;
 ID_stage ID (
     .clk(clk),
     .rst(reset),
+    .branchmux_sel(branchmux_sel),
     .funct3_if(IR_IF_ID[14:12]),
     .funct7_if(IR_IF_ID[31:25]),
     .opcode_if(rv32i_opcode'(IR_IF_ID[6:0])),

@@ -121,15 +121,21 @@ always @(posedge itf.clk) begin
     // end
     // timeout <= timeout - 1;
 end
-logic clk;
-logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out;
+logic clk,br_en,br_cw,j_cw,take_branch;
+logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, inst_addr;
 logic [31:0] data_memory_buffer;
 logic load_regfile;
 rv32i_control_word CW_ID_EX, CW_EX_MEM, CW_MEM_WB;
+branchmux::branchmux_sel_t branchmux_sel;
+rv32i_control_word ctrl;
 
 assign clk = itf.clk;
-assign inst_rdata = dut.inst_rdata;
+assign br_en = dut.datapath.br_en;
+assign br_cw = dut.datapath.is_br;
+assign j_cw = dut.datapath.is_jump;
+assign take_branch = dut.datapath.take_branch;
 assign inst_addr = dut.inst_addr;
+assign inst_rdata = dut.inst_rdata;
 assign data_rdata = dut.data_rdata;
 assign data_addr = dut.data_addr;
 assign data_wdata = dut.data_wdata;
@@ -141,6 +147,8 @@ assign CW_MEM_WB = dut.datapath.CW_MEM_WB;
 assign alu_out = dut.datapath.alu_out;
 assign alu_buffer_exmem_out = dut.datapath.alu_buffer_exmem_out;
 assign alu_buffer_memwb_out = dut.datapath.alu_buffer_memwb_out;
+assign branchmux_sel = dut.datapath.branchmux_sel;
+assign ctrl = dut.datapath.ID.ctrl;
 
 
 
