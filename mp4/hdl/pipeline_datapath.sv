@@ -184,13 +184,13 @@ begin
 
     // Assign use_fwd if src ex = dest mem
     //
-    alumux1_fwd_sel_exmem = fwd::fwd_sel_t'((rs1_idex == rd_exmem)); 
-    alumux2_fwd_sel_exmem = fwd::fwd_sel_t'((rs2_idex == rd_exmem));
+    alumux1_fwd_sel_exmem = fwd::fwd_sel_t'((rs1_idex == rd_exmem) & (rs1_idex != 4'b0000)); 
+    alumux2_fwd_sel_exmem = fwd::fwd_sel_t'((rs2_idex == rd_exmem) & (rs2_idex != 4'b0000));
 
     // Assign use_fwd if src ex = dest wb
     //
-    alumux1_fwd_sel_memwb = fwd::fwd_sel_t'((rs1_idex == rd_memwb)); 
-    alumux2_fwd_sel_memwb = fwd::fwd_sel_t'((rs2_idex == rd_memwb));
+    alumux1_fwd_sel_memwb = fwd::fwd_sel_t'((rs1_idex == rd_memwb) & (rs1_idex != 4'b0000)); 
+    alumux2_fwd_sel_memwb = fwd::fwd_sel_t'((rs2_idex == rd_memwb) & (rs2_idex != 4'b0000));
 
     // Assign use_fwd if rs2_exmem (register used for writing data to memory) = rd wb
     //

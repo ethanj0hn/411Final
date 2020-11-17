@@ -36,3 +36,7 @@ _start:
     nop
 HALT:
     beq x0, x0, HALT
+    nop
+    nop
+    nop
+    nop
