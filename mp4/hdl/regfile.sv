@@ -31,8 +31,14 @@ end
 
 always_comb
 begin
-    reg_a = write_through_a ? in : data[src_a];
-    reg_b = write_through_b ? in : data[src_b];
+    if(src_a)
+        reg_a = write_through_a ? in : data[src_a];
+    else
+        reg_a = 32'h0;
+    if(src_b)
+        reg_b = write_through_b ? in : data[src_b];
+    else
+        reg_b = 32'h0;
 end
 
 endmodule : regfile
