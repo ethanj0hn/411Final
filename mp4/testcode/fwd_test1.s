@@ -2,19 +2,11 @@ fwd_test.s:
 .align 4
 .section .text
 .globl _start
-<<<<<<< Updated upstream
-# if test works, see 4 in x1
-_start:
-    addi x1,x0,1 # x1 <- 1
-    # add x1,x1,x1 # x1 <- 2
-    add x1,x1,x1 # x1 <- 4
-=======
 # if test works, see 8 in x1
 _start:
     # checks alu forwarding
     addi x1,x0,1
     add x1,x1,x1 # x1 <-2
->>>>>>> Stashed changes
     nop
     add x1,x1,x1 # x1 <- 4
     add x1,x1,x1 # x1<- 8
