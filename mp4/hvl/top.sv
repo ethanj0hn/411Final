@@ -130,25 +130,25 @@ branchmux::branchmux_sel_t branchmux_sel;
 rv32i_control_word ctrl;
 
 assign clk = itf.clk;
-assign br_en = dut.datapath.br_en;
-assign br_cw = dut.datapath.is_br;
-assign j_cw = dut.datapath.is_jump;
-assign take_branch = dut.datapath.take_branch;
-assign inst_addr = dut.inst_addr;
+assign br_en = dut.datapath.br_en; // branch enable from datapath
+assign br_cw = dut.datapath.is_br; // branch operation from execute variable
+assign j_cw = dut.datapath.is_jump; // jump operation from execute variable
+assign take_branch = dut.datapath.take_branch; // should you take branch?
+assign inst_addr = dut.inst_addr; // top level signals
 assign inst_rdata = dut.inst_rdata;
 assign data_rdata = dut.data_rdata;
 assign data_addr = dut.data_addr;
 assign data_wdata = dut.data_wdata;
-assign data_memory_buffer = dut.datapath.data_memory_buffer.out;
-assign load_regfile = dut.datapath.ID.load_regfile_wb;
-assign CW_ID_EX = dut.datapath.CW_ID_EX;
+assign data_memory_buffer = dut.datapath.data_memory_buffer.out; // what's being read from data memory
+assign load_regfile = dut.datapath.ID.load_regfile_wb; // load regfile signal
+assign CW_ID_EX = dut.datapath.CW_ID_EX; // control words in IDEX, EXMEM, MEMWB
 assign CW_EX_MEM = dut.datapath.CW_EX_MEM;
 assign CW_MEM_WB = dut.datapath.CW_MEM_WB;
-assign alu_out = dut.datapath.alu_out;
-assign alu_buffer_exmem_out = dut.datapath.alu_buffer_exmem_out;
+assign alu_out = dut.datapath.alu_out; // alu_out
+assign alu_buffer_exmem_out = dut.datapath.alu_buffer_exmem_out; // alu buffer outputs
 assign alu_buffer_memwb_out = dut.datapath.alu_buffer_memwb_out;
-assign branchmux_sel = dut.datapath.branchmux_sel;
-assign ctrl = dut.datapath.ID.ctrl;
+assign branchmux_sel = dut.datapath.ID.branchmux_sel; // branch mux select in datapath
+assign ctrl = dut.datapath.ID.ctrl; // generated control word
 
 
 

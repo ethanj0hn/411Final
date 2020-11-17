@@ -13,6 +13,7 @@ typedef logic [4:0] rv32i_reg;
 typedef logic [3:0] rv32i_mem_wmask;
 
 typedef enum bit [6:0] {
+    nop      = 7'b0,
     op_lui   = 7'b0110111, //load upper immediate (U type)
     op_auipc = 7'b0010111, //add upper immediate PC (U type)
     op_jal   = 7'b1101111, //jump and link (J type)

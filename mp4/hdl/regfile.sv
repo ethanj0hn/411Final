@@ -11,6 +11,9 @@ module regfile
 
 //logic [31:0] data [32] /* synthesis ramstyle = "logic" */ = '{default:'0};
 logic [31:0] data [32];
+logic write_through_a, write_through_b;
+assign write_through_a = load & (dest == src_a);
+assign write_through_b = load & (dest == src_b);
 
 always_ff @(posedge clk)
 begin
@@ -28,8 +31,8 @@ end
 
 always_comb
 begin
-    reg_a = src_a ? data[src_a] : 0;
-    reg_b = src_b ? data[src_b] : 0;
+    reg_a = write_through_a ? in : data[src_a];
+    reg_b = write_through_b ? in : data[src_b];
 end
 
 endmodule : regfile

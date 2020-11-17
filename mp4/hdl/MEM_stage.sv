@@ -16,8 +16,12 @@ module MEM_stage(
     input [2:0] funct3_mem,
 
     // from exec buffers
-    input [31:0] rs2_out_buffered,
-    input [31:0] alu_buffered, // calculated address
+    input logic [31:0] rs2_out_buffered,
+    input logic [31:0] alu_buffered, // calculated address
+
+    // fowarding select and forwarding input
+    input fwd::fwd_sel_t wdata_fwd_sel,
+    input logic [31:0] rs2_fwd_memwb,
 
     // to wb buffer
     output logic [1:0] mem_address_last_two_bits,
@@ -32,30 +36,45 @@ module MEM_stage(
 assign mem_address = {alu_buffered[31:2], 2'b00};
 assign mem_address_last_two_bits = alu_buffered[1:0];
 
+// temp logic
+logic [31:0] rs2_out_buffered_;
+
+// if forward data, assign rs2_out_buffered_ to rs2_fwd_memwb
+//
+always_comb
+begin
+    case (wdata_fwd_sel)
+        fwd::use_fwd:
+            rs2_out_buffered_ = rs2_fwd_memwb;
+        default:
+            rs2_out_buffered_ = rs2_out_buffered;
+    endcase
+end
+
 // muxes
 always_comb
 begin
     case (store_funct3_t'(funct3_mem))
-        sw: mem_wdata = rs2_out_buffered;
+        sw: mem_wdata = rs2_out_buffered_;
         sh: 
         begin
             case (mem_address_last_two_bits)
-                2'b00, 2'b01 : mem_wdata = {16'b0, rs2_out_buffered[15:0]};
-                2'b10, 2'b11 : mem_wdata = {rs2_out_buffered[15:0], 16'b0};
-                default: mem_wdata = rs2_out_buffered;
+                2'b00, 2'b01 : mem_wdata = {16'b0, rs2_out_buffered_[15:0]};
+                2'b10, 2'b11 : mem_wdata = {rs2_out_buffered_[15:0], 16'b0};
+                default: mem_wdata = rs2_out_buffered_;
             endcase
         end
         sb:
         begin
             case (mem_address_last_two_bits)
-                2'b00 : mem_wdata = {24'b0, rs2_out_buffered[7:0]};
-                2'b01 : mem_wdata = {16'b0, rs2_out_buffered[7:0], 8'b0};
-                2'b10 : mem_wdata = {8'b0, rs2_out_buffered[7:0], 16'b0};
-                2'b11 : mem_wdata = {rs2_out_buffered[7:0], 24'b0};
-                default : mem_wdata = rs2_out_buffered;
+                2'b00 : mem_wdata = {24'b0, rs2_out_buffered_[7:0]};
+                2'b01 : mem_wdata = {16'b0, rs2_out_buffered_[7:0], 8'b0};
+                2'b10 : mem_wdata = {8'b0, rs2_out_buffered_[7:0], 16'b0};
+                2'b11 : mem_wdata = {rs2_out_buffered_[7:0], 24'b0};
+                default : mem_wdata = rs2_out_buffered_;
             endcase
         end
-        default: mem_wdata = rs2_out_buffered;
+        default: mem_wdata = rs2_out_buffered_;
     endcase
 
     case (store_funct3_t'(funct3_mem))

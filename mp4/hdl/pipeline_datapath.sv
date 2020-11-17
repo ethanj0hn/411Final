@@ -79,7 +79,6 @@ IF_stage IF(
 // Internal Logic for IR Shift regs
 //
 rv32i_word IR_IF_ID, IR_ID_EX, IR_EX_MEM, IR_MEM_WB;
-assign op_from_ex = rv32i_opcode'(IR_ID_EX[6:0]);
 
 // Shift regs for IR
 //
@@ -119,6 +118,7 @@ rv32i_control_word CW_regs_in;
 // Internal Logic for control words
 //
 rv32i_control_word CW_ID_EX, CW_EX_MEM, CW_MEM_WB;
+assign op_from_ex = CW_ID_EX.opcode;
 
 ID_stage ID (
     .clk(clk),
@@ -160,6 +160,43 @@ register reg_b_buffer(
     .out(reg_b_buff_out)
 );
 
+// assigning logic for IR bits to make code more readable
+//
+logic [4:0] rs1_idex, rs2_idex, rs2_exmem, rd_exmem, rd_memwb;
+
+assign rs1_idex = IR_ID_EX[19:15];
+assign rs2_idex = IR_ID_EX[24:20];
+assign rs2_exmem = IR_EX_MEM[24:20];
+assign rd_exmem = IR_EX_MEM[11:7];
+assign rd_memwb = IR_MEM_WB[11:7];
+
+// Logic for regfilemux selects, source registers and forwarding and assign statements
+//
+regfilemux::regfilemux_sel_t regfilemux_sel_exmem, regfilemux_sel_memwb;
+fwd::fwd_sel_t alumux1_fwd_sel_exmem, alumux2_fwd_sel_exmem, alumux1_fwd_sel_memwb, alumux2_fwd_sel_memwb, wdata_fwd_sel;
+
+always_comb
+begin
+    // Assign regfilemux sels
+    //
+    regfilemux_sel_exmem = CW_EX_MEM.regfilemux_sel;
+    regfilemux_sel_memwb = CW_MEM_WB.regfilemux_sel;
+
+    // Assign use_fwd if src ex = dest mem
+    //
+    alumux1_fwd_sel_exmem = fwd::fwd_sel_t'((rs1_idex == rd_exmem)); 
+    alumux2_fwd_sel_exmem = fwd::fwd_sel_t'((rs2_idex == rd_exmem));
+
+    // Assign use_fwd if src ex = dest wb
+    //
+    alumux1_fwd_sel_memwb = fwd::fwd_sel_t'((rs1_idex == rd_memwb)); 
+    alumux2_fwd_sel_memwb = fwd::fwd_sel_t'((rs2_idex == rd_memwb));
+
+    // Assign use_fwd if rs2_exmem (register used for writing data to memory) = rd wb
+    //
+    wdata_fwd_sel = fwd::fwd_sel_t'((rs2_exmem == rd_memwb));
+end
+
 // shift reg for generated control words
 //
 shift_reg_cw CW_regs (
@@ -172,6 +209,10 @@ shift_reg_cw CW_regs (
     .MEM_WB(CW_MEM_WB)
 );
 
+// internal logic for ex. Assigned by regfilemux selects after appropriate buffers below.
+//
+logic [31:0] rd_fwd_exmem, rd_fwd_memwb;
+
 EX_stage EX(
     .reg_a(reg_a_buff_out),
     .PC_EX(PC_ID_EX),
@@ -182,6 +223,12 @@ EX_stage EX(
     .cmpop(CW_ID_EX.cmpop), 
     .aluop(CW_ID_EX.aluop),
     .cmpmux_sel(CW_ID_EX.cmpmux_sel),
+    .rd_fwd_exmem(rd_fwd_exmem),
+    .rd_fwd_memwb(rd_fwd_memwb),
+    .alumux1_fwd_sel_exmem(alumux1_fwd_sel_exmem), // alumux selects for forwarding logic from 2 future stages
+    .alumux2_fwd_sel_exmem(alumux2_fwd_sel_exmem),
+    .alumux1_fwd_sel_memwb(alumux1_fwd_sel_memwb),
+    .alumux2_fwd_sel_memwb(alumux2_fwd_sel_memwb),
     .ALU_out(alu_out),
     .br_en(br_en)
 );
@@ -231,6 +278,86 @@ register regb_buff(
 //
 logic [1:0] mem_address_last_two_bits;
 
+// regfilemux logic for exmem buffer forwarding
+// load forwarding results omitted as not available in exmem buffer
+//
+always_comb
+begin
+    unique case (regfilemux_sel_exmem)
+        regfilemux::br_en:
+            rd_fwd_exmem = {31'b0,br_en_exmem};
+        regfilemux::u_imm:
+            rd_fwd_exmem = {IR_EX_MEM[31:12], 12'h000};
+        regfilemux::pc_plus4:
+            rd_fwd_exmem = (PC_EX_MEM + 32'h4);
+        regfilemux::alu_out:
+            rd_fwd_exmem = alu_buffer_exmem_out;
+        
+        // if read data is needed cycle after read from memory, forwarding logic
+        //
+        regfilemux::lw:
+            rd_fwd_exmem = data_rdata;
+        regfilemux::lb:
+        begin
+            case (mem_address_last_two_bits)
+                2'b00:
+                    rd_fwd_exmem = { {24{data_rdata[7]}}, data_rdata[7:0]};
+                2'b01:
+                    rd_fwd_exmem = { {24{data_rdata[15]}}, data_rdata[15:8]};
+                2'b10:
+                    rd_fwd_exmem = { {24{data_rdata[23]}}, data_rdata[23:16]};
+                2'b11:
+                    rd_fwd_exmem = { {24{data_rdata[31]}}, data_rdata[31:24]};
+                default:
+                    rd_fwd_exmem = { {24{data_rdata[15]}}, data_rdata[15:8]};
+            endcase
+        end
+        regfilemux::lbu:
+        begin
+            case (mem_address_last_two_bits)
+                2'b00:
+                    rd_fwd_exmem = {24'b0, data_rdata[7:0]};
+                2'b01:
+                    rd_fwd_exmem = {24'b0, data_rdata[15:8]};
+                2'b10:
+                    rd_fwd_exmem = {24'b0, data_rdata[23:16]};
+                2'b11:
+                    rd_fwd_exmem = {24'b0, data_rdata[31:24]};
+                default:
+                    rd_fwd_exmem = {24'b0, data_rdata[15:8]};   
+            endcase
+        end
+        regfilemux::lh:
+        begin
+            case (mem_address_last_two_bits)
+                2'b00, 2'b01:
+                    rd_fwd_exmem = { {16{data_rdata[15]}}, data_rdata[15:0]};
+                2'b10, 2'b11:
+                    rd_fwd_exmem = { {16{data_rdata[31]}}, data_rdata[31:16]};
+                default:
+                    rd_fwd_exmem = { {16{data_rdata[15]}}, data_rdata[15:0]};
+            endcase
+        end
+        regfilemux::lhu:
+        begin
+            case (mem_address_last_two_bits)
+                2'b00, 2'b01:
+                    rd_fwd_exmem = {16'b0, data_rdata[15:0]};
+                2'b10, 2'b11:
+                    rd_fwd_exmem = {16'b0, data_rdata[31:16]};
+                default:
+                    rd_fwd_exmem = {16'b0, data_rdata[15:0]};
+            endcase
+        end
+        default:
+            rd_fwd_exmem = alu_buffer_exmem_out;
+    endcase
+end
+
+//Internal logic for buffer
+//
+rv32i_word mem_buff_out;
+
 // MEM stage logic
 //
 MEM_stage MEM(
@@ -241,6 +368,10 @@ MEM_stage MEM(
     // from exec buffers
     .rs2_out_buffered(regb_buff_out_exmem),
     .alu_buffered(alu_buffer_exmem_out), // calculated address
+
+    // fwding selects and reg values
+    .wdata_fwd_sel(wdata_fwd_sel),
+    .rs2_fwd_memwb(mem_buff_out),
 
     // to wb buffer
     .mem_address_last_two_bits(mem_address_last_two_bits),
@@ -254,10 +385,6 @@ MEM_stage MEM(
 //
 assign data_read = CW_EX_MEM.data_read;
 assign data_write = CW_EX_MEM.data_write;
-
-//Internal logic for buffer
-//
-rv32i_word mem_buff_out;
 
 // Additional buffers for MEM/WB stage
 //
@@ -301,6 +428,78 @@ begin
         br_en_memwb <= 1'b0;
     else
         br_en_memwb <= br_en_exmem;
+end
+
+// regfilemux logic for memwb buffer forwarding, case statements based off of last 2 bits
+//
+always_comb
+begin
+    unique case (regfilemux_sel_memwb)
+        regfilemux::alu_out:
+            rd_fwd_memwb = alu_buffer_memwb_out;
+        regfilemux::br_en:
+            rd_fwd_memwb = {31'b0,br_en_memwb};
+        regfilemux::u_imm:
+            rd_fwd_memwb = {IR_MEM_WB[31:12], 12'h000};
+        regfilemux::lw:
+            rd_fwd_memwb = mem_buff_out;
+        regfilemux::pc_plus4:
+            rd_fwd_memwb = (PC_MEM_WB + 32'h4);
+        regfilemux::lb:
+        begin
+            case (l_two_bits_buff)
+                2'b00:
+                    rd_fwd_memwb = { {24{mem_buff_out[7]}}, mem_buff_out[7:0]};
+                2'b01:
+                    rd_fwd_memwb = { {24{mem_buff_out[15]}}, mem_buff_out[15:8]};
+                2'b10:
+                    rd_fwd_memwb = { {24{mem_buff_out[23]}}, mem_buff_out[23:16]};
+                2'b11:
+                    rd_fwd_memwb = { {24{mem_buff_out[31]}}, mem_buff_out[31:24]};
+                default:
+                    rd_fwd_memwb = { {24{mem_buff_out[15]}}, mem_buff_out[15:8]};
+            endcase
+        end
+        regfilemux::lbu:
+        begin
+            case (l_two_bits_buff)
+                2'b00:
+                    rd_fwd_memwb = {24'b0, mem_buff_out[7:0]};
+                2'b01:
+                    rd_fwd_memwb = {24'b0, mem_buff_out[15:8]};
+                2'b10:
+                    rd_fwd_memwb = {24'b0, mem_buff_out[23:16]};
+                2'b11:
+                    rd_fwd_memwb = {24'b0, mem_buff_out[31:24]};
+                default:
+                    rd_fwd_memwb = {24'b0, mem_buff_out[15:8]};   
+            endcase
+        end
+        regfilemux::lh:
+        begin
+            case (l_two_bits_buff)
+                2'b00, 2'b01:
+                    rd_fwd_memwb = { {16{mem_buff_out[15]}}, mem_buff_out[15:0]};
+                2'b10, 2'b11:
+                    rd_fwd_memwb = { {16{mem_buff_out[31]}}, mem_buff_out[31:16]};
+                default:
+                    rd_fwd_memwb = { {16{mem_buff_out[15]}}, mem_buff_out[15:0]};
+            endcase
+        end
+        regfilemux::lhu:
+        begin
+            case (l_two_bits_buff)
+                2'b00, 2'b01:
+                    rd_fwd_memwb = {16'b0, mem_buff_out[15:0]};
+                2'b10, 2'b11:
+                    rd_fwd_memwb = {16'b0, mem_buff_out[31:16]};
+                default:
+                    rd_fwd_memwb = {16'b0, mem_buff_out[15:0]};
+            endcase
+        end
+        default:
+            rd_fwd_memwb = alu_buffer_memwb_out;
+    endcase
 end
 
 WB_stage WB(

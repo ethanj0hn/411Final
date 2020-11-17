@@ -56,3 +56,11 @@ typedef enum bit {
     ,br_taken    = 1'b1
 } branchmux_sel_t;
 endpackage
+
+package fwd;
+typedef enum bit 
+{
+    no_fwd   = 1'b0
+    ,use_fwd = 1'b1
+} fwd_sel_t;
+endpackage

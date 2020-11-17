@@ -1,4 +1,4 @@
-load_test.s:
+clear_test.s:
 .align 4
 .section .text
 .globl _start

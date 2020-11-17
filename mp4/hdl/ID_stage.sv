@@ -54,7 +54,7 @@ begin
     ctrl.regfilemux_sel = regfilemux::alu_out;
     ctrl.cmpmux_sel = cmpmux::rs2_out;
 
-    case (branchmux_sel)
+    unique case (branchmux_sel)
         // if no need to flush pipeline on branch, assign control word by case
         //
         branchmux::br_not_taken:
@@ -155,9 +155,12 @@ begin
                     ctrl.data_write = 1'b1;
                 end
 
-                default: ctrl = 0;
+                default: ;
             endcase
         end
+
+        branchmux::br_taken: 
+            ctrl.opcode = nop; // set opcode to nop on taken branch
 
         default: ;
 
