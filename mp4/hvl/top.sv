@@ -58,6 +58,25 @@ Memory:
 
 Please refer to rvfi_itf.sv for more information.
 */
+always_comb
+begin
+    rvfi.inst = dut.datapath.inst_rdata;
+    rvfi.trap = 0;
+    rvfi.rs1_addr = dut.datapath.ID.regfile.src_a;
+    rvfi.rs2_addr = dut.datapath.ID.regfile.src_b;
+    rvfi.rs1_rdata = dut.datapath.ID.regfile.reg_a;
+    rvfi.rs2_rdata = dut.datapath.ID.regfile.reg_b;
+    rvfi.load_regfile = dut.datapath.ID.regfile.load;
+    rvfi.rd_addr = dut.datapath.ID.regfile.dest;
+    rvfi.rd_wdata = dut.datapath.ID.regfile.in;
+    rvfi.pc_wdata = dut.datapath.IF.PC.in;
+    rvfi.pc_rdata = dut.datapath.IF.PC.out;
+    rvfi.mem_addr = dut.mem_addr;
+    rvfi.mem_rmask = dut.datapath.rmask;
+    rvfi.mem_wmask = dut.datapath.MEM.mem_byte_enable;
+    rvfi.mem_rdata = dut.mem_rdata;
+    rvfi.mem_wdata = dut.mem_wdata;
+end
 
 /**************************** End RVFIMON signals ****************************/
 

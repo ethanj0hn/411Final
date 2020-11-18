@@ -284,12 +284,13 @@ register regb_buff(
 // Internal logic for MEM stage
 //
 logic [1:0] mem_address_last_two_bits;
-
+logic [3:0] rmask;
 // regfilemux logic for exmem buffer forwarding
 // load forwarding results omitted as not available in exmem buffer
 //
 always_comb
 begin
+    rmask = 4'b1111;
     unique case (regfilemux_sel_exmem)
         regfilemux::br_en:
             rd_fwd_exmem = {31'b0,br_en_exmem};
@@ -308,52 +309,100 @@ begin
         begin
             case (mem_address_last_two_bits)
                 2'b00:
+                begin
                     rd_fwd_exmem = { {24{data_rdata[7]}}, data_rdata[7:0]};
+                    rmask = 4'b0001;
+                end
                 2'b01:
+                begin
                     rd_fwd_exmem = { {24{data_rdata[15]}}, data_rdata[15:8]};
+                    rmask = 4'b0010;
+                end
                 2'b10:
+                begin
                     rd_fwd_exmem = { {24{data_rdata[23]}}, data_rdata[23:16]};
+                    rmask = 4'b0100;
+                end
                 2'b11:
+                begin
                     rd_fwd_exmem = { {24{data_rdata[31]}}, data_rdata[31:24]};
+                    rmask = 4'b1000;
+                end
                 default:
+                begin
                     rd_fwd_exmem = { {24{data_rdata[15]}}, data_rdata[15:8]};
+                    rmask = 4'b1111;
+                end
             endcase
         end
         regfilemux::lbu:
         begin
             case (mem_address_last_two_bits)
                 2'b00:
+                begin
                     rd_fwd_exmem = {24'b0, data_rdata[7:0]};
+                    rmask = 4'b0001;
+                end
                 2'b01:
+                begin
                     rd_fwd_exmem = {24'b0, data_rdata[15:8]};
+                    rmask = 4'b0010;
+                end
                 2'b10:
+                begin
                     rd_fwd_exmem = {24'b0, data_rdata[23:16]};
+                    rmask = 4'b0100;
+                end
                 2'b11:
+                begin
                     rd_fwd_exmem = {24'b0, data_rdata[31:24]};
+                    rmask = 4'b1000;
+                end
                 default:
-                    rd_fwd_exmem = {24'b0, data_rdata[15:8]};   
+                begin
+                    rd_fwd_exmem = {24'b0, data_rdata[15:8]};
+                    rmask = 4'b1111;
+                end  
             endcase
         end
         regfilemux::lh:
         begin
             case (mem_address_last_two_bits)
                 2'b00, 2'b01:
+                begin
                     rd_fwd_exmem = { {16{data_rdata[15]}}, data_rdata[15:0]};
+                    rmask = 4'b0011;
+                end
                 2'b10, 2'b11:
+                begin
                     rd_fwd_exmem = { {16{data_rdata[31]}}, data_rdata[31:16]};
+                    rmask = 4'b1100;
+                end
                 default:
+                begin
                     rd_fwd_exmem = { {16{data_rdata[15]}}, data_rdata[15:0]};
+                    rmask = 4'b1111;
+                end
             endcase
         end
         regfilemux::lhu:
         begin
             case (mem_address_last_two_bits)
                 2'b00, 2'b01:
+                begin
                     rd_fwd_exmem = {16'b0, data_rdata[15:0]};
+                    rmask = 4'b0011;
+                end
                 2'b10, 2'b11:
+                begin
                     rd_fwd_exmem = {16'b0, data_rdata[31:16]};
+                    rmask = 4'b1100;
+                end
                 default:
+                begin
                     rd_fwd_exmem = {16'b0, data_rdata[15:0]};
+                    rmask = 4'b1111;
+                end
             endcase
         end
         default:
