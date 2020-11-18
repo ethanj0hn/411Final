@@ -25,7 +25,7 @@ bit f;
 /************************ Signals necessary for monitor **********************/
 // This section not required until CP2
 
-assign rvfi.commit = 0; // Set high when a valid instruction is modifying regfile or PC
+assign rvfi.commit = dut.datapath.ID.regfile.load | dut.datapath.IF.PC.load; // Set high when a valid instruction is modifying regfile or PC
 assign rvfi.halt = (dut.datapath.CW_MEM_WB.opcode == op_br) & (dut.datapath.alu_buffer_memwb_out == dut.datapath.PC_MEM_WB);   // Set high when you detect an infinite loop
 initial rvfi.order = 0;
 always @(posedge itf.clk iff rvfi.commit) rvfi.order <= rvfi.order + 1; // Modify for OoO
@@ -105,7 +105,7 @@ Please refer to tb_itf.sv for more information.
 /*********************** End Shadow Memory Assignments ***********************/
 
 // Set this to the proper value
-assign itf.registers = '{default: '0};
+assign itf.registers = dut.datapath.ID.regfile.data;
 
 /*********************** Instantiate your design here ************************/
 /*
@@ -143,6 +143,7 @@ end
 logic clk,br_en,br_cw,j_cw,take_branch;
 logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, inst_addr;
 logic [31:0] data_memory_buffer;
+logic [31:0] registers [32];
 logic load_regfile;
 rv32i_control_word CW_ID_EX, CW_EX_MEM, CW_MEM_WB;
 branchmux::branchmux_sel_t branchmux_sel;
@@ -169,7 +170,8 @@ assign alu_buffer_memwb_out = dut.datapath.alu_buffer_memwb_out;
 assign branchmux_sel = dut.datapath.ID.branchmux_sel; // branch mux select in datapath
 assign ctrl = dut.datapath.ID.ctrl; // generated control word
 
-
+for(genvar i = 0; i<32;i++)
+assign registers[i] = dut.datapath.ID.regfile.data[i];
 
 mp4 dut(
     .clk(itf.clk),
