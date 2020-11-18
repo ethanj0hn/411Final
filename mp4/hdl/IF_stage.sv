@@ -10,6 +10,7 @@ module IF_stage(
     input logic clk,
     input logic reset,
     input branchmux::branchmux_sel_t branchmux_sel, // for selecting appropriate inputs, outputs on branch/ju
+    input logic pipeline_en, // controls pipeline flow
     input logic [31:0] br_PC, // if branch to be taken, PC + offset
     input logic [31:0] inst_rdata, // read data from cache/memory
     output logic [31:0] inst_addr, // instr read from memory
@@ -48,7 +49,7 @@ end
 pc_register PC(
     .clk(clk),
     .rst(reset),
-    .load(1'b1), // for now, we are always loading every cycle change when stalling pipeline required
+    .load(pipeline_en), // for now, we are always loading every cycle change when stalling pipeline required
     .in(PC_in),
     .out(inst_addr)
 );

@@ -155,18 +155,14 @@ assign ctrl = dut.datapath.ID.ctrl; // generated control word
 mp4 dut(
     .clk(itf.clk),
     .reset(itf.rst),
-    .data_resp(itf.data_resp), // response from data, instruction memory
-    .inst_resp(itf.inst_resp),
-    .inst_rdata(itf.inst_rdata), // instruction, data read port
-    .data_rdata(itf.data_rdata),
-    .inst_read(itf.inst_read), // instruction port address, read signal
-    .inst_addr(itf.inst_addr),
-    .data_read(itf.data_read), // data read write signals
-    .data_write(itf.data_write), 
-    .data_mbe(itf.data_mbe), // mem_byte_enable, signals data port address
-    .data_addr(itf.data_addr), 
-    .data_wdata(itf.data_wdata)  
+    .mem_resp(itf.mem_resp),
+    .mem_rdata(itf.mem_rdata),
+    .mem_read(itf.mem_read),
+    .mem_addr(itf.mem_addr),
+    .mem_wdata(itf.mem_wdata),
+    .mem_write(itf.mem_write)
 );
+
 /***************************** End Instantiation *****************************/
 
 endmodule

@@ -14,6 +14,7 @@ module ID_stage(
     input clk,
     input rst,
     input branchmux::branchmux_sel_t branchmux_sel, // for whether to clear control word or not
+    input pipeline_en, // controls pipeline flow
 
     // inputs coming from fetch
     input [2:0] funct3_if,
@@ -171,7 +172,7 @@ end
 regfile regfile(
     .clk(clk),
     .rst(rst),
-    .load(load_regfile_wb),
+    .load(load_regfile_wb & pipeline_en),
     .in(regfilemux_out_wb),
     .src_a(rs1_if),
     .src_b(rs2_if),

@@ -37,6 +37,9 @@ logic br_en, take_branch;
 rv32i_word alu_out;
 branchmux::branchmux_sel_t branchmux_sel;
 
+// controlling pipeline run / stall
+logic pipeline_en;
+assign pipeline_en = inst_resp & (data_resp | (~data_read & ~data_write));
 
 always_comb
 begin
@@ -69,6 +72,7 @@ IF_stage IF(
     .clk(clk),
     .reset(reset),
     .branchmux_sel(branchmux_sel),
+    .pipeline_en(pipeline_en),
     .br_PC(alu_out), // alu output
     .inst_rdata(inst_rdata),
     .inst_addr(inst_addr), // intruction add and read
@@ -85,7 +89,7 @@ rv32i_word IR_IF_ID, IR_ID_EX, IR_EX_MEM, IR_MEM_WB;
 shift_reg IR_regs(
     .clk(clk),
     .reset(reset),
-    .load(1'b1), // always load for now
+    .load(pipeline_en), // always load for now
     .in(IR_regs_in), // read from instruction data read from memory
     .IF_ID(IR_IF_ID), // has IF_ID IR value 
     .ID_EX(IR_ID_EX), // has ID_EX IR value
@@ -102,7 +106,7 @@ rv32i_word PC_IF_ID, PC_ID_EX, PC_EX_MEM, PC_MEM_WB;
 shift_reg PC_regs(
     .clk(clk),
     .reset(reset),
-    .load(1'b1), // always load for now
+    .load(pipeline_en), // always load for now
     .in(inst_addr), // read from PC out value
     .IF_ID(PC_IF_ID), // has IF_ID PC value 
     .ID_EX(PC_ID_EX), // has ID_EX PC value
@@ -124,6 +128,7 @@ ID_stage ID (
     .clk(clk),
     .rst(reset),
     .branchmux_sel(branchmux_sel),
+    .pipeline_en(pipeline_en),
     .funct3_if(IR_IF_ID[14:12]),
     .funct7_if(IR_IF_ID[31:25]),
     .opcode_if(rv32i_opcode'(IR_IF_ID[6:0])),
@@ -143,7 +148,7 @@ logic [31:0] reg_a_buff_out;
 register reg_a_buffer(
     .clk(clk),
     .rst(reset),
-    .load(1'b1), // load is 1'b1 for now, change after adding caches
+    .load(pipeline_en), // load is 1'b1 for now, change after adding caches
     .in(reg_a),
     .out(reg_a_buff_out)
 );
@@ -155,7 +160,7 @@ logic [31:0] reg_b_buff_out;
 register reg_b_buffer(
     .clk(clk),
     .rst(reset),
-    .load(1'b1), // load is 1'b1 for now, change after adding caches
+    .load(pipeline_en), // load is 1'b1 for now, change after adding caches
     .in(reg_b),
     .out(reg_b_buff_out)
 );
@@ -202,7 +207,7 @@ end
 shift_reg_cw CW_regs (
     .clk(clk),
     .reset(reset),
-    .load(1'b1), // always load for now
+    .load(pipeline_en), // always load for now
     .in(CW_regs_in), // connect to output of decode stage
     .ID_EX(CW_ID_EX), // outputs for following stages
     .EX_MEM(CW_EX_MEM),
@@ -245,7 +250,7 @@ rv32i_word alu_buffer_exmem_out;
 register alu_buffer_exmem(
     .clk(clk),
     .rst(reset),
-    .load(1'b1), // load is 1'b1 for now, change after adding caches
+    .load(pipeline_en), // load is 1'b1 for now, change after adding caches
     .in(alu_out),
     .out(alu_buffer_exmem_out)
 );
@@ -257,8 +262,10 @@ always_ff @(posedge clk)
 begin
     if(reset)
         br_en_exmem <= 1'b0;
-    else
+    else if (pipeline_en)
         br_en_exmem <= br_en; // output from EX stage
+    else
+        br_en_exmem <= br_en_exmem;
 end
 
 // Internal logic for regb_buff
@@ -269,7 +276,7 @@ rv32i_word regb_buff_out_exmem;
 register regb_buff(
     .clk(clk),
     .rst(reset),
-    .load(1'b1), // always load for now, change after adding caches
+    .load(pipeline_en), // always load for now, change after adding caches
     .in(reg_b_buff_out),
     .out(regb_buff_out_exmem) // to memory
 );
@@ -392,7 +399,12 @@ assign data_write = CW_EX_MEM.data_write;
 logic [1:0] l_two_bits_buff;
 always_ff @(posedge clk)
 begin
-    l_two_bits_buff <= mem_address_last_two_bits;
+    if (reset)
+        l_two_bits_buff <= 2'b00;
+    else if (pipeline_en)
+        l_two_bits_buff <= mem_address_last_two_bits;
+    else
+        l_two_bits_buff <= l_two_bits_buff;
 end
 
 // Internal logic for alu_buffer
@@ -404,7 +416,7 @@ rv32i_word alu_buffer_memwb_out;
 register alu_buffer_memwb(
     .clk(clk),
     .rst(reset),
-    .load(1'b1), // load is 1'b1 for now, change after adding caches
+    .load(pipeline_en), // load is 1'b1 for now, change after adding caches
     .in(alu_buffer_exmem_out),
     .out(alu_buffer_memwb_out)
 );
@@ -414,7 +426,7 @@ register alu_buffer_memwb(
 register data_memory_buffer(
     .clk  (clk),
     .rst (reset),
-    .load (1'b1), // always load for now, change when integrating cache hit logic
+    .load (pipeline_en), // always load for now, change when integrating cache hit logic
     .in   (data_rdata),
     .out  (mem_buff_out)
 );
@@ -426,8 +438,10 @@ always_ff @(posedge clk)
 begin
     if(reset)
         br_en_memwb <= 1'b0;
-    else
+    else if (pipeline_en)
         br_en_memwb <= br_en_exmem;
+    else
+        br_en_memwb <= br_en_memwb;
 end
 
 // regfilemux logic for memwb buffer forwarding, case statements based off of last 2 bits
