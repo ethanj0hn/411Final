@@ -102,6 +102,23 @@ dcache signals:
 Please refer to tb_itf.sv for more information.
 */
 
+always_comb
+begin
+    itf.inst_read = dut.datapth.inst_read;
+    itf.inst_addr = dut.datapath.inst_addr;
+    itf.inst_resp = dut.datapath.inst_resp;
+    itf.inst_rdata = dut.datapath.inst_rdata;
+
+    itf.data_read = dut.datapath.data_read;
+    itf.data_write = dut.datapath.data_write;
+    itf.data_mbe = dut.datapath.data_mbe;
+    itf.data_addr = dut.datapath.data_addr;
+    itf.data_wdata = dut.datapath.data_wdata;
+    itf.data_resp = dut.datapath.data_resp;
+    itf.data_rdata = dut.datapath.data_rdata;
+end
+
+
 /*********************** End Shadow Memory Assignments ***********************/
 
 // Set this to the proper value
