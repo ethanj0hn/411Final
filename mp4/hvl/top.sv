@@ -25,7 +25,7 @@ bit f;
 /************************ Signals necessary for monitor **********************/
 // This section not required until CP2
 
-assign rvfi.commit = dut.datapath.ID.regfile.load | dut.datapath.IF.PC.load; // Set high when a valid instruction is modifying regfile or PC
+assign rvfi.commit = 0; //dut.datapath.ID.regfile.load | dut.datapath.IF.PC.load; // Set high when a valid instruction is modifying regfile or PC
 assign rvfi.halt = (dut.datapath.CW_MEM_WB.opcode == op_br) & (dut.datapath.alu_buffer_memwb_out == dut.datapath.PC_MEM_WB);   // Set high when you detect an infinite loop
 initial rvfi.order = 0;
 always @(posedge itf.clk iff rvfi.commit) rvfi.order <= rvfi.order + 1; // Modify for OoO
@@ -38,7 +38,7 @@ Instruction and trap:
 
 Regfile:
     rvfi.rs1_addr
-    rvfi.rs2_add
+    rvfi.rs2_addr
     rvfi.rs1_rdata
     rvfi.rs2_rdata
     rvfi.load_regfile
@@ -102,21 +102,20 @@ dcache signals:
 Please refer to tb_itf.sv for more information.
 */
 
-always_comb
-begin
-    itf.inst_read = dut.datapth.inst_read;
-    itf.inst_addr = dut.datapath.inst_addr;
-    itf.inst_resp = dut.datapath.inst_resp;
-    itf.inst_rdata = dut.datapath.inst_rdata;
 
-    itf.data_read = dut.datapath.data_read;
-    itf.data_write = dut.datapath.data_write;
-    itf.data_mbe = dut.datapath.data_mbe;
-    itf.data_addr = dut.datapath.data_addr;
-    itf.data_wdata = dut.datapath.data_wdata;
-    itf.data_resp = dut.datapath.data_resp;
-    itf.data_rdata = dut.datapath.data_rdata;
-end
+assign itf.inst_read = dut.datapath.inst_read;
+assign itf.inst_addr = dut.datapath.inst_addr;
+assign itf.inst_resp = dut.datapath.inst_resp;
+assign itf.inst_rdata = dut.datapath.inst_rdata;
+
+assign itf.data_read = dut.datapath.data_read;
+assign itf.data_write = dut.datapath.data_write;
+assign itf.data_mbe = dut.datapath.data_mbe;
+assign itf.data_addr = dut.datapath.data_addr;
+assign itf.data_wdata = dut.datapath.data_wdata;
+assign itf.data_resp = dut.datapath.data_resp;
+assign itf.data_rdata = dut.datapath.data_rdata;
+
 
 
 /*********************** End Shadow Memory Assignments ***********************/

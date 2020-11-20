@@ -87,6 +87,29 @@ typedef struct packed {
     cmpmux::cmpmux_sel_t cmpmux_sel;
 } rv32i_control_word;
 
+typedef struct packed {
+    // Instruction and trap
+    rv32i_word inst_rdata;
+    logic trap;
+    // Regfile
+    rv32i_reg rs1_addr;
+    rv32i_reg rs2_addr;
+    rv32i_word rs1_rdata;
+    rv32i_word rs2_rdata;
+    logic load_regfile;
+    rv32i_reg rd_addr;
+    rv32i_word rd_wdata;
+    // PC
+    rv32i_word pc_wdata;
+    rv32i_word pc_rdata;
+    // Memory
+    rv32i_word mem_addr;
+    logic [3:0] rmask;
+    rv32i_mem_wmask wmask;
+    logic [63:0] mem_rdata;
+    logic [63:0] mem_wdata;
+} rvfi_signals;
+
 
 endpackage : rv32i_types
 
