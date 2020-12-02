@@ -96,42 +96,7 @@ l2_cache level_two_cache (
     .mem_rdata(ab_pmem_rdata)
 );
 
-// arbiter if else block
-always_comb
-begin
-    if (i_pmem_read) begin
-
-        // inputs
-        ab_pmem_read = i_pmem_read;
-        ab_pmem_write = i_pmem_write;
-        ab_pmem_address = i_pmem_address;
-        ab_pmem_wdata = i_pmem_wdata;
-        
-        // outputs to icache
-        i_pmem_rdata = ab_pmem_rdata;
-        i_pmem_resp = ab_pmem_resp;
-        
-        // outputs to dcache
-        d_pmem_rdata = 256'b0;
-        d_pmem_resp = 1'b0;
-    end
-    else begin
-
-        // inputs
-        ab_pmem_read = d_pmem_read;
-        ab_pmem_write = d_pmem_write;
-        ab_pmem_address = d_pmem_address;
-        ab_pmem_wdata = d_pmem_wdata;
-
-        // outputs to dcache
-        d_pmem_rdata = ab_pmem_rdata;
-        d_pmem_resp = ab_pmem_resp;
-
-        // outputs to icache
-        i_pmem_rdata = 256'b0;
-        i_pmem_resp = 1'b0;
-    end
-end
+arbiter arb(.*);
 
 cache i_cache (
   .clk(clk),
