@@ -9,6 +9,14 @@ module mp4(
     output logic mem_write
 );
 
+// signals from l2 cache
+logic l2_pmem_resp;
+logic [255:0] l2_pmem_rdata;
+logic [31:0] l2_pmem_address;
+logic [255:0] l2_pmem_wdata;
+logic l2_pmem_read;
+logic l2_pmem_write;
+
 // signals from arbiter
 logic ab_pmem_resp;
 logic [255:0] ab_pmem_rdata;
@@ -51,13 +59,13 @@ cacheline_adaptor ca (
     .clk(clk),
     .reset_n(~reset),
 
-    // Port to arbiter
-    .line_i(ab_pmem_wdata),
-    .line_o(ab_pmem_rdata),
-    .address_i(ab_pmem_address),
-    .read_i(ab_pmem_read),
-    .write_i(ab_pmem_write),
-    .resp_o(ab_pmem_resp),
+    // Port to l2 cache
+    .line_i(l2_pmem_wdata),
+    .line_o(l2_pmem_rdata),
+    .address_i(l2_pmem_address),
+    .read_i(l2_pmem_read),
+    .write_i(l2_pmem_write),
+    .resp_o(l2_pmem_resp),
 
     // Port to memory
     .burst_i(mem_rdata),
@@ -66,6 +74,26 @@ cacheline_adaptor ca (
     .read_o(mem_read),
     .write_o(mem_write),
     .resp_i(mem_resp)
+);
+
+l2_cache level_two_cache (
+    .clk(clk),
+
+    /* Physical memory signals */
+    .pmem_resp(l2_pmem_resp),
+    .pmem_rdata(l2_pmem_rdata),
+    .pmem_address(l2_pmem_address),
+    .pmem_wdata(l2_pmem_wdata),
+    .pmem_read(l2_pmem_read),
+    .pmem_write(l2_pmem_write),
+
+    /* Arbiter signals */
+    .mem_read(ab_pmem_read),
+    .mem_write(ab_pmem_write),
+    .mem_address(ab_pmem_address),
+    .mem_wdata(ab_pmem_wdata),
+    .mem_resp(ab_pmem_resp),
+    .mem_rdata(ab_pmem_rdata)
 );
 
 // arbiter if else block
