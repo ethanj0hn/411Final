@@ -1,0 +1,1439 @@
+# Reading C:/intelFPGA/18.1/modelsim_ase/tcl/vsim/pref.tcl
+# do mp2_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 10.5b Lib Mapping Utility 2016.10 Oct  5 2016
+# vmap work rtl_work 
+# Copying C:/intelFPGA/18.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_mux_types.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:26 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_mux_types.sv 
+# -- Compiling package pcmux
+# -- Compiling package marmux
+# -- Compiling package cmpmux
+# -- Compiling package alumux
+# -- Compiling package regfilemux
+# 
+# Top level modules:
+# 	--none--
+# End time: 11:41:26 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/register.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:26 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/register.sv 
+# -- Compiling module register
+# 
+# Top level modules:
+# 	register
+# End time: 11:41:26 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/regfile.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:26 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/regfile.sv 
+# -- Compiling module regfile
+# 
+# Top level modules:
+# 	regfile
+# End time: 11:41:27 on Dec 03,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/pc_reg.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:27 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/pc_reg.sv 
+# -- Compiling module pc_register
+# 
+# Top level modules:
+# 	pc_register
+# End time: 11:41:27 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_types.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:27 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_types.sv 
+# -- Compiling package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# 
+# Top level modules:
+# 	--none--
+# End time: 11:41:27 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mux.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:27 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mux.sv 
+# -- Compiling package mux_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module RegfileMUX
+# -- Compiling module Two_to_one_MUX
+# -- Compiling module alumux2
+# -- Compiling module PCMUX
+# 
+# Top level modules:
+# 	RegfileMUX
+# 	Two_to_one_MUX
+# 	alumux2
+# 	PCMUX
+# End time: 11:41:27 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/ir.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:27 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/ir.sv 
+# -- Compiling package ir_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module ir
+# 
+# Top level modules:
+# 	ir
+# End time: 11:41:27 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/control.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:27 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/control.sv 
+# -- Compiling package control_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module control
+# 
+# Top level modules:
+# 	control
+# End time: 11:41:27 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/cmp.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:27 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/cmp.sv 
+# -- Compiling package cmp_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module cmp
+# 
+# Top level modules:
+# 	cmp
+# End time: 11:41:27 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/alu.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:27 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/alu.sv 
+# -- Compiling package alu_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module alu
+# 
+# Top level modules:
+# 	alu
+# End time: 11:41:27 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/datapath.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:27 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/datapath.sv 
+# -- Compiling package datapath_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module datapath
+# 
+# Top level modules:
+# 	datapath
+# End time: 11:41:27 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mp2.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:27 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mp2.sv 
+# -- Compiling package mp2_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module mp2
+# 
+# Top level modules:
+# 	mp2
+# End time: 11:41:28 on Dec 03,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# 
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/memory.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:28 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/memory.sv 
+# -- Compiling interface tb_itf
+# -- Compiling module memory
+# 
+# Top level modules:
+# 	memory
+# End time: 11:41:28 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/random_tb.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:28 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/random_tb.sv 
+# -- Compiling package random_tb_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module random_tb
+# 
+# Top level modules:
+# 	random_tb
+# End time: 11:41:28 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/rvfimon.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:28 on Dec 03,2020
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/rvfimon.v 
+# -- Compiling module riscv_formal_monitor_rv32i
+# -- Compiling module riscv_formal_monitor_rv32i_rob
+# -- Compiling module riscv_formal_monitor_rv32i_isa_spec
+# -- Compiling module riscv_formal_monitor_rv32i_insn_add
+# -- Compiling module riscv_formal_monitor_rv32i_insn_addi
+# -- Compiling module riscv_formal_monitor_rv32i_insn_and
+# -- Compiling module riscv_formal_monitor_rv32i_insn_andi
+# -- Compiling module riscv_formal_monitor_rv32i_insn_auipc
+# -- Compiling module riscv_formal_monitor_rv32i_insn_beq
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bge
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bgeu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_blt
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bltu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bne
+# -- Compiling module riscv_formal_monitor_rv32i_insn_jal
+# -- Compiling module riscv_formal_monitor_rv32i_insn_jalr
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lb
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lbu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lh
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lhu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lui
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lw
+# -- Compiling module riscv_formal_monitor_rv32i_insn_or
+# -- Compiling module riscv_formal_monitor_rv32i_insn_ori
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sb
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sh
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sll
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slli
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slt
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slti
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sltiu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sltu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sra
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srai
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srl
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srli
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sub
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sw
+# -- Compiling module riscv_formal_monitor_rv32i_insn_xor
+# -- Compiling module riscv_formal_monitor_rv32i_insn_xori
+# 
+# Top level modules:
+# 	riscv_formal_monitor_rv32i
+# End time: 11:41:28 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/source_tb.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:28 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/source_tb.sv 
+# -- Compiling module source_tb
+# 
+# Top level modules:
+# 	source_tb
+# End time: 11:41:28 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/tb_itf.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:28 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/tb_itf.sv 
+# -- Compiling interface tb_itf
+# 
+# Top level modules:
+# 	--none--
+# End time: 11:41:28 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 11:41:28 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv 
+# -- Compiling module mp2_tb
+# ** Error: (vlog-13069) C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv(61): near "assign": syntax error, unexpected assign.
+# ** Error: C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv(59): (vlog-13205) Syntax error found in the scope following 'rv32i_opcode'. Is there a missing '::'?
+# End time: 11:41:28 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 0
+# ** Error: C:/intelFPGA/18.1/modelsim_ase/win32aloem/vlog failed.
+# Error in macro ./mp2_run_msim_rtl_verilog.do line 26
+# C:/intelFPGA/18.1/modelsim_ase/win32aloem/vlog failed.
+#     while executing
+# "vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashya..."
+do mp2_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 10.5b Lib Mapping Utility 2016.10 Oct  5 2016
+# vmap work rtl_work 
+# Modifying modelsim.ini
+# 
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_mux_types.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:02 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_mux_types.sv 
+# -- Compiling package pcmux
+# -- Compiling package marmux
+# -- Compiling package cmpmux
+# -- Compiling package alumux
+# -- Compiling package regfilemux
+# 
+# Top level modules:
+# 	--none--
+# End time: 12:06:02 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/register.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:02 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/register.sv 
+# -- Compiling module register
+# 
+# Top level modules:
+# 	register
+# End time: 12:06:02 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/regfile.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:02 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/regfile.sv 
+# -- Compiling module regfile
+# 
+# Top level modules:
+# 	regfile
+# End time: 12:06:02 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/pc_reg.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:02 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/pc_reg.sv 
+# -- Compiling module pc_register
+# 
+# Top level modules:
+# 	pc_register
+# End time: 12:06:03 on Dec 03,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_types.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:03 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_types.sv 
+# -- Compiling package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# 
+# Top level modules:
+# 	--none--
+# End time: 12:06:03 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mux.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:03 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mux.sv 
+# -- Compiling package mux_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module RegfileMUX
+# -- Compiling module Two_to_one_MUX
+# -- Compiling module alumux2
+# -- Compiling module PCMUX
+# 
+# Top level modules:
+# 	RegfileMUX
+# 	Two_to_one_MUX
+# 	alumux2
+# 	PCMUX
+# End time: 12:06:03 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/ir.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:03 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/ir.sv 
+# -- Compiling package ir_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module ir
+# 
+# Top level modules:
+# 	ir
+# End time: 12:06:03 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/control.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:03 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/control.sv 
+# -- Compiling package control_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module control
+# 
+# Top level modules:
+# 	control
+# End time: 12:06:03 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/cmp.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:03 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/cmp.sv 
+# -- Compiling package cmp_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module cmp
+# 
+# Top level modules:
+# 	cmp
+# End time: 12:06:03 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/alu.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:03 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/alu.sv 
+# -- Compiling package alu_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module alu
+# 
+# Top level modules:
+# 	alu
+# End time: 12:06:03 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/datapath.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:03 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/datapath.sv 
+# -- Compiling package datapath_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module datapath
+# 
+# Top level modules:
+# 	datapath
+# End time: 12:06:03 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mp2.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:03 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mp2.sv 
+# -- Compiling package mp2_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module mp2
+# 
+# Top level modules:
+# 	mp2
+# End time: 12:06:04 on Dec 03,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# 
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/memory.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:04 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/memory.sv 
+# -- Compiling interface tb_itf
+# -- Compiling module memory
+# 
+# Top level modules:
+# 	memory
+# End time: 12:06:04 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/random_tb.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:04 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/random_tb.sv 
+# -- Compiling package random_tb_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module random_tb
+# 
+# Top level modules:
+# 	random_tb
+# End time: 12:06:04 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/rvfimon.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:04 on Dec 03,2020
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/rvfimon.v 
+# -- Compiling module riscv_formal_monitor_rv32i
+# -- Compiling module riscv_formal_monitor_rv32i_rob
+# -- Compiling module riscv_formal_monitor_rv32i_isa_spec
+# -- Compiling module riscv_formal_monitor_rv32i_insn_add
+# -- Compiling module riscv_formal_monitor_rv32i_insn_addi
+# -- Compiling module riscv_formal_monitor_rv32i_insn_and
+# -- Compiling module riscv_formal_monitor_rv32i_insn_andi
+# -- Compiling module riscv_formal_monitor_rv32i_insn_auipc
+# -- Compiling module riscv_formal_monitor_rv32i_insn_beq
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bge
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bgeu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_blt
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bltu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bne
+# -- Compiling module riscv_formal_monitor_rv32i_insn_jal
+# -- Compiling module riscv_formal_monitor_rv32i_insn_jalr
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lb
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lbu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lh
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lhu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lui
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lw
+# -- Compiling module riscv_formal_monitor_rv32i_insn_or
+# -- Compiling module riscv_formal_monitor_rv32i_insn_ori
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sb
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sh
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sll
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slli
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slt
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slti
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sltiu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sltu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sra
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srai
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srl
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srli
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sub
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sw
+# -- Compiling module riscv_formal_monitor_rv32i_insn_xor
+# -- Compiling module riscv_formal_monitor_rv32i_insn_xori
+# 
+# Top level modules:
+# 	riscv_formal_monitor_rv32i
+# End time: 12:06:04 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/source_tb.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:04 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/source_tb.sv 
+# -- Compiling module source_tb
+# 
+# Top level modules:
+# 	source_tb
+# End time: 12:06:04 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/tb_itf.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:04 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/tb_itf.sv 
+# -- Compiling interface tb_itf
+# 
+# Top level modules:
+# 	--none--
+# End time: 12:06:04 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:04 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv 
+# -- Compiling module mp2_tb
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# ** Error: (vlog-13069) C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv(8): near "timeunit": syntax error, unexpected "SystemVerilog keyword 'timeunit'".
+# End time: 12:06:04 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# ** Error: C:/intelFPGA/18.1/modelsim_ase/win32aloem/vlog failed.
+# Error in macro ./mp2_run_msim_rtl_verilog.do line 26
+# C:/intelFPGA/18.1/modelsim_ase/win32aloem/vlog failed.
+#     while executing
+# "vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashya..."
+do mp2_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 10.5b Lib Mapping Utility 2016.10 Oct  5 2016
+# vmap work rtl_work 
+# Modifying modelsim.ini
+# 
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_mux_types.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:36 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_mux_types.sv 
+# -- Compiling package pcmux
+# -- Compiling package marmux
+# -- Compiling package cmpmux
+# -- Compiling package alumux
+# -- Compiling package regfilemux
+# 
+# Top level modules:
+# 	--none--
+# End time: 12:06:36 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/register.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:36 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/register.sv 
+# -- Compiling module register
+# 
+# Top level modules:
+# 	register
+# End time: 12:06:36 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/regfile.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:36 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/regfile.sv 
+# -- Compiling module regfile
+# 
+# Top level modules:
+# 	regfile
+# End time: 12:06:36 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/pc_reg.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:36 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/pc_reg.sv 
+# -- Compiling module pc_register
+# 
+# Top level modules:
+# 	pc_register
+# End time: 12:06:36 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_types.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:36 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_types.sv 
+# -- Compiling package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# 
+# Top level modules:
+# 	--none--
+# End time: 12:06:36 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mux.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:36 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mux.sv 
+# -- Compiling package mux_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module RegfileMUX
+# -- Compiling module Two_to_one_MUX
+# -- Compiling module alumux2
+# -- Compiling module PCMUX
+# 
+# Top level modules:
+# 	RegfileMUX
+# 	Two_to_one_MUX
+# 	alumux2
+# 	PCMUX
+# End time: 12:06:36 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/ir.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:36 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/ir.sv 
+# -- Compiling package ir_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module ir
+# 
+# Top level modules:
+# 	ir
+# End time: 12:06:36 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/control.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:36 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/control.sv 
+# -- Compiling package control_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module control
+# 
+# Top level modules:
+# 	control
+# End time: 12:06:36 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/cmp.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:36 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/cmp.sv 
+# -- Compiling package cmp_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module cmp
+# 
+# Top level modules:
+# 	cmp
+# End time: 12:06:37 on Dec 03,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/alu.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:37 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/alu.sv 
+# -- Compiling package alu_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module alu
+# 
+# Top level modules:
+# 	alu
+# End time: 12:06:37 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/datapath.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:37 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/datapath.sv 
+# -- Compiling package datapath_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module datapath
+# 
+# Top level modules:
+# 	datapath
+# End time: 12:06:37 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mp2.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:37 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mp2.sv 
+# -- Compiling package mp2_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module mp2
+# 
+# Top level modules:
+# 	mp2
+# End time: 12:06:37 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/memory.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:37 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/memory.sv 
+# -- Compiling interface tb_itf
+# -- Compiling module memory
+# 
+# Top level modules:
+# 	memory
+# End time: 12:06:37 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/random_tb.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:37 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/random_tb.sv 
+# -- Compiling package random_tb_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module random_tb
+# 
+# Top level modules:
+# 	random_tb
+# End time: 12:06:37 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/rvfimon.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:37 on Dec 03,2020
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/rvfimon.v 
+# -- Compiling module riscv_formal_monitor_rv32i
+# -- Compiling module riscv_formal_monitor_rv32i_rob
+# -- Compiling module riscv_formal_monitor_rv32i_isa_spec
+# -- Compiling module riscv_formal_monitor_rv32i_insn_add
+# -- Compiling module riscv_formal_monitor_rv32i_insn_addi
+# -- Compiling module riscv_formal_monitor_rv32i_insn_and
+# -- Compiling module riscv_formal_monitor_rv32i_insn_andi
+# -- Compiling module riscv_formal_monitor_rv32i_insn_auipc
+# -- Compiling module riscv_formal_monitor_rv32i_insn_beq
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bge
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bgeu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_blt
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bltu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bne
+# -- Compiling module riscv_formal_monitor_rv32i_insn_jal
+# -- Compiling module riscv_formal_monitor_rv32i_insn_jalr
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lb
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lbu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lh
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lhu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lui
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lw
+# -- Compiling module riscv_formal_monitor_rv32i_insn_or
+# -- Compiling module riscv_formal_monitor_rv32i_insn_ori
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sb
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sh
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sll
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slli
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slt
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slti
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sltiu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sltu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sra
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srai
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srl
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srli
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sub
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sw
+# -- Compiling module riscv_formal_monitor_rv32i_insn_xor
+# -- Compiling module riscv_formal_monitor_rv32i_insn_xori
+# 
+# Top level modules:
+# 	riscv_formal_monitor_rv32i
+# End time: 12:06:37 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/source_tb.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:38 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/source_tb.sv 
+# -- Compiling module source_tb
+# 
+# Top level modules:
+# 	source_tb
+# End time: 12:06:38 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/tb_itf.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:38 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/tb_itf.sv 
+# -- Compiling interface tb_itf
+# 
+# Top level modules:
+# 	--none--
+# End time: 12:06:38 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:06:38 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv 
+# -- Compiling package top_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module mp2_tb
+# 
+# Top level modules:
+# 	mp2_tb
+# End time: 12:06:38 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L arriaii_hssi_ver -L arriaii_pcie_hip_ver -L arriaii_ver -L rtl_work -L work -voptargs="+acc"  mp2_tb
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L arriaii_hssi_ver -L arriaii_pcie_hip_ver -L arriaii_ver -L rtl_work -L work -voptargs=""+acc"" mp2_tb 
+# Start time: 12:06:38 on Dec 03,2020
+# Loading sv_std.std
+# Loading work.regfilemux
+# Loading work.alumux
+# Loading work.cmpmux
+# Loading work.marmux
+# Loading work.pcmux
+# Loading work.rv32i_types
+# Loading work.top_sv_unit
+# Loading work.mp2_tb
+# Loading work.tb_itf
+# Loading work.mp2_sv_unit
+# Loading work.mp2
+# Loading work.control_sv_unit
+# Loading work.control
+# Loading work.datapath_sv_unit
+# Loading work.datapath
+# Loading work.register
+# Loading work.ir_sv_unit
+# Loading work.ir
+# Loading work.mux_sv_unit
+# Loading work.RegfileMUX
+# Loading work.regfile
+# Loading work.Two_to_one_MUX
+# Loading work.alumux2
+# Loading work.alu_sv_unit
+# Loading work.alu
+# Loading work.PCMUX
+# Loading work.pc_register
+# Loading work.cmp_sv_unit
+# Loading work.cmp
+# Loading work.riscv_formal_monitor_rv32i
+# Loading work.riscv_formal_monitor_rv32i_isa_spec
+# Loading work.riscv_formal_monitor_rv32i_insn_add
+# Loading work.riscv_formal_monitor_rv32i_insn_addi
+# Loading work.riscv_formal_monitor_rv32i_insn_and
+# Loading work.riscv_formal_monitor_rv32i_insn_andi
+# Loading work.riscv_formal_monitor_rv32i_insn_auipc
+# Loading work.riscv_formal_monitor_rv32i_insn_beq
+# Loading work.riscv_formal_monitor_rv32i_insn_bge
+# Loading work.riscv_formal_monitor_rv32i_insn_bgeu
+# Loading work.riscv_formal_monitor_rv32i_insn_blt
+# Loading work.riscv_formal_monitor_rv32i_insn_bltu
+# Loading work.riscv_formal_monitor_rv32i_insn_bne
+# Loading work.riscv_formal_monitor_rv32i_insn_jal
+# Loading work.riscv_formal_monitor_rv32i_insn_jalr
+# Loading work.riscv_formal_monitor_rv32i_insn_lb
+# Loading work.riscv_formal_monitor_rv32i_insn_lbu
+# Loading work.riscv_formal_monitor_rv32i_insn_lh
+# Loading work.riscv_formal_monitor_rv32i_insn_lhu
+# Loading work.riscv_formal_monitor_rv32i_insn_lui
+# Loading work.riscv_formal_monitor_rv32i_insn_lw
+# Loading work.riscv_formal_monitor_rv32i_insn_or
+# Loading work.riscv_formal_monitor_rv32i_insn_ori
+# Loading work.riscv_formal_monitor_rv32i_insn_sb
+# Loading work.riscv_formal_monitor_rv32i_insn_sh
+# Loading work.riscv_formal_monitor_rv32i_insn_sll
+# Loading work.riscv_formal_monitor_rv32i_insn_slli
+# Loading work.riscv_formal_monitor_rv32i_insn_slt
+# Loading work.riscv_formal_monitor_rv32i_insn_slti
+# Loading work.riscv_formal_monitor_rv32i_insn_sltiu
+# Loading work.riscv_formal_monitor_rv32i_insn_sltu
+# Loading work.riscv_formal_monitor_rv32i_insn_sra
+# Loading work.riscv_formal_monitor_rv32i_insn_srai
+# Loading work.riscv_formal_monitor_rv32i_insn_srl
+# Loading work.riscv_formal_monitor_rv32i_insn_srli
+# Loading work.riscv_formal_monitor_rv32i_insn_sub
+# Loading work.riscv_formal_monitor_rv32i_insn_sw
+# Loading work.riscv_formal_monitor_rv32i_insn_xor
+# Loading work.riscv_formal_monitor_rv32i_insn_xori
+# Loading work.riscv_formal_monitor_rv32i_rob
+# Loading work.source_tb
+# Loading work.memory
+# 
+# add wave *
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: akash  Hostname: ANIRUDH-LAPTOP  ProcessID: 15928
+#           Attempting to use alternate WLF file "./wlftkj1c5y".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftkj1c5y
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# ** Note: $finish    : C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv(160)
+#    Time: 32255 ns  Iteration: 1  Instance: /mp2_tb
+# 1
+# Break in Module mp2_tb at C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv line 160
+add wave -position insertpoint  \
+sim:/mp2_tb/dut/datapath/regfile/data
+restart -f
+run 50000ns
+# ** Note: $finish    : C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv(160)
+#    Time: 32255 ns  Iteration: 1  Instance: /mp2_tb
+# 1
+# Break in Module mp2_tb at C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv line 160
+# WARNING: No extended dataflow license exists
+do mp2_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# Error 31: Unable to unlink file "C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/simulation/modelsim/rtl_work/_lib.qdb".
+# Error 31: Unable to unlink file "C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/simulation/modelsim/rtl_work/_lib1_0.qdb".
+# Error 31: Unable to unlink file "C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/simulation/modelsim/rtl_work/_lib1_0.qpg".
+# Error 31: Unable to unlink file "C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/simulation/modelsim/rtl_work/_lib1_0.qtl".
+# Error 133: Unable to remove directory "C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/simulation/modelsim/rtl_work".
+# vlib rtl_work
+# ** Error: (vlib-35) Failed to create directory "rtl_work".
+# File exists. (errno = EEXIST)
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 10.5b Lib Mapping Utility 2016.10 Oct  5 2016
+# vmap work rtl_work 
+# Modifying modelsim.ini
+# 
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_mux_types.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:57 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_mux_types.sv 
+# -- Compiling package pcmux
+# -- Compiling package marmux
+# -- Compiling package cmpmux
+# -- Compiling package alumux
+# -- Compiling package regfilemux
+# 
+# Top level modules:
+# 	--none--
+# End time: 12:27:57 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/register.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:57 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/register.sv 
+# -- Compiling module register
+# 
+# Top level modules:
+# 	register
+# End time: 12:27:58 on Dec 03,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/regfile.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:58 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/regfile.sv 
+# -- Compiling module regfile
+# 
+# Top level modules:
+# 	regfile
+# End time: 12:27:58 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/pc_reg.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:58 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/pc_reg.sv 
+# -- Compiling module pc_register
+# 
+# Top level modules:
+# 	pc_register
+# End time: 12:27:58 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_types.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:58 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/rv32i_types.sv 
+# -- Compiling package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# 
+# Top level modules:
+# 	--none--
+# End time: 12:27:58 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mux.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:58 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mux.sv 
+# -- Compiling package mux_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module RegfileMUX
+# -- Compiling module Two_to_one_MUX
+# -- Compiling module alumux2
+# -- Compiling module PCMUX
+# 
+# Top level modules:
+# 	RegfileMUX
+# 	Two_to_one_MUX
+# 	alumux2
+# 	PCMUX
+# End time: 12:27:58 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/ir.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:58 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/ir.sv 
+# -- Compiling package ir_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module ir
+# 
+# Top level modules:
+# 	ir
+# End time: 12:27:58 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/control.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:58 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/control.sv 
+# -- Compiling package control_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module control
+# 
+# Top level modules:
+# 	control
+# End time: 12:27:58 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/cmp.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:58 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/cmp.sv 
+# -- Compiling package cmp_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module cmp
+# 
+# Top level modules:
+# 	cmp
+# End time: 12:27:58 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/alu.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:58 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/alu.sv 
+# -- Compiling package alu_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module alu
+# 
+# Top level modules:
+# 	alu
+# End time: 12:27:58 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/datapath.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:59 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/datapath.sv 
+# -- Compiling package datapath_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module datapath
+# 
+# Top level modules:
+# 	datapath
+# End time: 12:27:59 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mp2.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:59 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hdl/mp2.sv 
+# -- Compiling package mp2_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module mp2
+# 
+# Top level modules:
+# 	mp2
+# End time: 12:27:59 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/memory.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:59 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/memory.sv 
+# -- Compiling interface tb_itf
+# -- Compiling module memory
+# 
+# Top level modules:
+# 	memory
+# End time: 12:27:59 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/random_tb.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:59 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/random_tb.sv 
+# -- Compiling package random_tb_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module random_tb
+# 
+# Top level modules:
+# 	random_tb
+# End time: 12:27:59 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/rvfimon.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:59 on Dec 03,2020
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/rvfimon.v 
+# -- Compiling module riscv_formal_monitor_rv32i
+# -- Compiling module riscv_formal_monitor_rv32i_rob
+# -- Compiling module riscv_formal_monitor_rv32i_isa_spec
+# -- Compiling module riscv_formal_monitor_rv32i_insn_add
+# -- Compiling module riscv_formal_monitor_rv32i_insn_addi
+# -- Compiling module riscv_formal_monitor_rv32i_insn_and
+# -- Compiling module riscv_formal_monitor_rv32i_insn_andi
+# -- Compiling module riscv_formal_monitor_rv32i_insn_auipc
+# -- Compiling module riscv_formal_monitor_rv32i_insn_beq
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bge
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bgeu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_blt
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bltu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_bne
+# -- Compiling module riscv_formal_monitor_rv32i_insn_jal
+# -- Compiling module riscv_formal_monitor_rv32i_insn_jalr
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lb
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lbu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lh
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lhu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lui
+# -- Compiling module riscv_formal_monitor_rv32i_insn_lw
+# -- Compiling module riscv_formal_monitor_rv32i_insn_or
+# -- Compiling module riscv_formal_monitor_rv32i_insn_ori
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sb
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sh
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sll
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slli
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slt
+# -- Compiling module riscv_formal_monitor_rv32i_insn_slti
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sltiu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sltu
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sra
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srai
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srl
+# -- Compiling module riscv_formal_monitor_rv32i_insn_srli
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sub
+# -- Compiling module riscv_formal_monitor_rv32i_insn_sw
+# -- Compiling module riscv_formal_monitor_rv32i_insn_xor
+# -- Compiling module riscv_formal_monitor_rv32i_insn_xori
+# 
+# Top level modules:
+# 	riscv_formal_monitor_rv32i
+# End time: 12:27:59 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/source_tb.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:59 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/source_tb.sv 
+# -- Compiling module source_tb
+# 
+# Top level modules:
+# 	source_tb
+# End time: 12:27:59 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/tb_itf.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:27:59 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/tb_itf.sv 
+# -- Compiling interface tb_itf
+# 
+# Top level modules:
+# 	--none--
+# End time: 12:28:00 on Dec 03,2020, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl {C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 12:28:00 on Dec 03,2020
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl" C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv 
+# -- Compiling package top_sv_unit
+# -- Importing package rv32i_types
+# -- Importing package pcmux
+# -- Importing package marmux
+# -- Importing package cmpmux
+# -- Importing package alumux
+# -- Importing package regfilemux
+# -- Compiling module mp2_tb
+# 
+# Top level modules:
+# 	mp2_tb
+# End time: 12:28:00 on Dec 03,2020, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L arriaii_hssi_ver -L arriaii_pcie_hip_ver -L arriaii_ver -L rtl_work -L work -voptargs="+acc"  mp2_tb
+# End time: 12:28:05 on Dec 03,2020, Elapsed time: 0:21:27
+# Errors: 0, Warnings: 3
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L arriaii_hssi_ver -L arriaii_pcie_hip_ver -L arriaii_ver -L rtl_work -L work -voptargs=""+acc"" mp2_tb 
+# Start time: 12:28:05 on Dec 03,2020
+# Loading sv_std.std
+# Loading work.regfilemux
+# Loading work.alumux
+# Loading work.cmpmux
+# Loading work.marmux
+# Loading work.pcmux
+# Loading work.rv32i_types
+# Loading work.top_sv_unit
+# Loading work.mp2_tb
+# Loading work.tb_itf
+# Loading work.mp2_sv_unit
+# Loading work.mp2
+# Loading work.control_sv_unit
+# Loading work.control
+# Loading work.datapath_sv_unit
+# Loading work.datapath
+# Loading work.register
+# Loading work.ir_sv_unit
+# Loading work.ir
+# Loading work.mux_sv_unit
+# Loading work.RegfileMUX
+# Loading work.regfile
+# Loading work.Two_to_one_MUX
+# Loading work.alumux2
+# Loading work.alu_sv_unit
+# Loading work.alu
+# Loading work.PCMUX
+# Loading work.pc_register
+# Loading work.cmp_sv_unit
+# Loading work.cmp
+# Loading work.riscv_formal_monitor_rv32i
+# Loading work.riscv_formal_monitor_rv32i_isa_spec
+# Loading work.riscv_formal_monitor_rv32i_insn_add
+# Loading work.riscv_formal_monitor_rv32i_insn_addi
+# Loading work.riscv_formal_monitor_rv32i_insn_and
+# Loading work.riscv_formal_monitor_rv32i_insn_andi
+# Loading work.riscv_formal_monitor_rv32i_insn_auipc
+# Loading work.riscv_formal_monitor_rv32i_insn_beq
+# Loading work.riscv_formal_monitor_rv32i_insn_bge
+# Loading work.riscv_formal_monitor_rv32i_insn_bgeu
+# Loading work.riscv_formal_monitor_rv32i_insn_blt
+# Loading work.riscv_formal_monitor_rv32i_insn_bltu
+# Loading work.riscv_formal_monitor_rv32i_insn_bne
+# Loading work.riscv_formal_monitor_rv32i_insn_jal
+# Loading work.riscv_formal_monitor_rv32i_insn_jalr
+# Loading work.riscv_formal_monitor_rv32i_insn_lb
+# Loading work.riscv_formal_monitor_rv32i_insn_lbu
+# Loading work.riscv_formal_monitor_rv32i_insn_lh
+# Loading work.riscv_formal_monitor_rv32i_insn_lhu
+# Loading work.riscv_formal_monitor_rv32i_insn_lui
+# Loading work.riscv_formal_monitor_rv32i_insn_lw
+# Loading work.riscv_formal_monitor_rv32i_insn_or
+# Loading work.riscv_formal_monitor_rv32i_insn_ori
+# Loading work.riscv_formal_monitor_rv32i_insn_sb
+# Loading work.riscv_formal_monitor_rv32i_insn_sh
+# Loading work.riscv_formal_monitor_rv32i_insn_sll
+# Loading work.riscv_formal_monitor_rv32i_insn_slli
+# Loading work.riscv_formal_monitor_rv32i_insn_slt
+# Loading work.riscv_formal_monitor_rv32i_insn_slti
+# Loading work.riscv_formal_monitor_rv32i_insn_sltiu
+# Loading work.riscv_formal_monitor_rv32i_insn_sltu
+# Loading work.riscv_formal_monitor_rv32i_insn_sra
+# Loading work.riscv_formal_monitor_rv32i_insn_srai
+# Loading work.riscv_formal_monitor_rv32i_insn_srl
+# Loading work.riscv_formal_monitor_rv32i_insn_srli
+# Loading work.riscv_formal_monitor_rv32i_insn_sub
+# Loading work.riscv_formal_monitor_rv32i_insn_sw
+# Loading work.riscv_formal_monitor_rv32i_insn_xor
+# Loading work.riscv_formal_monitor_rv32i_insn_xori
+# Loading work.riscv_formal_monitor_rv32i_rob
+# Loading work.source_tb
+# Loading work.memory
+# 
+# add wave *
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: akash  Hostname: ANIRUDH-LAPTOP  ProcessID: 15928
+#           Attempting to use alternate WLF file "./wlft0b3yx1".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft0b3yx1
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# ** Note: $finish    : C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv(160)
+#    Time: 15955 ns  Iteration: 1  Instance: /mp2_tb
+# 1
+# Break in Module mp2_tb at C:/Users/akash/Documents/College_Classes/ECE_411/kashyap5/mp2/hvl/top.sv line 160

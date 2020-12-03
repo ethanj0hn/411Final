@@ -1,0 +1,7 @@
+On load, PC is 000000b0, mem_address is 00000228, read data is 00badbad, dest reg address is  1
+On load, PC is 000000b8, mem_address is 00000220, read data is 00000001, dest reg address is  1
+On store, PC is 000000d0, mem_address is 0000022c, write data is 00000002, mbe is 1111
+On load, PC is 000000d8, mem_address is 0000022c, read data is 00000002, dest reg address is  4
+On load, PC is 000000e4, mem_address is 00000230, read data is ffffffff, dest reg address is  2
+On load, PC is 000000f8, mem_address is 00000240, read data is 00000002, dest reg address is  2
+On load, PC is 00000118, mem_address is 00000224, read data is 600d600d, dest reg address is  7
