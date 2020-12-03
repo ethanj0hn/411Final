@@ -179,19 +179,19 @@ always @(posedge itf.clk) begin
     if (regfile_load & regfile_addr)
     begin
 		$fwrite(i,"-PC is %x, input to regfile is %x, address is %d\n",PC_out,regfile_in,regfile_addr);
-        $fwrite(j,"Timeout is %d\n",timeout);
+        $fwrite(j,"Time in ns is %d\n",$time / 1000);
     end
     if ((EX_MEM_opcode == op_load) & pipeline_en)
     begin
         $fwrite(k,"On load, PC is %x, mem_address is %x, read data is %x, dest reg address is %d\n", 
             dut.datapath.PC_EX_MEM, dut.datapath.data_addr, dut.datapath.data_rdata, dut.datapath.IR_EX_MEM[11:7]);
-        $fwrite(l,"Timeout (load) is %d\n", timeout);
+        $fwrite(l,"Time (load) in ns is %d\n",$time / 1000);
     end
     if ( (EX_MEM_opcode == op_store) & pipeline_en)
     begin
         $fwrite(k, "On store, PC is %x, mem_address is %x, write data is %x, mbe is %b\n", 
             dut.datapath.PC_EX_MEM, dut.datapath.data_addr, dut.datapath.data_rdata, dut.datapath.data_mbe);
-        $fwrite(l,"Timeout (store) is %d\n", timeout);
+        $fwrite(l,"Time (store) in ns is %d\n",$time / 1000);
     end
 end
 logic clk,br_en,br_cw,j_cw,take_branch;
