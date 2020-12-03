@@ -189,17 +189,17 @@ begin
 
     // Assign use_fwd if src ex = dest mem
     //
-    alumux1_fwd_sel_exmem = fwd::fwd_sel_t'((rs1_idex == rd_exmem) & (rs1_idex != 5'b0000)); 
-    alumux2_fwd_sel_exmem = fwd::fwd_sel_t'((rs2_idex == rd_exmem) & (rs2_idex != 5'b0000));
+    alumux1_fwd_sel_exmem = fwd::fwd_sel_t'((rs1_idex == rd_exmem) & (rs1_idex != 5'b0000) & (CW_EX_MEM.opcode != nop)); 
+    alumux2_fwd_sel_exmem = fwd::fwd_sel_t'((rs2_idex == rd_exmem) & (rs2_idex != 5'b0000) & (CW_EX_MEM.opcode != nop)); 
 
     // Assign use_fwd if src ex = dest wb
     //
-    alumux1_fwd_sel_memwb = fwd::fwd_sel_t'((rs1_idex == rd_memwb) & (rs1_idex != 5'b0000)); 
-    alumux2_fwd_sel_memwb = fwd::fwd_sel_t'((rs2_idex == rd_memwb) & (rs2_idex != 5'b0000));
+    alumux1_fwd_sel_memwb = fwd::fwd_sel_t'((rs1_idex == rd_memwb) & (rs1_idex != 5'b0000) & (CW_MEM_WB.opcode != nop)); 
+    alumux2_fwd_sel_memwb = fwd::fwd_sel_t'((rs2_idex == rd_memwb) & (rs2_idex != 5'b0000) & (CW_MEM_WB.opcode != nop));
 
     // Assign use_fwd if rs2_exmem (register used for writing data to memory) = rd wb
     //
-    wdata_fwd_sel = fwd::fwd_sel_t'((rs2_exmem == rd_memwb) & (rs2_exmem != 5'b00000));
+    wdata_fwd_sel = fwd::fwd_sel_t'((rs2_exmem == rd_memwb) & (rs2_exmem != 5'b00000) & (CW_MEM_WB.opcode != nop));
 end
 
 // shift reg for generated control words
