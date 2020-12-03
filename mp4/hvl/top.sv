@@ -19,11 +19,18 @@ source_tb tb(
 // For local simulation, add signal for Modelsim to display by default
 // Note that this signal does nothing and is not used for anything
 bit f;
-
+int timeout = 100000000;
 /****************************** End do not touch *****************************/
 
 /************************ Signals necessary for monitor **********************/
 // This section not required until CP2
+integer i,j,k,l;
+initial begin
+    i = $fopen("mp4_regoutput.txt","w");
+    j = $fopen("mp4_regtimeout.txt","w");
+    k = $fopen("mp4_loadstore.txt","w");
+    l = $fopen("mp4_lstimeout.txt", "w");
+end
 
 assign rvfi.commit = 0; //dut.datapath.ID.regfile.load | dut.datapath.IF.PC.load; // Set high when a valid instruction is modifying regfile or PC
 assign rvfi.halt = (dut.datapath.CW_MEM_WB.opcode == op_br) & (dut.datapath.alu_buffer_memwb_out == dut.datapath.PC_MEM_WB);   // Set high when you detect an infinite loop
@@ -146,6 +153,20 @@ Please refer to tb_itf.sv for more information.
 //
 // logic halt;
 // assign halt = (dut.datapath.CW_MEM_WB.opcode == op_br) & (dut.datapath.alu_buffer_memwb_out == dut.datapath.PC_MEM_WB);
+logic regfile_load, pipeline_en;
+logic [31:0] regfile_in, PC_out;
+logic [4:0] regfile_addr;
+rv32i_opcode EX_MEM_opcode;
+
+always_comb
+begin
+    regfile_load = dut.datapath.ID.regfile.load;
+    regfile_in = dut.datapath.ID.regfile.in;
+    PC_out = dut.datapath.PC_MEM_WB;
+    regfile_addr = dut.datapath.ID.regfile.dest;
+    EX_MEM_opcode = dut.datapath.CW_EX_MEM.opcode;
+    pipeline_en = dut.datapath.pipeline_en;
+end
 
 always @(posedge itf.clk) begin
     if (rvfi.halt)
@@ -154,7 +175,24 @@ always @(posedge itf.clk) begin
     //     $display("TOP: Timed out");
     //     $finish;
     // end
-    // timeout <= timeout - 1;
+    timeout <= timeout - 1;
+    if (regfile_load & regfile_addr)
+    begin
+		$fwrite(i,"-PC is %x, input to regfile is %x, address is %d\n",PC_out,regfile_in,regfile_addr);
+        $fwrite(j,"Timeout is %d\n",timeout);
+    end
+    if ((EX_MEM_opcode == op_load) & pipeline_en)
+    begin
+        $fwrite(k,"On load, PC is %x, mem_address is %x, read data is %x, dest reg address is %d\n", 
+            dut.datapath.PC_EX_MEM, dut.datapath.data_addr, dut.datapath.data_rdata, dut.datapath.IR_EX_MEM[11:7]);
+        $fwrite(l,"Timeout (load) is %d\n", timeout);
+    end
+    if ( (EX_MEM_opcode == op_store) & pipeline_en)
+    begin
+        $fwrite(k, "On store, PC is %x, mem_address is %x, write data is %x, mbe is %b\n", 
+            dut.datapath.PC_EX_MEM, dut.datapath.data_addr, dut.datapath.data_rdata, dut.datapath.data_mbe);
+        $fwrite(l,"Timeout (store) is %d\n", timeout);
+    end
 end
 logic clk,br_en,br_cw,j_cw,take_branch;
 logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, inst_addr;
