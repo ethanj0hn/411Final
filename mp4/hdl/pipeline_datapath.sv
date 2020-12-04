@@ -23,7 +23,7 @@ module pipeline_datapath(
 );
 // Internal Logic for IF
 //
-logic is_br, is_jump;
+// logic is_br, is_jump;
 rv32i_word IR_regs_in;
 rv32i_opcode op_from_ex; // assign statement below line 60
 
@@ -33,9 +33,16 @@ rv32i_word regfilemux_out;
 
 // internal logic for EX
 //
-logic br_en, take_branch;
+logic br_en;
+// logic br_en, take_branch;
 rv32i_word alu_out;
 branchmux::branchmux_sel_t branchmux_sel;
+
+
+// logic for buffering branch prediction
+logic pb_in;
+logic pb_buffered;
+logic pb_out;
 
 // controlling pipeline run / stall
 logic pipeline_en;
@@ -44,45 +51,73 @@ assign pipeline_en = inst_resp & (data_resp | (~data_read & ~data_write));
 always_comb
 begin
     // default 0
-    is_br = 1'b0;
-    is_jump = 1'b0;
+    // is_br = 1'b0;
+    // is_jump = 1'b0;
     unique case(op_from_ex)
-        op_jal: // set is_jump on jal, jalr
-            is_jump = 1'b1;
+        // op_jal: // set is_jump on jal, jalr
+        //     branchmux_sel = branchmux::br_not_taken;
         op_jalr:
-            is_jump = 1'b1;
+            branchmux_sel = branchmux::br_taken;
         op_br:
-            is_br = 1'b1;
-        default : ;
+            branchmux_sel = branchmux::branchmux_sel_t'(pb_out != br_en);
+        default : branchmux_sel = branchmux::br_not_taken;
     endcase
 end
 
 // if branch instruction in execute and condition holds, take branch
 //
-assign take_branch = is_br & br_en;
+// assign take_branch = is_br & br_en;
 
 // also load PC/appropriate control words on jumps
 //
-assign branchmux_sel = branchmux::branchmux_sel_t'(take_branch | is_jump);
+// assign branchmux_sel = branchmux::branchmux_sel_t'(take_branch | is_jump);
 
 // Instruction fetch components
 // Contains PC, PCmux
 //
+
+// Internal Logic for PC Shift regs
+//
+rv32i_word PC_IF_ID, PC_ID_EX, PC_EX_MEM, PC_MEM_WB;
+
+// Internal Logic for IR Shift regs
+//
+rv32i_word IR_IF_ID, IR_ID_EX, IR_EX_MEM, IR_MEM_WB;
+
+
 IF_stage IF(
     .clk(clk),
     .reset(reset),
     .branchmux_sel(branchmux_sel),
     .pipeline_en(pipeline_en),
     .br_PC(alu_out), // alu output
+    .non_br_PC(PC_ID_EX),
+    .correct_br(br_en),
+    .ir_id_ex(IR_ID_EX),
     .inst_rdata(inst_rdata),
     .inst_addr(inst_addr), // intruction add and read
     .inst_read(inst_read),
-    .IR_regs_in(IR_regs_in) // to shift regs
+    .IR_regs_in(IR_regs_in), // to shift regs
+    .predicted_branch(pb_in)
 );
 
-// Internal Logic for IR Shift regs
-//
-rv32i_word IR_IF_ID, IR_ID_EX, IR_EX_MEM, IR_MEM_WB;
+
+register #(1) pb_buff_1(
+    .clk(clk),
+    .rst(reset),
+    .load(pipeline_en),
+    .in(pb_in),
+    .out(pb_buffered)
+);
+
+register #(1) pb_buff_2(
+    .clk(clk),
+    .rst(reset),
+    .load(pipeline_en),
+    .in(pb_buffered),
+    .out(pb_out)
+);
+
 
 // Shift regs for IR
 //
@@ -98,9 +133,7 @@ shift_reg_IR IR_regs(
     .MEM_WB(IR_MEM_WB) // has MEM_WV IR value
 );
 
-// Internal Logic for PC Shift regs
-//
-rv32i_word PC_IF_ID, PC_ID_EX, PC_EX_MEM, PC_MEM_WB;
+
 
 // Shift regs for PC
 //
