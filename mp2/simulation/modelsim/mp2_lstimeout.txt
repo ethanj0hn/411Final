@@ -1,7 +1,0 @@
-Timeout (load) is    99999411
-Timeout (load) is    99999321
-Timeout (store) is    99999107
-Timeout (load) is    99999017
-Timeout (load) is    99998896
-Timeout (load) is    99998713
-Timeout (load) is    99998437

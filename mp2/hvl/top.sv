@@ -168,17 +168,17 @@ always @(posedge itf.clk) begin
 	if (regfile_load & regfile_addr)
     begin
 		$fwrite(f,"-PC is %x, input to regfile is %x, address is %d\n",PC_out,regfile_in,regfile_addr);
-        $fwrite(g,"Timeout is %d\n",timeout);
+        $fwrite(g,"Time (regfile commit) in ns is %d\n",$time);
     end
     if( (State == ldr1) & mem_resp)
     begin
-        $fwrite(h,"On load, PC is %x, mem_address is %x, read data is %x, dest reg address is %d\n", PC_out, mem_address, mem_rdata, rd);
-        $fwrite(i,"Timeout (load) is %d\n", timeout);
+        $fwrite(f,"On load, PC is %x, mem_address is %x, read data is %x, dest reg address is %d\n", PC_out, mem_address, mem_rdata, rd);
+        $fwrite(g,"Time (load) in ns is %d\n",$time);
     end
     if( (State == str1) & mem_resp)
     begin
-        $fwrite(h,"On store, PC is %x, mem_address is %x, write data is %x, mbe is %b\n", PC_out, mem_address, mem_wdata, dut.mem_byte_enable);
-        $fwrite(i,"Timeout (store) is %d\n", timeout);
+        $fwrite(f,"On store, PC is %x, mem_address is %x, write data is %x, mbe is %b\n", PC_out, mem_address, mem_wdata, dut.mem_byte_enable);
+        $fwrite(g,"Time (store) in ns is %d\n",$time);
     end
 
 
