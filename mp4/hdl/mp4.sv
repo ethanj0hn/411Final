@@ -78,7 +78,7 @@ cacheline_adaptor ca (
 
 l2_cache level_two_cache (
     .clk(clk),
-
+    .rst(reset),
     /* Physical memory signals */
     .pmem_resp(l2_pmem_resp),
     .pmem_rdata(l2_pmem_rdata),

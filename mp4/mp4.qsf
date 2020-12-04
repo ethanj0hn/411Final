@@ -67,6 +67,14 @@ set_global_assignment -name EDA_TEST_BENCH_FILE hvl/shadow_memory.sv -section_id
 set_global_assignment -name EDA_TEST_BENCH_FILE hvl/source_tb.sv -section_id mp4_tb
 set_global_assignment -name EDA_TEST_BENCH_FILE hvl/tb_itf.sv -section_id mp4_tb
 set_global_assignment -name EDA_TEST_BENCH_FILE hvl/top.sv -section_id mp4_tb
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/anidata_array.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/aniarray.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/anicache_regs.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/anicache_datapath.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/anicache_control.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/l2cache_datapath.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/l2cache_control.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/cache_types.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/arbiter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/l2_cache.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/cacheline_adaptor.sv
@@ -92,4 +100,7 @@ set_global_assignment -name SYSTEMVERILOG_FILE hdl/MEM_stage.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/IF_stage.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/ID_stage.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/EX_stage.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/l2data_array.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/l2cache_regs.sv
+set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/L2array.sv
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
