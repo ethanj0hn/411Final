@@ -86,10 +86,11 @@ rv32i_word IR_IF_ID, IR_ID_EX, IR_EX_MEM, IR_MEM_WB;
 
 // Shift regs for IR
 //
-shift_reg IR_regs(
+shift_reg_IR IR_regs(
     .clk(clk),
     .reset(reset),
-    .load(pipeline_en), // always load for now
+    .load(pipeline_en), 
+    .branchmux_sel(branchmux_sel),
     .in(IR_regs_in), // read from instruction data read from memory
     .IF_ID(IR_IF_ID), // has IF_ID IR value 
     .ID_EX(IR_ID_EX), // has ID_EX IR value
@@ -189,17 +190,17 @@ begin
 
     // Assign use_fwd if src ex = dest mem
     //
-    alumux1_fwd_sel_exmem = fwd::fwd_sel_t'((rs1_idex == rd_exmem) & (rs1_idex != 4'b0000)); 
-    alumux2_fwd_sel_exmem = fwd::fwd_sel_t'((rs2_idex == rd_exmem) & (rs2_idex != 4'b0000));
+    alumux1_fwd_sel_exmem = fwd::fwd_sel_t'((rs1_idex == rd_exmem) & (rs1_idex != 5'b0000) & (CW_EX_MEM.opcode != nop)); 
+    alumux2_fwd_sel_exmem = fwd::fwd_sel_t'((rs2_idex == rd_exmem) & (rs2_idex != 5'b0000) & (CW_EX_MEM.opcode != nop)); 
 
     // Assign use_fwd if src ex = dest wb
     //
-    alumux1_fwd_sel_memwb = fwd::fwd_sel_t'((rs1_idex == rd_memwb) & (rs1_idex != 4'b0000)); 
-    alumux2_fwd_sel_memwb = fwd::fwd_sel_t'((rs2_idex == rd_memwb) & (rs2_idex != 4'b0000));
+    alumux1_fwd_sel_memwb = fwd::fwd_sel_t'((rs1_idex == rd_memwb) & (rs1_idex != 5'b0000) & (CW_MEM_WB.opcode != nop)); 
+    alumux2_fwd_sel_memwb = fwd::fwd_sel_t'((rs2_idex == rd_memwb) & (rs2_idex != 5'b0000) & (CW_MEM_WB.opcode != nop));
 
     // Assign use_fwd if rs2_exmem (register used for writing data to memory) = rd wb
     //
-    wdata_fwd_sel = fwd::fwd_sel_t'((rs2_exmem == rd_memwb));
+    wdata_fwd_sel = fwd::fwd_sel_t'((rs2_exmem == rd_memwb) & (rs2_exmem != 5'b00000) & (CW_MEM_WB.opcode != nop));
 end
 
 // shift reg for generated control words
@@ -273,11 +274,15 @@ end
 rv32i_word regb_buff_out_exmem;
 // take reg_b and buffer in EX/MEM stage buffer
 //
+
+logic regb_buff_sel;
+assign regb_buff_sel = ((rs2_idex == rd_memwb) & (rs2_idex != 5'b00000) & (CW_MEM_WB.opcode != nop) & (CW_MEM_WB.load_regfile));
+
 register regb_buff(
     .clk(clk),
     .rst(reset),
     .load(pipeline_en), // always load for now, change after adding caches
-    .in(reg_b_buff_out),
+    .in((regb_buff_sel ? regfilemux_out : reg_b_buff_out)),
     .out(regb_buff_out_exmem) // to memory
 );
 
@@ -413,7 +418,9 @@ end
 //Internal logic for buffer
 //
 rv32i_word mem_buff_out;
-
+// Internal logic for alu_buffer
+//
+rv32i_word alu_buffer_memwb_out;
 // MEM stage logic
 //
 MEM_stage MEM(
@@ -427,7 +434,7 @@ MEM_stage MEM(
 
     // fwding selects and reg values
     .wdata_fwd_sel(wdata_fwd_sel),
-    .rs2_fwd_memwb(mem_buff_out),
+    .rs2_fwd_memwb(regfilemux_out),
 
     // to wb buffer
     .mem_address_last_two_bits(mem_address_last_two_bits),
@@ -455,10 +462,6 @@ begin
     else
         l_two_bits_buff <= l_two_bits_buff;
 end
-
-// Internal logic for alu_buffer
-//
-rv32i_word alu_buffer_memwb_out;
 
 // buffer alu output after MEM stage
 //
