@@ -220,8 +220,8 @@ always @(posedge itf.clk) begin
 end
 // logic clk,br_en,br_cw,j_cw,take_branch;
 logic clk,br_en;
-logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, inst_addr;
-logic clk,br_en,br_cw,j_cw,take_branch;
+// logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, inst_addr;
+// logic clk,br_en,br_cw,j_cw,take_branch;
 logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out
     , inst_addr, IR_MEM_WB, j_imm_memwb, b_imm_memwb;
 logic [31:0] data_memory_buffer;
