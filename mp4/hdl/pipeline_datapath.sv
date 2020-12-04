@@ -86,10 +86,11 @@ rv32i_word IR_IF_ID, IR_ID_EX, IR_EX_MEM, IR_MEM_WB;
 
 // Shift regs for IR
 //
-shift_reg IR_regs(
+shift_reg_IR IR_regs(
     .clk(clk),
     .reset(reset),
-    .load(pipeline_en), // always load for now
+    .load(pipeline_en), 
+    .branchmux_sel(branchmux_sel),
     .in(IR_regs_in), // read from instruction data read from memory
     .IF_ID(IR_IF_ID), // has IF_ID IR value 
     .ID_EX(IR_ID_EX), // has ID_EX IR value
@@ -275,7 +276,7 @@ rv32i_word regb_buff_out_exmem;
 //
 
 logic regb_buff_sel;
-assign regb_buff_sel = ((rs2_idex == rd_memwb) & (rs2_idex != 5'b00000) & (CW_MEM_WB.opcode != nop));
+assign regb_buff_sel = ((rs2_idex == rd_memwb) & (rs2_idex != 5'b00000) & (CW_MEM_WB.opcode != nop) & (CW_MEM_WB.load_regfile));
 
 register regb_buff(
     .clk(clk),
