@@ -1,20 +1,28 @@
-module tag_array(
+module tag_array #(
+    parameter s_offset = 5,
+    parameter s_index  = 4,
+    parameter s_tag    = 32 - s_offset - s_index,
+    parameter s_mask   = 2**s_offset,
+    parameter s_line   = 8*s_mask,
+    parameter num_sets = 2**s_index
+)
+(
     input logic clk,
     input logic reset,
     input logic load,
-    input logic [2:0] addr,
-    input logic [23:0] tag_in,
+    input logic [s_index-1:0] addr,
+    input logic [s_tag-1:0] tag_in,
     output logic hit,
-    output logic [23:0] rtag
+    output logic [s_tag-1:0] rtag
 );
 
-logic [23:0] data [7:0];
+logic [s_tag - 1:0] data [num_sets - 1:0];
 
 always_ff @(posedge clk)
 begin
     if (reset)
     begin
-        for (int i=0; i<8; i++)
+        for (int i=0; i< num_sets; i++)
             data[i] <= 24'h0;
     end
     else if (load)

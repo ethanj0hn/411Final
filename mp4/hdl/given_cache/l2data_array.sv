@@ -4,7 +4,7 @@ help you update the values in the array. */
 
 module l2data_array #(
     parameter s_offset = 5,
-    parameter s_index = 3
+    parameter s_index = 4
 )
 (
     clk,
