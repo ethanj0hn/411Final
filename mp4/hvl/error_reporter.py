@@ -30,4 +30,5 @@ with open("..\simulation\modelsim\diff_regout.txt", "r") as f:
     # print('')
     print("MP2 (Gold):")
     print(second)
+    # print("here")
     print(time2)

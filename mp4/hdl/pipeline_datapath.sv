@@ -414,6 +414,18 @@ end
 //
 rv32i_word mem_buff_out;
 
+logic [31:0] rs2_fwd_memwb;
+always_comb
+begin
+    if ((CW_MEM_WB.opcode == op_load) & (wdata_fwd_sel == fwd::use_fwd))
+    begin
+        rs2_fwd_memwb = mem_buff_out;
+    end
+    else
+    begin
+        rs2_fwd_memwb = alu_buffer_memwb_out;
+    end
+end
 // MEM stage logic
 //
 MEM_stage MEM(
@@ -427,7 +439,7 @@ MEM_stage MEM(
 
     // fwding selects and reg values
     .wdata_fwd_sel(wdata_fwd_sel),
-    .rs2_fwd_memwb(mem_buff_out),
+    .rs2_fwd_memwb(rs2_fwd_memwb),
 
     // to wb buffer
     .mem_address_last_two_bits(mem_address_last_two_bits),
