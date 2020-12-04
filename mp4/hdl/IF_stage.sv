@@ -34,6 +34,56 @@ logic [31:0] j_imm;
 assign b_imm = {{20{inst_rdata[31]}}, inst_rdata[7], inst_rdata[30:25], inst_rdata[11:8], 1'b0};
 assign j_imm = {{12{inst_rdata[31]}}, inst_rdata[19:12], inst_rdata[20], inst_rdata[30:21], 1'b0};
 
+// 2 bit up down branch predictor
+enum int unsigned
+{
+    strongly_not_taken,
+    not_taken,
+    taken,
+    strongly_taken
+} state, next_state;
+
+always_comb
+begin
+    next_state = state;
+    if ((rv32i_opcode'(ir_id_ex[6:0]) == op_br) | (rv32i_opcode'(ir_id_ex[6:0]) == op_jal) | (rv32i_opcode'(ir_id_ex[6:0]) == op_jalr)) begin
+        case (state)
+            strongly_not_taken: begin
+                if (correct_br)
+                    next_state = not_taken;
+                else
+                    next_state = strongly_not_taken;
+            end
+            not_taken: begin
+                if (correct_br)
+                    next_state = taken;
+                else
+                    next_state = strongly_not_taken;
+            end
+            taken: begin
+                if (correct_br)
+                    next_state = strongly_taken;
+                else
+                    next_state = not_taken;
+            end
+            strongly_taken: begin
+                if (correct_br)
+                    next_state = strongly_taken;
+                else
+                    next_state = taken;
+            end
+            default: ;
+        endcase
+    end
+end
+
+/* Next State Assignment */
+always_ff @(posedge clk) begin: next_state_assignment
+	 state <= next_state;
+end
+
+
+// prediction and correction logic
 always_comb
 begin
     inst_read = 1'b1; // always read
@@ -56,8 +106,14 @@ begin
         default:
         begin
             if (rv32i_opcode'(inst_rdata[6:0]) == op_br) begin
-                PC_in = inst_addr + b_imm;
-                predicted_branch = 1'b1; // modify for prediction
+                if ((state == strongly_taken) | (state == taken)) begin
+                    PC_in = inst_addr + b_imm;
+                    predicted_branch = 1'b1;
+                end
+                else begin
+                    PC_in = inst_addr + 32'h4;
+                    predicted_branch = 1'b0;
+                end
             end
             else if (rv32i_opcode'(inst_rdata[6:0]) == op_jal) begin
                 PC_in = inst_addr + j_imm;
