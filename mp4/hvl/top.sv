@@ -28,8 +28,6 @@ integer i,j,k,l;
 initial begin
     i = $fopen("mp4_regoutput.txt","w");
     j = $fopen("mp4_regtimeout.txt","w");
-    k = $fopen("mp4_loadstore.txt","w");
-    l = $fopen("mp4_lstimeout.txt", "w");
 end
 
 assign rvfi.commit = 0; //dut.datapath.ID.regfile.load | dut.datapath.IF.PC.load; // Set high when a valid instruction is modifying regfile or PC
@@ -157,6 +155,11 @@ logic regfile_load, pipeline_en;
 logic [31:0] regfile_in, PC_out;
 logic [4:0] regfile_addr;
 rv32i_opcode EX_MEM_opcode;
+rv32i_control_word CW_ID_EX, CW_EX_MEM, CW_MEM_WB;
+
+assign CW_ID_EX = dut.datapath.CW_ID_EX; // control words in IDEX, EXMEM, MEMWB
+assign CW_EX_MEM = dut.datapath.CW_EX_MEM;
+assign CW_MEM_WB = dut.datapath.CW_MEM_WB;
 
 always_comb
 begin
@@ -181,25 +184,46 @@ always @(posedge itf.clk) begin
 		$fwrite(i,"-PC is %x, input to regfile is %x, address is %d\n",PC_out,regfile_in,regfile_addr);
         $fwrite(j,"Time (regfile commit) in ns is %d\n",$time / 1000);
     end
+
     if ((EX_MEM_opcode == op_load) & pipeline_en)
     begin
         $fwrite(i,"On load, PC is %x, mem_address is %x, read data is %x, dest reg address is %d\n", 
             dut.datapath.PC_EX_MEM, dut.datapath.data_addr, dut.datapath.data_rdata, dut.datapath.IR_EX_MEM[11:7]);
         $fwrite(j,"Time (load) in ns is %d\n",$time / 1000);
     end
+
     if ( (EX_MEM_opcode == op_store) & pipeline_en)
     begin
         $fwrite(i, "On store, PC is %x, mem_address is %x, write data is %x, mbe is %b\n", 
             dut.datapath.PC_EX_MEM, dut.datapath.data_addr, dut.datapath.data_wdata, dut.datapath.data_mbe);
         $fwrite(j,"Time (store) in ns is %d\n",$time / 1000);
     end
+
+    if( (CW_MEM_WB.opcode == op_jal) & pipeline_en)
+    begin
+        $fwrite(i, "On jal, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, dut.datapath.PC_MEM_WB + j_imm_memwb);
+        $fwrite(j, "Time (jal) in ns is %d\n",$time / 1000);
+    end
+
+    if( (CW_MEM_WB.opcode == op_jalr) & pipeline_en)
+    begin
+        $fwrite(i, "On jalr, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, dut.datapath.alu_buffer_memwb_out);
+        $fwrite(j, "Time (jalr) in ns is %d\n",$time / 1000);
+    end
+
+    if( (CW_MEM_WB.opcode == op_br) & pipeline_en)
+    begin
+        $fwrite(i, "On br, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, 
+            dut.datapath.br_en_memwb ? dut.datapath.PC_MEM_WB + b_imm_memwb : dut.datapath.PC_MEM_WB + 32'h4);
+        $fwrite(j, "Time (br) in ns is %d\n",$time / 1000);
+    end
 end
 logic clk,br_en,br_cw,j_cw,take_branch;
-logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, inst_addr;
+logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out
+    , inst_addr, IR_MEM_WB, j_imm_memwb, b_imm_memwb;
 logic [31:0] data_memory_buffer;
 logic [31:0] registers [32];
 logic load_regfile;
-rv32i_control_word CW_ID_EX, CW_EX_MEM, CW_MEM_WB;
 branchmux::branchmux_sel_t branchmux_sel;
 rv32i_control_word ctrl;
 
@@ -215,14 +239,14 @@ assign data_addr = dut.data_addr;
 assign data_wdata = dut.data_wdata;
 assign data_memory_buffer = dut.datapath.data_memory_buffer.out; // what's being read from data memory
 assign load_regfile = dut.datapath.ID.load_regfile_wb; // load regfile signal
-assign CW_ID_EX = dut.datapath.CW_ID_EX; // control words in IDEX, EXMEM, MEMWB
-assign CW_EX_MEM = dut.datapath.CW_EX_MEM;
-assign CW_MEM_WB = dut.datapath.CW_MEM_WB;
 assign alu_out = dut.datapath.alu_out; // alu_out
 assign alu_buffer_exmem_out = dut.datapath.alu_buffer_exmem_out; // alu buffer outputs
 assign alu_buffer_memwb_out = dut.datapath.alu_buffer_memwb_out;
 assign branchmux_sel = dut.datapath.ID.branchmux_sel; // branch mux select in datapath
 assign ctrl = dut.datapath.ID.ctrl; // generated control word
+assign IR_MEM_WB = dut.datapath.IR_MEM_WB;
+assign j_imm_memwb = {{12{IR_MEM_WB[31]}}, IR_MEM_WB[19:12], IR_MEM_WB[20], IR_MEM_WB[30:21], 1'b0};
+assign b_imm_memwb = {{20{IR_MEM_WB[31]}}, IR_MEM_WB[7], IR_MEM_WB[30:25], IR_MEM_WB[11:8], 1'b0};
 
 for(genvar i = 0; i<32;i++)
 assign registers[i] = dut.datapath.ID.regfile.data[i];

@@ -49,8 +49,6 @@ initial begin
     // end
 	f = $fopen("mp2_regoutput.txt","w");
     g = $fopen("mp2_regtimeout.txt", "w");
-    h = $fopen("mp2_loadstore.txt","w");
-    i = $fopen("mp2_lstimeout.txt", "w");
 end
 
 logic loadmar, loadmdr,mem_resp,mem_read,mem_write;
@@ -181,6 +179,23 @@ always @(posedge itf.clk) begin
         $fwrite(g,"Time (store) in ns is %d\n",$time);
     end
 
+    if( (State == jal))
+    begin
+        $fwrite(f, "On jal, PC is %x, PC_in is %x.\n", pc, pcin);
+        $fwrite(g, "Time (jal) in ns is %d\n",$time);
+    end
+
+    if( (State == jalr))
+    begin
+        $fwrite(f, "On jalr, PC is %x, PC_in is %x.\n", pc, pcin);
+        $fwrite(g, "Time (jalr) in ns is %d\n",$time);
+    end
+
+    if( (State == br))
+    begin
+        $fwrite(f, "On br, PC is %x, PC_in is %x.\n", pc, pcin);
+        $fwrite(g, "Time (br) in ns is %d\n",$time);
+    end
 
 end
 
