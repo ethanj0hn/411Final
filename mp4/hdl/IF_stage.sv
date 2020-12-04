@@ -30,11 +30,9 @@ logic [31:0] PC_in;
 
 logic [31:0] b_imm;
 logic [31:0] j_imm;
-logic [31:0] j_imm_buffered;
 
 assign b_imm = {{20{inst_rdata[31]}}, inst_rdata[7], inst_rdata[30:25], inst_rdata[11:8], 1'b0};
 assign j_imm = {{12{inst_rdata[31]}}, inst_rdata[19:12], inst_rdata[20], inst_rdata[30:21], 1'b0};
-assign j_imm_buffered = {{12{ir_id_ex[31]}}, ir_id_ex[19:12], ir_id_ex[20], ir_id_ex[30:21], 1'b0};
 
 always_comb
 begin
@@ -48,7 +46,7 @@ begin
         branchmux::br_taken:
         begin
             if (rv32i_opcode'(ir_id_ex[6:0]) == op_jalr)
-                PC_in = non_br_PC + j_imm_buffered;
+                PC_in = br_PC;
             else if (correct_br)
                 PC_in = br_PC;
             else
