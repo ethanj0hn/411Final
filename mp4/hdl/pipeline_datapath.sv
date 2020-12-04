@@ -273,11 +273,15 @@ end
 rv32i_word regb_buff_out_exmem;
 // take reg_b and buffer in EX/MEM stage buffer
 //
+
+logic regb_buff_sel;
+assign regb_buff_sel = ((rs2_idex == rd_memwb) & (rs2_idex != 5'b00000) & (CW_MEM_WB.opcode != nop));
+
 register regb_buff(
     .clk(clk),
     .rst(reset),
     .load(pipeline_en), // always load for now, change after adding caches
-    .in(reg_b_buff_out),
+    .in((regb_buff_sel ? regfilemux_out : reg_b_buff_out)),
     .out(regb_buff_out_exmem) // to memory
 );
 
