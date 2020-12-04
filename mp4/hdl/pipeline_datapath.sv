@@ -413,7 +413,9 @@ end
 //Internal logic for buffer
 //
 rv32i_word mem_buff_out;
-
+// Internal logic for alu_buffer
+//
+rv32i_word alu_buffer_memwb_out;
 logic [31:0] rs2_fwd_memwb;
 always_comb
 begin
@@ -467,10 +469,6 @@ begin
     else
         l_two_bits_buff <= l_two_bits_buff;
 end
-
-// Internal logic for alu_buffer
-//
-rv32i_word alu_buffer_memwb_out;
 
 // buffer alu output after MEM stage
 //
