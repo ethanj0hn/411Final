@@ -28,6 +28,8 @@ integer i,j,k,l;
 initial begin
     i = $fopen("mp4_regoutput.txt","w");
     j = $fopen("mp4_regtimeout.txt","w");
+    k = $fopen("mp4_jumpout.txt","w");
+    l = $fopen("mp4_jumptime.txt", "w");
 end
 
 assign rvfi.commit = 0; //dut.datapath.ID.regfile.load | dut.datapath.IF.PC.load; // Set high when a valid instruction is modifying regfile or PC
@@ -201,21 +203,21 @@ always @(posedge itf.clk) begin
 
     if( (CW_MEM_WB.opcode == op_jal) & pipeline_en)
     begin
-        $fwrite(i, "On jal, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, dut.datapath.PC_MEM_WB + j_imm_memwb);
-        $fwrite(j, "Time (jal) in ns is %d\n",$time / 1000);
+        $fwrite(k, "On jal, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, dut.datapath.PC_MEM_WB + j_imm_memwb);
+        $fwrite(l, "Time (jal) in ns is %d\n",$time / 1000);
     end
 
     if( (CW_MEM_WB.opcode == op_jalr) & pipeline_en)
     begin
-        $fwrite(i, "On jalr, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, dut.datapath.alu_buffer_memwb_out);
-        $fwrite(j, "Time (jalr) in ns is %d\n",$time / 1000);
+        $fwrite(k, "On jalr, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, dut.datapath.alu_buffer_memwb_out);
+        $fwrite(l, "Time (jalr) in ns is %d\n",$time / 1000);
     end
 
     if( (CW_MEM_WB.opcode == op_br) & pipeline_en)
     begin
-        $fwrite(i, "On br, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, 
+        $fwrite(k, "On br, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, 
             dut.datapath.br_en_memwb ? dut.datapath.PC_MEM_WB + b_imm_memwb : dut.datapath.PC_MEM_WB + 32'h4);
-        $fwrite(j, "Time (br) in ns is %d\n",$time / 1000);
+        $fwrite(l, "Time (br) in ns is %d\n",$time / 1000);
     end
 end
 // logic clk,br_en,br_cw,j_cw,take_branch;

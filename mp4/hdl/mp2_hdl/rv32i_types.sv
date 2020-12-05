@@ -106,8 +106,8 @@ typedef struct packed {
     rv32i_word mem_addr;
     logic [3:0] rmask;
     rv32i_mem_wmask wmask;
-    logic [63:0] mem_rdata;
-    logic [63:0] mem_wdata;
+    logic [31:0] mem_rdata;
+    logic [31:0] mem_wdata;
 } rvfi_signals;
 
 
