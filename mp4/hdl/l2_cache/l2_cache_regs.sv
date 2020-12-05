@@ -1,20 +1,37 @@
-module tag_array(
-    input logic clk,
-    input logic reset,
-    input logic load,
-    input logic [2:0] addr,
-    input logic [23:0] tag_in,
-    output logic hit,
-    output logic [23:0] rtag
+module tag_array #(
+    parameter s_offset = 5,
+    parameter s_index  = 4
+)
+(
+    clk,
+    reset,
+    load,
+    addr,
+    tag_in,
+    hit,
+    rtag
 );
 
-logic [23:0] data [7:0];
+localparam s_tag    = 32 - s_offset - s_index;
+localparam s_mask   = 2**s_offset;
+localparam s_line   = 8*s_mask;
+localparam num_sets = 2**s_index;
+
+input clk;
+input reset;
+input load;
+input [s_index-1:0] addr;
+input [s_tag-1:0] tag_in;
+output logic hit;
+output logic [s_tag-1:0] rtag;
+
+logic [s_tag-1:0] data [num_sets-1:0];
 
 always_ff @(posedge clk)
 begin
     if (reset)
     begin
-        for (int i=0; i<8; i++)
+        for (int i=0; i<num_sets; i++)
             data[i] <= 24'h0;
     end
     else if (load)

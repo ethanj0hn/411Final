@@ -4,7 +4,7 @@ logic gates and other supporting logic. */
 
 module l2_cache_datapath #(
     parameter s_offset = 5,
-    parameter s_index  = 3,
+    parameter s_index  = 4,
     parameter s_tag    = 32 - s_offset - s_index,
     parameter s_mask   = 2**s_offset,
     parameter s_line   = 8*s_mask,
@@ -55,13 +55,13 @@ end
 
 // LRU metadata array
 //
-l2_array#(3,1) LRU_arr(
+l2_array#(4,1) LRU_arr(
     .clk(clk),
     .rst(reset),
     .read(1'b1), // always read
     .load(load_lru),
-    .rindex(mem_address[7:5]), // 5 bits offset, then set index
-    .windex(mem_address[7:5]),
+    .rindex(mem_address[8:5]), // 5 bits offset, then set index
+    .windex(mem_address[8:5]),
     .datain(LRU_in), // from above
     .dataout(LRU),
     .dataout_imm() 
@@ -73,13 +73,13 @@ logic valid_0_o,valid_0_i;
 
 // for valid bits for way 0, can always put data in as 1'b1, since we never load invalid data except on reset
 //
-l2_array#(3,1) valid_0(
+l2_array#(4,1) valid_0(
     .clk(clk),
     .rst(reset),
     .read(1'b1), // always read
     .load(WE0), // load valid whenever we write to cache registers and LRU is way 0
-    .rindex(mem_address[7:5]), // 5 bits offset, then set index
-    .windex(mem_address[7:5]),
+    .rindex(mem_address[8:5]), // 5 bits offset, then set index
+    .windex(mem_address[8:5]),
     .datain(1'b1), // always 1 because we never load invalid
     .dataout(valid_0_o), // output from valid 0
     .dataout_imm(valid_0_i) // immediate output from valid0
@@ -91,13 +91,13 @@ logic valid_1_o, valid_1_i;
 
 // for valid bits for way 0, can always put data in as 1'b1, since we never load invalid data except on reset
 //
-l2_array#(3,1) valid_1(
+l2_array#(4,1) valid_1(
     .clk(clk),
     .rst(reset),
     .read(1'b1),
     .load(WE1), // load valid whenever we write to cache registers & LRU is way 1
-    .rindex(mem_address[7:5]), // 5 bits offset, then set index
-    .windex(mem_address[7:5]),
+    .rindex(mem_address[8:5]), // 5 bits offset, then set index
+    .windex(mem_address[8:5]),
     .datain(1'b1), // always 1 because we never load invalid
     .dataout(valid_1_o), // output from valid 0
     .dataout_imm(valid_1_i) // immediate output from valid 1
@@ -108,13 +108,13 @@ l2_array#(3,1) valid_1(
 logic dirty_0_o, dirty0_in;
 
 // for dirty bits for way 0. 
-l2_array#(3,1) dirty_0(
+l2_array#(4,1) dirty_0(
     .clk(clk),
     .rst(reset), 
     .read(1'b1),
     .load(ld_dirty0), // load dirty when set_dirty_bit and it is 
-    .rindex(mem_address[7:5]), // 5 bits offset, then set index
-    .windex(mem_address[7:5]),
+    .rindex(mem_address[8:5]), // 5 bits offset, then set index
+    .windex(mem_address[8:5]),
     .datain(!clear_dirty0), // if not clearing, set data in as 1 
     .dataout(dirty_0_o), // output from valid 0
     .dataout_imm()
@@ -125,13 +125,13 @@ l2_array#(3,1) dirty_0(
 logic dirty_1_o, dirty1_in;
 
 // for dirty bits for way 1. 
-l2_array#(3,1) dirty_1(
+l2_array#(4,1) dirty_1(
     .clk(clk),
     .rst(reset), 
     .read(1'b1),
     .load(ld_dirty1), // load dirty when set_dirty_bit and it is 
-    .rindex(mem_address[7:5]), // 5 bits offset, then set index
-    .windex(mem_address[7:5]),
+    .rindex(mem_address[8:5]), // 5 bits offset, then set index
+    .windex(mem_address[8:5]),
     .datain(!clear_dirty1), // if not clearing, set data in as 1 
     .dataout(dirty_1_o), // output from valid 0
     .dataout_imm()
@@ -151,14 +151,14 @@ end
 //
 logic hit0_t;
 assign hit0 = hit0_t & valid_0_i;
-logic [23:0] eviction_addr0;
+logic [22:0] eviction_addr0;
 
-tag_array tag_way0(
+tag_array#(5,4) tag_way0(
     .clk(clk),
     .reset(reset),
     .load(WE0),
-    .addr(mem_address[7:5]),
-    .tag_in(mem_address[31:8]),
+    .addr(mem_address[8:5]),
+    .tag_in(mem_address[31:9]),
     .hit(hit0_t),
     .rtag(eviction_addr0)
 );
@@ -167,14 +167,14 @@ tag_array tag_way0(
 //
 logic hit1_t;
 assign hit1 = hit1_t & valid_1_i;
-logic [23:0] eviction_addr1;
+logic [22:0] eviction_addr1;
 
-tag_array tag_way1(
+tag_array#(5,4) tag_way1(
     .clk(clk),
     .reset(reset),
     .load(WE1),
-    .addr(mem_address[7:5]),
-    .tag_in(mem_address[31:8]),
+    .addr(mem_address[8:5]),
+    .tag_in(mem_address[31:9]),
     .hit(hit1_t),
     .rtag(eviction_addr1)
 );
@@ -188,9 +188,9 @@ logic [31:0] eviction_addr;
 always_comb
 begin
     if (!eviction_addr_sel) // LRU is 0
-        eviction_addr = {eviction_addr0,mem_address[7:5],5'b0};
+        eviction_addr = {eviction_addr0,mem_address[8:5],5'b0};
     else
-        eviction_addr = {eviction_addr1,mem_address[7:5],5'b0};
+        eviction_addr = {eviction_addr1,mem_address[8:5],5'b0};
 end
 
 // selection of which address to assign to
@@ -234,13 +234,13 @@ write_mux way0_mux(
     .data_to_reg(way0_din)
 );
 
-l2_data_array #(5,3) way0_d(
+l2_data_array #(5,4) way0_d(
     .clk(clk),
     .rst(reset),
     .read(1'b1),
     .write_en(mem_b_en0),
-    .rindex(mem_address[7:5]),
-    .windex(mem_address[7:5]),
+    .rindex(mem_address[8:5]),
+    .windex(mem_address[8:5]),
     .datain(way0_din),
     .dataout(data0)
 );
@@ -277,13 +277,13 @@ write_mux way1_mux(
     .data_to_reg(way1_din)
 );
 
-l2_data_array #(5,3) way1_d(
+l2_data_array #(5,4) way1_d(
     .clk(clk),
     .rst(reset),
     .read(1'b1),
     .write_en(mem_b_en1),
-    .rindex(mem_address[7:5]),
-    .windex(mem_address[7:5]),
+    .rindex(mem_address[8:5]),
+    .windex(mem_address[8:5]),
     .datain(way1_din),
     .dataout(data1)
 );

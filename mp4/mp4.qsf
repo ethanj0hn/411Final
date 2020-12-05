@@ -73,7 +73,6 @@ set_global_assignment -name SYSTEMVERILOG_FILE hdl/l2_cache/l2_cache_datapath.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/l2_cache/l2_cache_control.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/l2_cache/l2_cache.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/l2_cache/l2_array.sv
-set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/anidata_array.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/arbiter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/cacheline_adaptor.sv
 set_global_assignment -name SYSTEMVERILOG_FILE hdl/given_cache/line_adapter.sv
