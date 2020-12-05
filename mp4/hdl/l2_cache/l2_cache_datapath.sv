@@ -31,14 +31,21 @@ module l2_cache_datapath #(
     input logic [31:0] mem_address, // address from CPU
     input logic [s_line - 1:0] pmem_rdata, // data from memory on read
     input logic [255:0] mem_wdata256, // write data from adapter/CPU
+    input logic [31:0] inst_addr,
     output logic [31:0] pmem_address, // 256 bit aligned address when reading from memory
     output logic [s_line - 1:0] mem_rdata256, // data to data bus->CPU
     output logic [s_line - 1:0] pmem_wdata, // to cacheline adapter for writes to memory
     output logic hit0, // hits on either of the ways
     output logic hit1,
     output logic dirty_eviction, // is eviction going to be dirty?
-    output logic LRU // LRU bit to send to control
+    output logic LRU, // LRU bit to send to control
+    output logic inst_present
 );
+
+// prefetching logic
+logic pout_1;
+logic pout_2;
+assign inst_present = pout_1 | pout_2;
 
 // internal logic for LRU
 //
@@ -80,9 +87,11 @@ l2_array#(4,1) valid_0(
     .load(WE0), // load valid whenever we write to cache registers and LRU is way 0
     .rindex(mem_address[8:5]), // 5 bits offset, then set index
     .windex(mem_address[8:5]),
+    .pindex(inst_addr[8:5] + 4'b0001),
     .datain(1'b1), // always 1 because we never load invalid
     .dataout(valid_0_o), // output from valid 0
-    .dataout_imm(valid_0_i) // immediate output from valid0
+    .dataout_imm(valid_0_i), // immediate output from valid0
+    .pout(pout_1)
 );
 
 // internal logic for valid_1
@@ -98,9 +107,11 @@ l2_array#(4,1) valid_1(
     .load(WE1), // load valid whenever we write to cache registers & LRU is way 1
     .rindex(mem_address[8:5]), // 5 bits offset, then set index
     .windex(mem_address[8:5]),
+    .pindex(inst_addr[8:5] + 4'b0001),
     .datain(1'b1), // always 1 because we never load invalid
     .dataout(valid_1_o), // output from valid 0
-    .dataout_imm(valid_1_i) // immediate output from valid 1
+    .dataout_imm(valid_1_i), // immediate output from valid 1
+    .pout(pout_2)
 );
 
 // internal logic for dirty_0
