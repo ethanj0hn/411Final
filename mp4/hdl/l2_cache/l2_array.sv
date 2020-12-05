@@ -11,11 +11,13 @@ module l2_array #(
     load,
     rindex,
     windex,
-    pindex,
+    iindex,
+    dindex,
     datain,
     dataout,
     dataout_imm,
-    pout
+    iout,
+    dout
 );
 
 localparam num_sets = 2**s_index;
@@ -26,18 +28,22 @@ input read;
 input load;
 input [s_index-1:0] rindex;
 input [s_index-1:0] windex;
-input [s_index-1:0] pindex;
+input [s_index-1:0] iindex;
+input [s_index-1:0] dindex;
 input [width-1:0] datain;
 output logic [width-1:0] dataout;
 output logic [width-1:0] dataout_imm;
-output logic pout;
+output logic iout;
+output logic dout;
 
 logic [width-1:0] data [num_sets-1:0] /* synthesis ramstyle = "logic" */;
 logic [width-1:0] _dataout;
 assign dataout = _dataout;
 assign dataout_imm = data[rindex]; // immediate read
 
-assign pout = data[pindex];
+assign iout = data[iindex];
+assign dout = data[dindex];
+
 
 always_ff @(posedge clk)
 begin

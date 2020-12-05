@@ -15,7 +15,9 @@ module l2_cache #(
 
     /* prefetching signals */
     input logic [31:0] inst_addr,
+    input logic [31:0] prefetch_data_addr,
     output logic inst_present,
+    output logic data_present,
 
     /* signals to arbiter */
     input logic mem_read, // take in reads and write signals from CPU

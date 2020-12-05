@@ -56,6 +56,9 @@ logic [31:0] data_wdata;
 
 // prefetching signals
 logic inst_present;
+logic data_present;
+logic [31:0] prefetch_data_addr;
+
 
 
 cacheline_adaptor ca (
@@ -86,6 +89,8 @@ l2_cache level_two_cache (
     /* Prefetching signals */
     .inst_addr(inst_addr),
     .inst_present(inst_present),
+    .prefetch_data_addr(prefetch_data_addr),
+    .data_present(data_present),
 
     /* Physical memory signals */
     .pmem_resp(l2_pmem_resp),
