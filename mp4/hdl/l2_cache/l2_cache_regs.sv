@@ -9,7 +9,11 @@ module tag_array #(
     addr,
     tag_in,
     hit,
-    rtag
+    rtag,
+    iindex,
+    dindex,
+    iout,
+    dout
 );
 
 localparam s_tag    = 32 - s_offset - s_index;
@@ -25,7 +29,16 @@ input [s_tag-1:0] tag_in;
 output logic hit;
 output logic [s_tag-1:0] rtag;
 
+// prefetching
+input logic [s_index-1:0] iindex;
+input logic [s_index-1:0] dindex;
+output logic [s_tag-1:0] iout;
+output logic [s_tag-1:0] dout;
+
 logic [s_tag-1:0] data [num_sets-1:0];
+
+assign iout = data[iindex];
+assign dout = data[dindex];
 
 always_ff @(posedge clk)
 begin
