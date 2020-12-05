@@ -28,6 +28,8 @@ integer i,j,k,l;
 initial begin
     i = $fopen("mp4_regoutput.txt","w");
     j = $fopen("mp4_regtimeout.txt","w");
+    k = $fopen("mp4_jumpout.txt","w");
+    l = $fopen("mp4_jumptime.txt", "w");
 end
 
 assign rvfi.commit = 0; //dut.datapath.ID.regfile.load | dut.datapath.IF.PC.load; // Set high when a valid instruction is modifying regfile or PC
@@ -201,24 +203,27 @@ always @(posedge itf.clk) begin
 
     if( (CW_MEM_WB.opcode == op_jal) & pipeline_en)
     begin
-        $fwrite(i, "On jal, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, dut.datapath.PC_MEM_WB + j_imm_memwb);
-        $fwrite(j, "Time (jal) in ns is %d\n",$time / 1000);
+        $fwrite(k, "On jal, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, dut.datapath.PC_MEM_WB + j_imm_memwb);
+        $fwrite(l, "Time (jal) in ns is %d\n",$time / 1000);
     end
 
     if( (CW_MEM_WB.opcode == op_jalr) & pipeline_en)
     begin
-        $fwrite(i, "On jalr, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, dut.datapath.alu_buffer_memwb_out);
-        $fwrite(j, "Time (jalr) in ns is %d\n",$time / 1000);
+        $fwrite(k, "On jalr, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, dut.datapath.alu_buffer_memwb_out);
+        $fwrite(l, "Time (jalr) in ns is %d\n",$time / 1000);
     end
 
     if( (CW_MEM_WB.opcode == op_br) & pipeline_en)
     begin
-        $fwrite(i, "On br, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, 
+        $fwrite(k, "On br, PC is %x, PC_in is %x.\n", dut.datapath.PC_MEM_WB, 
             dut.datapath.br_en_memwb ? dut.datapath.PC_MEM_WB + b_imm_memwb : dut.datapath.PC_MEM_WB + 32'h4);
-        $fwrite(j, "Time (br) in ns is %d\n",$time / 1000);
+        $fwrite(l, "Time (br) in ns is %d\n",$time / 1000);
     end
 end
-logic clk,br_en,br_cw,j_cw,take_branch;
+// logic clk,br_en,br_cw,j_cw,take_branch;
+logic clk,br_en;
+// logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, inst_addr;
+// logic clk,br_en,br_cw,j_cw,take_branch;
 logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out
     , inst_addr, IR_MEM_WB, j_imm_memwb, b_imm_memwb;
 logic [31:0] data_memory_buffer;
@@ -229,9 +234,9 @@ rv32i_control_word ctrl;
 
 assign clk = itf.clk;
 assign br_en = dut.datapath.br_en; // branch enable from datapath
-assign br_cw = dut.datapath.is_br; // branch operation from execute variable
-assign j_cw = dut.datapath.is_jump; // jump operation from execute variable
-assign take_branch = dut.datapath.take_branch; // should you take branch?
+// assign br_cw = dut.datapath.is_br; // branch operation from execute variable
+// assign j_cw = dut.datapath.is_jump; // jump operation from execute variable
+// assign take_branch = dut.datapath.take_branch; // should you take branch?
 assign inst_addr = dut.inst_addr; // top level signals
 assign inst_rdata = dut.inst_rdata;
 assign data_rdata = dut.data_rdata;
