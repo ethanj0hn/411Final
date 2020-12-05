@@ -71,6 +71,13 @@ typedef enum bit [2:0] {
     alu_and = 3'b111
 } alu_ops;
 
+typedef enum bit [1:0] {
+    start = 2'b00,
+    mem_resp = 2'b01,
+    wait_ = 2'b10,
+    process_dirty_eviction = 2'b11
+} ewb_states;
+
 typedef struct packed {
     rv32i_opcode opcode;
     alu_ops aluop;
