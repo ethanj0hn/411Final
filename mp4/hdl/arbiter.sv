@@ -79,25 +79,11 @@ begin
         ready: begin
             if (i_pmem_read | d_pmem_read | d_pmem_write) begin
 
-                if (i_pmem_read) begin
-
-                    // inputs
-                    ab_pmem_read = i_pmem_read;
-                    ab_pmem_write = i_pmem_write;
-                    ab_pmem_address = i_pmem_address;
-                    ab_pmem_wdata = i_pmem_wdata;
-                    
-                    // outputs to icache
-                    i_pmem_rdata = ab_pmem_rdata;
-                    i_pmem_resp = ab_pmem_resp;
-                    
-                    // outputs to dcache
-                    d_pmem_rdata = 256'b0;
-                    d_pmem_resp = 1'b0;
-                end
-                else begin
+                
+                if (d_pmem_read | d_pmem_write) begin
 
                     // update predicted data access by stride and save previous
+
                     load_data = 1'b1;
                     
                     if (prev_out != 32'b0)
@@ -117,6 +103,22 @@ begin
                     // outputs to icache
                     i_pmem_rdata = 256'b0;
                     i_pmem_resp = 1'b0;
+                end
+                else begin
+
+                    // inputs
+                    ab_pmem_read = i_pmem_read;
+                    ab_pmem_write = i_pmem_write;
+                    ab_pmem_address = i_pmem_address;
+                    ab_pmem_wdata = i_pmem_wdata;
+                    
+                    // outputs to icache
+                    i_pmem_rdata = ab_pmem_rdata;
+                    i_pmem_resp = ab_pmem_resp;
+                    
+                    // outputs to dcache
+                    d_pmem_rdata = 256'b0;
+                    d_pmem_resp = 1'b0;
                 end
             end
             else if ((prefetch_data_addr != 32'b0) & (~data_present))
