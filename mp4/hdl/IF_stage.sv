@@ -34,14 +34,7 @@ logic [31:0] j_imm;
 assign b_imm = {{20{inst_rdata[31]}}, inst_rdata[7], inst_rdata[30:25], inst_rdata[11:8], 1'b0};
 assign j_imm = {{12{inst_rdata[31]}}, inst_rdata[19:12], inst_rdata[20], inst_rdata[30:21], 1'b0};
 
-// 2 bit up down branch predictor
-enum int unsigned
-{
-    strongly_not_taken,
-    not_taken,
-    taken,
-    strongly_taken
-} state, next_state;
+predictor_state state, next_state;
 
 always_comb
 begin
