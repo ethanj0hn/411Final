@@ -54,6 +54,9 @@ logic [3:0] data_mbe; // mem_byte_enable, signals data port address
 logic [31:0] data_addr; 
 logic [31:0] data_wdata;
 
+// prefetching signals
+logic inst_present;
+
 
 cacheline_adaptor ca (
     .clk(clk),
@@ -79,6 +82,11 @@ cacheline_adaptor ca (
 l2_cache level_two_cache (
     .clk(clk),
     .rst(reset),
+
+    /* Prefetching signals */
+    .inst_addr(inst_addr),
+    .inst_present(inst_present),
+
     /* Physical memory signals */
     .pmem_resp(l2_pmem_resp),
     .pmem_rdata(l2_pmem_rdata),

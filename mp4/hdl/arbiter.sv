@@ -19,6 +19,7 @@ module arbiter(
     input logic [255:0] ab_pmem_rdata,
     input logic ab_pmem_resp,
     input logic [31:0] inst_addr,
+    input logic inst_present,
 
     output logic ab_pmem_read,
     output logic ab_pmem_write,
@@ -34,7 +35,6 @@ module arbiter(
 enum int unsigned
 {
     ready,
-	serve_request,
     prefetch
 } state, next_state;
 
@@ -53,47 +53,43 @@ begin
 
     case (state)
         ready: begin
-            if (i_pmem_read | d_pmem_read | d_pmem_write)
-                next_state = serve_request;
-            else
+            if (i_pmem_read | d_pmem_read | d_pmem_write) begin
+
+                if (i_pmem_read) begin
+
+                    // inputs
+                    ab_pmem_read = i_pmem_read;
+                    ab_pmem_write = i_pmem_write;
+                    ab_pmem_address = i_pmem_address;
+                    ab_pmem_wdata = i_pmem_wdata;
+                    
+                    // outputs to icache
+                    i_pmem_rdata = ab_pmem_rdata;
+                    i_pmem_resp = ab_pmem_resp;
+                    
+                    // outputs to dcache
+                    d_pmem_rdata = 256'b0;
+                    d_pmem_resp = 1'b0;
+                end
+                else begin
+
+                    // inputs
+                    ab_pmem_read = d_pmem_read;
+                    ab_pmem_write = d_pmem_write;
+                    ab_pmem_address = d_pmem_address;
+                    ab_pmem_wdata = d_pmem_wdata;
+
+                    // outputs to dcache
+                    d_pmem_rdata = ab_pmem_rdata;
+                    d_pmem_resp = ab_pmem_resp;
+
+                    // outputs to icache
+                    i_pmem_rdata = 256'b0;
+                    i_pmem_resp = 1'b0;
+                end
+            end
+            else if (~inst_present)
                 next_state = prefetch;
-        end
-        serve_request: begin
-            if (~i_pmem_read & ~d_pmem_read & ~d_pmem_write)
-                next_state = ready;
-
-            if (i_pmem_read) begin
-
-                // inputs
-                ab_pmem_read = i_pmem_read;
-                ab_pmem_write = i_pmem_write;
-                ab_pmem_address = i_pmem_address;
-                ab_pmem_wdata = i_pmem_wdata;
-                
-                // outputs to icache
-                i_pmem_rdata = ab_pmem_rdata;
-                i_pmem_resp = ab_pmem_resp;
-                
-                // outputs to dcache
-                d_pmem_rdata = 256'b0;
-                d_pmem_resp = 1'b0;
-            end
-            else begin
-
-                // inputs
-                ab_pmem_read = d_pmem_read;
-                ab_pmem_write = d_pmem_write;
-                ab_pmem_address = d_pmem_address;
-                ab_pmem_wdata = d_pmem_wdata;
-
-                // outputs to dcache
-                d_pmem_rdata = ab_pmem_rdata;
-                d_pmem_resp = ab_pmem_resp;
-
-                // outputs to icache
-                i_pmem_rdata = 256'b0;
-                i_pmem_resp = 1'b0;
-            end
         end
         prefetch: begin
             if (ab_pmem_resp)
