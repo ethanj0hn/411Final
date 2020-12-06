@@ -19,15 +19,15 @@ begin
     case (state)
         strongly_not_taken: begin
             if (correct_br)
-                next_state = not_taken;
-            else
                 next_state = strongly_not_taken;
+            else
+                next_state = not_taken;
         end
         not_taken: begin
             if (correct_br)
-                next_state = taken;
-            else
                 next_state = strongly_not_taken;
+            else
+                next_state = taken;
         end
         taken: begin
             if (correct_br)
@@ -42,6 +42,16 @@ begin
                 next_state = taken;
         end
         default: ;
+    endcase
+end
+
+always_comb
+begin
+    unique case (state)
+        taken, strongly_taken:
+            prediction = take;
+        default: 
+            prediction = no_take;
     endcase
 end
 

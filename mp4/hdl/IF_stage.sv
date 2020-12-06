@@ -40,7 +40,8 @@ local_branch_predictor lbp(
     .reset(reset),
     .PC(inst_addr),
     .result((branchmux_sel == branchmux::br_not_taken)), // for updating state 1 correct prediction and 0 for incorrect
-    .is_br((rv32i_opcode'(ir_id_ex[6:0]) == op_br)),
+    .is_br((rv32i_opcode'(inst_rdata[6:0]) == op_br)),
+    .is_br_idex((rv32i_opcode'(ir_id_ex[6:0]) == op_br)),
     .pipeline_en(pipeline_en),
     .prediction(prediction)
 );

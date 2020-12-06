@@ -8,7 +8,8 @@ module local_branch_predictor(
     input logic reset,
     input logic [31:0] PC,
     input logic result, // for updating state
-    input logic is_br,
+    input logic is_br, // branch in inst_rdata
+    input logic is_br_idex, // branch in idex?
     input logic pipeline_en,
     output prediction_choice prediction
 );
@@ -36,7 +37,7 @@ begin
         end
     end
     for(int i=0; i< 4; i= i + 1)
-        load[i] = ( (PC_shift_reg[1] == PC_arr[i]) & is_br & pipeline_en);
+        load[i] = ( (PC_shift_reg[1] == PC_arr[i]) & pipeline_en & is_br_idex);
 end
 
 always_ff @(posedge clk)
