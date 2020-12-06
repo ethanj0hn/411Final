@@ -34,46 +34,16 @@ logic [31:0] j_imm;
 assign b_imm = {{20{inst_rdata[31]}}, inst_rdata[7], inst_rdata[30:25], inst_rdata[11:8], 1'b0};
 assign j_imm = {{12{inst_rdata[31]}}, inst_rdata[19:12], inst_rdata[20], inst_rdata[30:21], 1'b0};
 
-predictor_state state, next_state;
-
-always_comb
-begin
-    next_state = state;
-    if ((rv32i_opcode'(ir_id_ex[6:0]) == op_br) | (rv32i_opcode'(ir_id_ex[6:0]) == op_jal) | (rv32i_opcode'(ir_id_ex[6:0]) == op_jalr)) begin
-        case (state)
-            strongly_not_taken: begin
-                if (correct_br)
-                    next_state = not_taken;
-                else
-                    next_state = strongly_not_taken;
-            end
-            not_taken: begin
-                if (correct_br)
-                    next_state = taken;
-                else
-                    next_state = strongly_not_taken;
-            end
-            taken: begin
-                if (correct_br)
-                    next_state = strongly_taken;
-                else
-                    next_state = not_taken;
-            end
-            strongly_taken: begin
-                if (correct_br)
-                    next_state = strongly_taken;
-                else
-                    next_state = taken;
-            end
-            default: ;
-        endcase
-    end
-end
-
-/* Next State Assignment */
-always_ff @(posedge clk) begin: next_state_assignment
-	 state <= next_state;
-end
+prediction_choice prediction;
+local_branch_predictor lbp(
+    .clk(clk),
+    .reset(reset),
+    .PC(inst_addr),
+    .result((branchmux_sel == branchmux::br_not_taken)), // for updating state 1 correct prediction and 0 for incorrect
+    .is_br((rv32i_opcode'(ir_id_ex[6:0]) == op_br)),
+    .pipeline_en(pipeline_en),
+    .prediction(prediction)
+);
 
 
 // prediction and correction logic
@@ -99,7 +69,7 @@ begin
         default:
         begin
             if (rv32i_opcode'(inst_rdata[6:0]) == op_br) begin
-                if ((state == strongly_taken) | (state == taken)) begin
+                if (prediction == take) begin // (state == strongly_taken) | (state == taken) - old
                     PC_in = inst_addr + b_imm;
                     predicted_branch = 1'b1;
                 end
