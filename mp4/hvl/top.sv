@@ -36,7 +36,8 @@ initial begin
 end
 
 assign rvfi.commit = 0; //dut.datapath.ID.regfile.load | dut.datapath.IF.PC.load; // Set high when a valid instruction is modifying regfile or PC
-assign rvfi.halt = (dut.datapath.CW_MEM_WB.opcode == op_br) & (dut.datapath.alu_buffer_memwb_out == dut.datapath.PC_MEM_WB);   // Set high when you detect an infinite loop
+assign rvfi.halt = ((dut.datapath.CW_MEM_WB.opcode == op_br) | (dut.datapath.CW_MEM_WB.opcode == op_jal) | (dut.datapath.CW_MEM_WB.opcode == op_jalr)) 
+    & (dut.datapath.alu_buffer_memwb_out == dut.datapath.PC_MEM_WB);   // Set high when you detect an infinite loop
 initial rvfi.order = 0;
 always @(posedge itf.clk iff rvfi.commit) rvfi.order <= rvfi.order + 1; // Modify for OoO
 
@@ -235,17 +236,19 @@ always @(posedge itf.clk) begin
     end
 end
 // logic clk,br_en,br_cw,j_cw,take_branch;
-logic clk,br_en;
-// logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, inst_addr;
+logic clk,br_en, data_resp;
+// logic [31:0]  alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, inst_addr;
 // logic clk,br_en,br_cw,j_cw,take_branch;
-// logic [31:0] data_rdata, data_addr, data_wdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out;
-logic [31:0] inst_rdata, inst_addr , j_imm_memwb, b_imm_memwb, IR_MEM_WB;
+// logic [31:0] data_rdata, data_addr, data_wdata, ;
+logic [31:0] inst_rdata, inst_addr , j_imm_memwb, b_imm_memwb, IR_MEM_WB, data_rdata, data_addr, data_wdata, rs1_alu, IR_ID_EX,
+    alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, ALU_a, ALU_b;
 logic [31:0] data_memory_buffer;
 logic [31:0] registers [32];
 logic load_regfile;
 branchmux::branchmux_sel_t branchmux_sel;
 rv32i_control_word ctrl;
-predictor_state s0,s1,s2,s3;
+fwd::fwd_sel_t alumux1_fwd_sel_exmem, alumux2_fwd_sel_exmem, alumux1_fwd_sel_memwb, alumux2_fwd_sel_memwb;
+// predictor_state s0,s1,s2,s3;
 
 assign clk = itf.clk;
 assign br_en = dut.datapath.br_en; // branch enable from datapath
@@ -254,23 +257,32 @@ assign br_en = dut.datapath.br_en; // branch enable from datapath
 // assign take_branch = dut.datapath.take_branch; // should you take branch?
 assign inst_addr = dut.inst_addr; // top level signals
 assign inst_rdata = dut.inst_rdata;
-// assign data_rdata = dut.data_rdata;
-// assign data_addr = dut.data_addr;
-// assign data_wdata = dut.data_wdata;
+assign data_rdata = dut.data_rdata;
+assign data_addr = dut.data_addr;
+assign data_wdata = dut.data_wdata;
+assign data_resp = dut.data_resp;
+assign IR_ID_EX = dut.datapath.IR_ID_EX;
 assign data_memory_buffer = dut.datapath.data_memory_buffer.out; // what's being read from data memory
 assign load_regfile = dut.datapath.ID.load_regfile_wb; // load regfile signal
-// assign alu_out = dut.datapath.alu_out; // alu_out
-// assign alu_buffer_exmem_out = dut.datapath.alu_buffer_exmem_out; // alu buffer outputs
-// assign alu_buffer_memwb_out = dut.datapath.alu_buffer_memwb_out;
+assign rs1_alu = IR_ID_EX[19:15];
+assign ALU_a = dut.datapath.EX.ALU.a;
+assign ALU_b = dut.datapath.EX.ALU.b;
+assign alu_out = dut.datapath.alu_out; // alu_out
+assign alumux1_fwd_sel_exmem = dut.datapath.alumux1_fwd_sel_exmem;
+assign alumux1_fwd_sel_memwb = dut.datapath.alumux1_fwd_sel_memwb;
+assign alumux2_fwd_sel_exmem = dut.datapath.alumux2_fwd_sel_exmem;
+assign alumux2_fwd_sel_memwb = dut.datapath.alumux2_fwd_sel_memwb;
+assign alu_buffer_exmem_out = dut.datapath.alu_buffer_exmem_out; // alu buffer outputs
+assign alu_buffer_memwb_out = dut.datapath.alu_buffer_memwb_out;
 // assign branchmux_sel = dut.datapath.ID.branchmux_sel; // branch mux select in datapath
 assign ctrl = dut.datapath.ID.ctrl; // generated control word
 assign IR_MEM_WB = dut.datapath.IR_MEM_WB;
 assign j_imm_memwb = {{12{IR_MEM_WB[31]}}, IR_MEM_WB[19:12], IR_MEM_WB[20], IR_MEM_WB[30:21], 1'b0};
 assign b_imm_memwb = {{20{IR_MEM_WB[31]}}, IR_MEM_WB[7], IR_MEM_WB[30:25], IR_MEM_WB[11:8], 1'b0};
-assign s0 = dut.datapath.IF.lbp.P0.state;
-assign s1 = dut.datapath.IF.lbp.P1.state;
-assign s2 = dut.datapath.IF.lbp.P2.state;
-assign s3 = dut.datapath.IF.lbp.P3.state;
+// assign s0 = dut.datapath.IF.lbp.P0.state;
+// assign s1 = dut.datapath.IF.lbp.P1.state;
+// assign s2 = dut.datapath.IF.lbp.P2.state;
+// assign s3 = dut.datapath.IF.lbp.P3.state;
 
 
 for(genvar i = 0; i<32;i++)

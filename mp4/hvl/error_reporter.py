@@ -78,8 +78,9 @@ with open("..\simulation\modelsim\diff_regout.txt", "r") as f:
                 time4 = b.readline()
                 fourth = d.readline()
     
-    print(time1.split()[-1])
-    print(time3.split()[-1])
+    print(f'Jump diff at line {line_jumpout} at time {time1.split()[-1]}')
+    print(f'Reg diff at line {line_regout} at time {time3.split()[-1]}')
+    print('First error:')
     print("MP4 (Test):")
     if (int(time1.split()[-1]) < int(time3.split()[-1])):
         print(first)
@@ -91,7 +92,7 @@ with open("..\simulation\modelsim\diff_regout.txt", "r") as f:
     print("-------------")
     # print('')
     print("MP2 (Gold):")
-    if (int(time2.split()[-1]) < int(time4.split()[-1])):
+    if (int(time1.split()[-1]) < int(time3.split()[-1])):
         print(second)
         # print("here")
         print(time2)
