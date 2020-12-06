@@ -41,8 +41,8 @@ begin
         end
         else begin
             // avoiding overflow
-            if (counter[prev_pc_index] == 32'h800000000)
-                new_count = 32'h800000000;
+            if (counter[prev_pc_index] == 32'h80000000)
+                new_count = 32'h80000000;
             else
                 new_count = counter[prev_pc_index] + 32'hFFFFFFFF;
         end
