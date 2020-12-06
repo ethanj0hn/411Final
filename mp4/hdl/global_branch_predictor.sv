@@ -1,9 +1,12 @@
+
+import rv32i_types::*; /* Import types defined in rv32i_types.sv */
+
 module global_branch_predictor (
   input clk,
   input logic write_en,
   input logic [31:0] pc_value,
-  input logic branch_taken,
-  output logic take_branch
+  input prediction_choice branch_taken,
+  output prediction_choice take_branch
 );
 
 
@@ -20,13 +23,13 @@ assign pc_index = pc_value[11:8];
 assign pc_tag = pc_value[31:12];
 
 // branch is taken if there were greater or equal branches than non branches for that set of pc values
-assign take_branch = $signed(counter[pc_index]) >= $signed(32'h00000000);
+assign take_branch = prediction_choice'($signed(counter[pc_index]) >= $signed(32'h00000000));
 
 always_comb
 begin
     if (tag[pc_index] == pc_tag) begin
         // if tag matches update value
-        if (branch_taken) begin
+        if (branch_taken == take) begin
             // avoiding overflow
             if (counter[pc_index] == 32'h7FFFFFFF)
                 new_count = 32'h7FFFFFFF;
@@ -43,7 +46,7 @@ begin
     end
     else begin
         // if tag doesn't match then write new values
-        if (branch_taken)
+        if (branch_taken == take)
             new_count <= 32'h00000001;
         else
             new_count <= 32'hFFFFFFFF;
