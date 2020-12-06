@@ -25,11 +25,14 @@ int timeout = 100000000;
 /************************ Signals necessary for monitor **********************/
 // This section not required until CP2
 integer i,j,k,l;
+integer hitcount, br_count;
 initial begin
     i = $fopen("mp4_regoutput.txt","w");
     j = $fopen("mp4_regtimeout.txt","w");
     k = $fopen("mp4_jumpout.txt","w");
     l = $fopen("mp4_jumptime.txt", "w");
+    hitcount = 0;
+    br_count = 0;
 end
 
 assign rvfi.commit = 0; //dut.datapath.ID.regfile.load | dut.datapath.IF.PC.load; // Set high when a valid instruction is modifying regfile or PC
@@ -156,7 +159,7 @@ Please refer to tb_itf.sv for more information.
 logic regfile_load, pipeline_en;
 logic [31:0] regfile_in, PC_out;
 logic [4:0] regfile_addr;
-rv32i_opcode EX_MEM_opcode;
+rv32i_opcode EX_MEM_opcode, inst_rdata_opcode;
 rv32i_control_word CW_ID_EX, CW_EX_MEM, CW_MEM_WB;
 
 assign CW_ID_EX = dut.datapath.CW_ID_EX; // control words in IDEX, EXMEM, MEMWB
@@ -170,12 +173,16 @@ begin
     PC_out = dut.datapath.PC_MEM_WB;
     regfile_addr = dut.datapath.ID.regfile.dest;
     EX_MEM_opcode = dut.datapath.CW_EX_MEM.opcode;
+    inst_rdata_opcode = rv32i_opcode'(dut.inst_rdata[6:0]);
     pipeline_en = dut.datapath.pipeline_en;
 end
 
 always @(posedge itf.clk) begin
     if (rvfi.halt)
+    begin
+        $display("%d, %d", hitcount,br_count);
         $finish;
+    end
     // if (timeout == 0) begin
     //     $display("TOP: Timed out");
     //     $finish;
@@ -219,18 +226,26 @@ always @(posedge itf.clk) begin
             dut.datapath.br_en_memwb ? dut.datapath.PC_MEM_WB + b_imm_memwb : dut.datapath.PC_MEM_WB + 32'h4);
         $fwrite(l, "Time (br) in ns is %d\n",$time / 1000);
     end
+
+    if( (CW_ID_EX.opcode == op_br) & pipeline_en)
+    begin
+        if (dut.datapath.IF.branchmux_sel == branchmux::br_not_taken)
+            hitcount += 1;
+        br_count += 1;
+    end
 end
 // logic clk,br_en,br_cw,j_cw,take_branch;
 logic clk,br_en;
 // logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out, inst_addr;
 // logic clk,br_en,br_cw,j_cw,take_branch;
-logic [31:0] data_rdata, data_addr, data_wdata, inst_rdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out
-    , inst_addr, IR_MEM_WB, j_imm_memwb, b_imm_memwb;
+// logic [31:0] data_rdata, data_addr, data_wdata, alu_out, alu_buffer_exmem_out, alu_buffer_memwb_out;
+logic [31:0] inst_rdata, inst_addr , j_imm_memwb, b_imm_memwb, IR_MEM_WB;
 logic [31:0] data_memory_buffer;
 logic [31:0] registers [32];
 logic load_regfile;
 branchmux::branchmux_sel_t branchmux_sel;
 rv32i_control_word ctrl;
+predictor_state s0,s1,s2,s3;
 
 assign clk = itf.clk;
 assign br_en = dut.datapath.br_en; // branch enable from datapath
@@ -239,19 +254,24 @@ assign br_en = dut.datapath.br_en; // branch enable from datapath
 // assign take_branch = dut.datapath.take_branch; // should you take branch?
 assign inst_addr = dut.inst_addr; // top level signals
 assign inst_rdata = dut.inst_rdata;
-assign data_rdata = dut.data_rdata;
-assign data_addr = dut.data_addr;
-assign data_wdata = dut.data_wdata;
+// assign data_rdata = dut.data_rdata;
+// assign data_addr = dut.data_addr;
+// assign data_wdata = dut.data_wdata;
 assign data_memory_buffer = dut.datapath.data_memory_buffer.out; // what's being read from data memory
 assign load_regfile = dut.datapath.ID.load_regfile_wb; // load regfile signal
-assign alu_out = dut.datapath.alu_out; // alu_out
-assign alu_buffer_exmem_out = dut.datapath.alu_buffer_exmem_out; // alu buffer outputs
-assign alu_buffer_memwb_out = dut.datapath.alu_buffer_memwb_out;
-assign branchmux_sel = dut.datapath.ID.branchmux_sel; // branch mux select in datapath
+// assign alu_out = dut.datapath.alu_out; // alu_out
+// assign alu_buffer_exmem_out = dut.datapath.alu_buffer_exmem_out; // alu buffer outputs
+// assign alu_buffer_memwb_out = dut.datapath.alu_buffer_memwb_out;
+// assign branchmux_sel = dut.datapath.ID.branchmux_sel; // branch mux select in datapath
 assign ctrl = dut.datapath.ID.ctrl; // generated control word
 assign IR_MEM_WB = dut.datapath.IR_MEM_WB;
 assign j_imm_memwb = {{12{IR_MEM_WB[31]}}, IR_MEM_WB[19:12], IR_MEM_WB[20], IR_MEM_WB[30:21], 1'b0};
 assign b_imm_memwb = {{20{IR_MEM_WB[31]}}, IR_MEM_WB[7], IR_MEM_WB[30:25], IR_MEM_WB[11:8], 1'b0};
+assign s0 = dut.datapath.IF.lbp.P0.state;
+assign s1 = dut.datapath.IF.lbp.P1.state;
+assign s2 = dut.datapath.IF.lbp.P2.state;
+assign s3 = dut.datapath.IF.lbp.P3.state;
+
 
 for(genvar i = 0; i<32;i++)
 assign registers[i] = dut.datapath.ID.regfile.data[i];

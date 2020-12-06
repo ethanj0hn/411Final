@@ -78,6 +78,29 @@ typedef enum bit [1:0] {
     process_dirty_eviction = 2'b11
 } ewb_states;
 
+// 2 bit up down branch predictor state
+//
+typedef enum bit [1:0] {
+    strongly_not_taken = 2'b00,
+    not_taken = 2'b01,
+    taken = 2'b10,
+    strongly_taken = 2'b11
+} predictor_state;
+
+// for tournament predictor
+//
+typedef enum bit [1:0] {
+    strongly_first_predictor = 2'b00,
+    first_predictor = 2'b01,
+    second_predictor = 2'b10,
+    strongly_second_predictor = 2'b11
+} tournament_choice;
+
+typedef enum bit {  
+    no_take = 1'b0,
+    take = 1'b1
+} prediction_choice;
+
 typedef struct packed {
     rv32i_opcode opcode;
     alu_ops aluop;

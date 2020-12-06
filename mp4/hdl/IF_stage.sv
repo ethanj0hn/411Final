@@ -34,43 +34,108 @@ logic [31:0] j_imm;
 assign b_imm = {{20{inst_rdata[31]}}, inst_rdata[7], inst_rdata[30:25], inst_rdata[11:8], 1'b0};
 assign j_imm = {{12{inst_rdata[31]}}, inst_rdata[19:12], inst_rdata[20], inst_rdata[30:21], 1'b0};
 
-// 2 bit up down branch predictor
+/* local predictor */
+prediction_choice local_prediction;
+logic local_buffer;
+logic local_out;
+
+local_branch_predictor lbp(
+    .clk(clk),
+    .reset(reset),
+    .PC(inst_addr),
+    .result((branchmux_sel == branchmux::br_not_taken)), // for updating state 1 correct prediction and 0 for incorrect
+    .is_br((rv32i_opcode'(inst_rdata[6:0]) == op_br)),
+    .is_br_idex((rv32i_opcode'(ir_id_ex[6:0]) == op_br)),
+    .pipeline_en(pipeline_en),
+    .prediction(local_prediction)
+);
+register #(1) local_buff_1(
+    .clk(clk),
+    .rst(reset),
+    .load(pipeline_en),
+    .in(local_prediction == take),
+    .out(local_buffer)
+);
+register #(1) local_buff_2(
+    .clk(clk),
+    .rst(reset),
+    .load(pipeline_en),
+    .in(local_buffer),
+    .out(local_out)
+);
+
+/* global branch predictor */
+prediction_choice global_prediction;
+logic global_buffer;
+logic global_out;
+
+global_branch_predictor gbp(
+    .clk(clk),
+    .write_en((rv32i_opcode'(ir_id_ex[6:0]) == op_br) & pipeline_en),
+    .curr_pc_value(inst_addr),
+    .prev_pc_value(non_br_PC),
+    .branch_taken(prediction_choice'(correct_br)),
+    .take_branch(global_prediction)
+);
+register #(1) global_buff_1(
+    .clk(clk),
+    .rst(reset),
+    .load(pipeline_en),
+    .in(global_prediction == take),
+    .out(global_buffer)
+);
+register #(1) global_buff_2(
+    .clk(clk),
+    .rst(reset),
+    .load(pipeline_en),
+    .in(global_buffer),
+    .out(global_out)
+);
+
+
+/* tournament predictor */
+logic local_correct;
+logic global_correct;
+
+assign local_correct = (local_out == correct_br) & (global_out != correct_br);
+assign global_correct = (global_out == correct_br) & (local_out != correct_br);
+
 enum int unsigned
 {
-    strongly_not_taken,
-    not_taken,
-    taken,
-    strongly_taken
+    strongly_local,
+    _local,
+    _global,
+    strongly_global
 } state, next_state;
 
 always_comb
 begin
     next_state = state;
-    if ((rv32i_opcode'(ir_id_ex[6:0]) == op_br) | (rv32i_opcode'(ir_id_ex[6:0]) == op_jal) | (rv32i_opcode'(ir_id_ex[6:0]) == op_jalr)) begin
+    if (rv32i_opcode'(ir_id_ex[6:0]) == op_br) begin
         case (state)
-            strongly_not_taken: begin
-                if (correct_br)
-                    next_state = not_taken;
-                else
-                    next_state = strongly_not_taken;
+            strongly_local: begin
+                if (local_correct)
+                    next_state = strongly_local;
+                else if (global_correct)
+                    next_state = _local;
             end
-            not_taken: begin
-                if (correct_br)
-                    next_state = taken;
-                else
-                    next_state = strongly_not_taken;
+            _local: begin
+                if (local_correct)
+                    next_state = strongly_local;
+                else if (global_correct)
+                    next_state = _global;
             end
-            taken: begin
-                if (correct_br)
-                    next_state = strongly_taken;
-                else
-                    next_state = not_taken;
+            _global: begin
+                if (local_correct)
+                    next_state = _local;
+                else if (global_correct)
+                    next_state = strongly_global;
             end
-            strongly_taken: begin
-                if (correct_br)
-                    next_state = strongly_taken;
-                else
-                    next_state = taken;
+            strongly_global: begin
+                if (local_correct)
+                    next_state = _global;
+                else if (global_correct)
+                    next_state = strongly_global;
             end
             default: ;
         endcase
@@ -79,15 +144,24 @@ end
 
 /* Next State Assignment */
 always_ff @(posedge clk) begin: next_state_assignment
-	 state <= next_state;
+    if (pipeline_en)
+        state <= next_state;
 end
 
 
 // prediction and correction logic
+prediction_choice prediction;
 always_comb
 begin
     inst_read = 1'b1; // always read
     predicted_branch = 1'b0;
+    
+    // choose which predictor to use depending on state machine
+    if ((state == strongly_global) | (state == _global))
+        prediction = global_prediction;
+    else
+        prediction = local_prediction;
+
     // PCMUX logic
     //
     unique case (branchmux_sel)
@@ -106,7 +180,7 @@ begin
         default:
         begin
             if (rv32i_opcode'(inst_rdata[6:0]) == op_br) begin
-                if ((state == strongly_taken) | (state == taken)) begin
+                if (prediction == take) begin // (state == strongly_taken) | (state == taken) - old
                     PC_in = inst_addr + b_imm;
                     predicted_branch = 1'b1;
                 end
