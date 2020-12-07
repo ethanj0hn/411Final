@@ -33,21 +33,13 @@ logic [255:0] i_pmem_wdata;
 logic i_pmem_read;
 logic i_pmem_write;
 
-// signals from dcache ewb to arbiter 
+// signals from dcache
 logic d_pmem_resp;
 logic [255:0] d_pmem_rdata;
 logic [31:0] d_pmem_address;
 logic [255:0] d_pmem_wdata;
 logic d_pmem_read;
 logic d_pmem_write;
-
-// signals from dcache to dcache ewb
-logic d_pmem_resp_ewb;
-logic [255:0] d_pmem_rdata_ewb;
-logic [31:0] d_pmem_address_ewb;
-logic [255:0] d_pmem_wdata_ewb;
-logic d_pmem_read_ewb;
-logic d_pmem_write_ewb;
 
 // signals from datapath
 logic data_resp; // response from data, instruction memory
@@ -144,12 +136,12 @@ cache d_cache (
   .clk(clk),
 
   /* Physical memory signals */
-  .pmem_resp(d_pmem_resp_ewb),
-  .pmem_rdata(d_pmem_rdata_ewb),
-  .pmem_address(d_pmem_address_ewb),
-  .pmem_wdata(d_pmem_wdata_ewb),
-  .pmem_read(d_pmem_read_ewb),
-  .pmem_write(d_pmem_write_ewb),
+  .pmem_resp(d_pmem_resp),
+  .pmem_rdata(d_pmem_rdata),
+  .pmem_address(d_pmem_address),
+  .pmem_wdata(d_pmem_wdata),
+  .pmem_read(d_pmem_read),
+  .pmem_write(d_pmem_write),
 
   /* CPU memory signals */
   .mem_read(data_read),
@@ -159,27 +151,6 @@ cache d_cache (
   .mem_wdata_cpu(data_wdata),
   .mem_resp(data_resp),
   .mem_rdata_cpu(data_rdata)
-);
-
-eviction_write_buffer ewb_dcache(
-      // from cache
-    .clk(clk),
-    .reset(reset),
-    .mem_read(d_pmem_read_ewb),
-    .mem_write(d_pmem_write_ewb),
-    .mem_address(d_pmem_address_ewb),
-    .mem_wdata(d_pmem_wdata_ewb),
-    // from memory
-    .pmem_rdata(d_pmem_rdata),
-    .pmem_resp(d_pmem_resp),
-    // to cache
-    .mem_resp(d_pmem_resp_ewb),
-    .mem_rdata(d_pmem_rdata_ewb),
-    // to memory
-    .pmem_read(d_pmem_read),
-    .pmem_write(d_pmem_write),
-    .pmem_wdata(d_pmem_wdata),
-    .pmem_address(d_pmem_address)
 );
 
 pipeline_datapath datapath(.*);
